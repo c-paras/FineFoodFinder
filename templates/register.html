@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Find Food Finder - Create Account
+{% endblock %}
+
+{% block body %}
+
+{% if status %}
+<div class="alert alert-danger"><p>{{ status }}</p></div>
+{% endif %}
+
+<form method="POST" action="">
+  <div class="panel-body">
+    <div class="form-group">
+      Username (*):
+      <input type="textfield" name="user" class="form-control">
+    </div>
+    <div class="form-group">
+      Password (*):
+      <input type="password" name="pass1" class="form-control">
+    </div>
+    <div class="form-group">
+      Retype Password (*):
+      <input type="password" name="pass2" class="form-control">
+    </div>
+    <div class="form-group">
+      Email (*):
+      <input type="textfield" name="email" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Create Account" class="btn btn-primary">
+      <input type="submit" name="cancel" value="Cancel" class="btn btn-primary">
+    </div>
+  </div>
+</form>
+
+{% endblock %}

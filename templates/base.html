@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+{% block title %}
+{% endblock %}
+</title>
+<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" type="image/x-icon">
+</head>
+<body>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+<div class="navbar-header">
+<div class="panel-heading"><h2 class="">Fine Food Finder</h2></div>
+</div>
+</div>
+<div class="col-sm-6">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% block body %}
+{% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Find Food Finder - Login
+{% endblock %}
+
+{% block body %}
+
+{{ message }}
+{% if status %}
+<div class="alert alert-danger"><p>{{ status }}</p></div>
+{% endif %}
+
+<form method="POST" action="">
+  <div class="panel-body">
+    <div class="form-group">
+      Username:
+      <input type="textfield" name="user" class="form-control">
+    </div>
+    <div class="form-group">
+      Password:
+      <input type="password" name="pass" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Login" class="btn btn-primary">
+    </div>
+    <a href="{{ url_for('register') }}" name="register">Create Account</a>
+  </div>
+</form>
+
+{% endblock %}
