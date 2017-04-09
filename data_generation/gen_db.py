@@ -6,6 +6,7 @@
 #names.txt - http://listofrandomnames.com/
 #emails.txt - https://www.randomlists.com/email-addresses
 
+from __future__ import print_function
 import sqlite3, sys, random, os, re, glob
 
 def main():
@@ -26,7 +27,7 @@ def main():
 #drops all old tables if they exist
 def drop_tables(c, tables):
 	for table in tables:
-		print 'Dropping %s table...' %table
+		print('Dropping %s table...' %table)
 		try:
 			c.execute('DROP TABLE ' + table)
 		except sqlite3.OperationalError:
@@ -35,7 +36,7 @@ def drop_tables(c, tables):
 #creates fresh tables
 def create_tables(c):
 
-	print 'Creating Users table...'
+	print('Creating Users table...')
 	c.execute(
 		'''CREATE TABLE Users (
 				full_name	TEXT not null,
@@ -45,7 +46,7 @@ def create_tables(c):
 				PRIMARY KEY (username)
 			);''')
 
-	print 'Creating Restaurants table...'
+	print('Creating Restaurants table...')
 	c.execute(
 		'''CREATE TABLE Restaurants (
 				id			INTEGER not null unique,
@@ -72,12 +73,12 @@ def populate_tables(c):
 #username created based on first name
 #uses simple-to-use passwords for testing purposes
 def populate_users(c):
-	print 'Populating Users table...'
+	print('Populating Users table...')
 
 	required = ['names.txt', 'emails.txt']
 	for f in required:
 		if not (os.access(f, os.R_OK) and os.path.isfile(f)):
-			print >>sys.stderr, "Error: cannot access raw data file '%s'" %f
+			print("Error: cannot access raw data file '%s'" %f, file=sys.stderr)
 			sys.exit(1)
 
 	names = open('names.txt').readlines()
@@ -95,10 +96,10 @@ def populate_users(c):
 
 #populates restaurants table
 def populate_restaurants(c):
-	print 'Populating Restaurants table...'
+	print('Populating Restaurants table...')
 
 	if not (os.access('restaurants', os.R_OK) and os.path.isdir('restaurants')):
-		print >>sys.stderr, "Error: cannot access raw data directory 'restaurants'"
+		print("Error: cannot access raw data directory 'restaurants'", file=sys.stderr)
 		sys.exit(1)
 
 	users = c.execute('SELECT username FROM Users').fetchall()
@@ -119,7 +120,7 @@ def populate_restaurants(c):
 			cuisine = r[4].strip()
 			cost = r[5].strip()
 		except:
-			print >>sys.stderr, "Error: skipping '%s'" %restaurant
+			print("Error: skipping '%s'" %restaurant, file=sys.stderr)
 			continue
 
 		#uses a ficticious rating between 0 and 5
