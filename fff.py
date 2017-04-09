@@ -3,7 +3,7 @@
 #SENG2011 17s1 Project
 #Implements a prototype for Fine Food Finder
 
-import os, re
+import os, re, sqlite3, db_interface
 from flask import *
 
 # Create new flask app
@@ -57,6 +57,13 @@ def register():
 			# Correct registration details
 			flash('Confirmation email sent to ' + email + '.')
 			return redirect(url_for('login'))
+
+@app.route('/restaurants')
+def restaurants_page():
+	conn = sqlite3.connect('data.db')
+	c = conn.cursor()
+	restaurants = db_interface.get_restaurants(c)
+	return render_template('restaurants.html', restaurants=restaurants)
 
 # Serve static files from static/
 @app.route('/static/<path:path>')
