@@ -13,6 +13,23 @@ class Restaurant():
         self.website = website
         self.cost = cost
 
+    # String representation
+    def __repr__(self):
+        output = 'Restaurant {\n' + \
+            '\tid: {}\n'.format(self.id) + \
+            '\tname: {}\n'.format(self.name) + \
+            '\tsuburb: {}\n'.format(self.suburb) + \
+            '\taddress: {}\n'.format(self.address) + \
+            '\tcuisine: {}\n'.format(self.cuisine) + \
+            '\towner: {}\n'.format(self.owner) + \
+            '\tphone: {}\n'.format(self.phone) + \
+            '\thours: {}\n'.format(self.hours) + \
+            '\trating: {}\n'.format(self.rating) + \
+            '\twebsite: {}\n'.format(self.website) + \
+            '\tcost: {}\n'.format(self.cost) + \
+            '}'
+        return output
+
     # Getters and setters
     def get_id(self):  # Does not require setter
         return self.id
@@ -84,6 +101,14 @@ class User():
         self.username = username
         self.password = password
         self.email = email
+
+    def __repr__(self):
+        output = 'User {\n' + \
+            '\tusername: {}\n'.format(self.username) + \
+            '\tpassword: {}\n'.format(self.password) + \
+            '\temail: {}\n'.format(self.email) + \
+            '}'
+        return output
 
     # Getters and setters
     def get_username(self):

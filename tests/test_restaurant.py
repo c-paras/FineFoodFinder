@@ -29,6 +29,13 @@ class TestRestaurantMethods(unittest.TestCase):
         self.assertEqual(r.get_website(), "https://restaurant1.com")
         self.assertEqual(r.get_cost(), 10.5)
 
+    def test_repr(self):
+        r = Restaurant(0, "restaurant1", "kensington", "12 anzac parade", "pizza", "john smith")
+        exp = 'Restaurant {\n\tid: 0\n\tname: restaurant1\n\tsuburb: kensington\n\taddress: ' \
+              '12 anzac parade\n\tcuisine: pizza\n\towner: john smith\n\tphone: \n\t' \
+              'hours: \n\trating: 0\n\twebsite: \n\tcost: 0\n}'
+        self.assertEqual(repr(r), exp)
+
     def test_set_name(self):
         r = Restaurant(0, "restaurant1", "kensington", "12 anzac parade", "pizza", "john smith")
         r.set_name("restaurant2")
