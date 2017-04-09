@@ -116,6 +116,8 @@ def populate_restaurants(c):
 			address = r[1].strip()
 			suburb = re.match(r'.*, (.+), Sydney', r[1]).group(1)
 			phone = r[2].strip()
+			if re.match('Not available', phone):
+				phone = 'Not available'
 			hours = r[3].strip()
 			cuisine = r[4].strip()
 			cost = r[5].strip()
@@ -124,10 +126,9 @@ def populate_restaurants(c):
 			continue
 
 		#uses a ficticious rating between 0 and 5
-		rating = random.random() * 100
-		while rating > 5:
-			rating -= 1
-		rating = round(rating, 1)
+		int_part = str(random.randint(1, 4))
+		decimal_part = str(random.randint(1, 9))
+		rating = float(int_part + '.' + decimal_part)
 
 		#choses a random protocol for the website
 		protocol = 'http://'
