@@ -7,10 +7,11 @@ Find Food Finder - Restaurants
 {% block body %}
 
 <div class="restaurant-display">
+  <h1>Restaurants Listing</h1>
   {% for r in restaurants %}
     <div class="restaurant">
       <p>
-        <h1>Restaurant</h1> <br/>
+        <h2>Restaurant</h2> <br/>
         <b>id:</b> {{ r.get_id() }} <br/>
         <b>name:</b> {{ r.get_name() }} <br/>
         <b>suburb:</b> {{ r.get_suburb() }} <br/>
@@ -22,7 +23,7 @@ Find Food Finder - Restaurants
         <b>rating:</b> {{ r.get_rating() }} <br/>
         <b>website:</b> {{ r.get_website() }} <br/>
         <b>cost:</b> {{ r.get_cost() }} <br/>
-    </p>
+      </p>
     </div>
   {% endfor %}
 </div>
