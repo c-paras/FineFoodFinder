@@ -5,6 +5,9 @@
 
 import os, re, sqlite3, db_interface, uuid
 from flask import *
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
 
 # Create new flask app
 app = Flask(__name__)
@@ -31,6 +34,9 @@ def login():
 		res = c.execute('SELECT * FROM Users WHERE username="%s" AND password="%s"' %(username, password))
 		try:
 			res.fetchone()[0]
+			res = c.execute('SELECT status FROM Users WHERE username="%s"' %username)
+			if res.fetchone()[0] != 'active':
+				flash('Please confirm your account first.')
 			return render_template('home.html')
 		except:
 			err = 'Invalid username or password.'
@@ -81,9 +87,11 @@ def register():
 			except:
 				pass
 
-			#TODO: send email with confirmation link
-			confirm_id = 'confirm_id=' + str(uuid.uuid4())
-			#TODO
+			#sends email with confirmation link
+			confirm_id = str(uuid.uuid4())
+			link = os.path.join(request.url_root, 'confirm', user, confirm_id)
+			body = 'Please visit the following link to confirm your account: ' + link
+			send_email(email, body, 'Account Confirmation')
 
 			flash('Confirmation email sent to ' + email + '.')
 			c.execute('''INSERT INTO Users (full_name, username, password, email, status) VALUES (?, ?, ?, ?, ?)''', (full_name, user, pass1, email, confirm_id))
@@ -91,6 +99,25 @@ def register():
 			db.commit()
 			db.close()
 			return redirect(url_for('login'))
+
+@app.route('/confirm/<path:user>/<path:uuid>', methods=['GET', 'POST'])
+def confirm(user, uuid):
+	db = sqlite3.connect('data.db')
+	c = db.cursor()
+
+	#activate account if link is valid
+	res = c.execute('SELECT * FROM Users WHERE username="%s" AND status="%s"' %(user, uuid))
+	try:
+		res.fetchone()[0]
+		c.execute('UPDATE Users SET status="%s" WHERE username="%s"' %('active', user))
+	except:
+		#invalid link
+		return redirect(url_for('login'))
+
+	db.commit()
+	db.close()
+	flash('You account has been activated. Please log in.')
+	return redirect(url_for('login'))
 
 @app.route('/restaurants')
 def restaurants_page():
@@ -104,6 +131,26 @@ def restaurants_page():
 @app.route('/static/<path:path>')
 def send_static_file(path):
 	return send_from_directory('static', path)
+
+#sends an email to the specified address
+def send_email(to, body, subject):
+
+	noreply = 'noreply.fine.food.finder@gmail.com'
+	noreply_password = 'finefoodfinder'
+
+	#construct email
+	msg = MIMEMultipart()
+	msg['From'] = noreply
+	msg['To'] = to
+	msg['Subject'] = subject
+	msg.attach(MIMEText(body, 'plain'))
+
+	#send the email from gmail account using smtp
+	server = smtplib.SMTP('smtp.gmail.com', 587)
+	server.starttls()
+	server.login(noreply, noreply_password)
+	server.sendmail(noreply, to, msg.as_string())
+	server.quit()
 
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=True)
