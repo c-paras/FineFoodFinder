@@ -4,6 +4,9 @@ init: # Install dependencies via pip
 database: # Run database generation script
 	cd data_generation && python gen_db.py
 
+database3: # Converts database generation script to py3, runs it, then resets to original
+	cd data_generation && 2to3 -w gen_db.py && python gen_db.py && git checkout gen_db.py && rm gen_db.py.bak
+
 test: # Run unit tests
 	python -m unittest 
 
