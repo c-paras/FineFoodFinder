@@ -45,6 +45,7 @@ def create_tables(c):
 				username		TEXT not null unique,
 				password		TEXT not null,
 				email			TEXT not null unique check (email like '_%@_%'),
+				status      TEXT not null,
 				PRIMARY KEY (username)
 			);''')
 
@@ -92,9 +93,9 @@ def populate_users(c):
 		username = full_name.split(' ')[0].lower() + str(random.randint(10, 99)) #first name + 2 digits
 		password = passwords[random.randint(0, len(passwords) - 1)]
 		email = emails.pop().strip()
-		data = (full_name, username, password, email)
-		c.execute('''INSERT INTO Users (full_name, username, password, email)
-				VALUES (?, ?, ?, ?)''', data)
+		data = (full_name, username, password, email, 'active')
+		c.execute('''INSERT INTO Users (full_name, username, password, email, status)
+				VALUES (?, ?, ?, ?, ?)''', data)
 
 #populates restaurants table
 def populate_restaurants(c):
