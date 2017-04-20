@@ -37,11 +37,23 @@ def login():
 			res = c.execute('SELECT status FROM Users WHERE username="%s"' %username)
 			if res.fetchone()[0] != 'active':
 				flash('Please confirm your account first.')
+			else:
+				session['logged_in'] = True
 			return render_template('home.html')
 		except:
 			err = 'Invalid username or password.'
 			return render_template('login.html', status=err)
 		db.close()
+
+#logout out user
+@app.route('/logout')
+def logout():
+	if 'logged_in' in session:
+		session.pop('logged_in', None)
+		flash('Successfully logged out.')
+	else:
+		flash('You are not logged in.')
+	return redirect(url_for('home_page'))
 
 # Registration page
 @app.route('/register', methods=['GET', 'POST'])
