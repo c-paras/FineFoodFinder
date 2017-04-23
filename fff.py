@@ -19,10 +19,10 @@ def home_page():
 	if request.method == 'GET':
 		return render_template('home.html')
 	elif request.method == 'POST':
-		search_term = request.form.get('search')
-		print("SEARCH TERM", search_term)
+		search_term = request.form.get('search-box')
+		search_criteria = request.form.get('search-criteria')
 
-		return redirect(url_for('restaurants_page', search_term=search_term))
+		return redirect(url_for('restaurants_page', search_term=search_term, search_criteria=search_criteria))
 
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -140,6 +140,7 @@ def confirm(user, uuid):
 @app.route('/restaurants')
 def restaurants_page():
 	search_term = request.args.get('search_term')
+	search_criteria = request.args.get('search_criteria')
 
 	conn = sqlite3.connect('data.db')
 	c = conn.cursor()
@@ -148,7 +149,7 @@ def restaurants_page():
 	else:  # Search
 		conn = sqlite3.connect('data.db')
 		c = conn.cursor()
-		restaurants = db_interface.search_restaurants(c, criteria='name', search_term=search_term)
+		restaurants = db_interface.search_restaurants(c, criteria=search_criteria, search_term=search_term)
 
 	conn.close()
 	return render_template('restaurants.html', restaurants=restaurants)
