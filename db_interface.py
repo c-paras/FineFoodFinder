@@ -51,3 +51,22 @@ def search_restaurants(c, criteria="", search_term="", search_term2=""):
         if any_search or name_search or cuisine_search or cost_search or suburb_search or rating_search:
             results.append(r)
     return results
+
+def get_restaurant_by_id(c, id):
+    c.execute("""SELECT * FROM Restaurants WHERE ID=?""", (id, ))
+    res = c.fetchone()
+    if res:
+        r = Restaurant(
+            id=res[0],
+            name=res[1],
+            suburb=res[2],
+            address=res[3],
+            phone=res[4],
+            hours=res[5],
+            cuisine=res[6],
+            owner=res[7],
+            rating=res[8],
+            website=res[9],
+            cost=res[10]
+        )
+        return r
