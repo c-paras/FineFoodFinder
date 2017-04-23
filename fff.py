@@ -14,9 +14,15 @@ app = Flask(__name__)
 app.secret_key = open('.flask_key').read().strip()
 
 # Landing page
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home_page():
-    return render_template('home.html')
+	if request.method == 'GET':
+		return render_template('home.html')
+	elif request.method == 'POST':
+		search_term = request.form.get('search')
+		print("SEARCH TERM", search_term)
+
+		return redirect(url_for('restaurants_page', search_term=search_term))
 
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -133,9 +139,17 @@ def confirm(user, uuid):
 
 @app.route('/restaurants')
 def restaurants_page():
+	search_term = request.args.get('search_term')
+
 	conn = sqlite3.connect('data.db')
 	c = conn.cursor()
-	restaurants = db_interface.get_restaurants(c)
+	if not search_term: # Not passed in, pull all restaurants from db
+		restaurants = db_interface.get_restaurants(c)
+	else:  # Search
+		conn = sqlite3.connect('data.db')
+		c = conn.cursor()
+		restaurants = db_interface.search_restaurants(c, criteria='name', search_term=search_term)
+
 	conn.close()
 	return render_template('restaurants.html', restaurants=restaurants)
 

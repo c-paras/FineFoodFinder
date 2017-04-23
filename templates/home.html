@@ -5,24 +5,26 @@ Fine Food Finder - Home
 {% endblock %}
 
 {% block body %}
-    <header>
-        <div class="header-content">
-            <div class="header-content-inner">
-                <h1 id="homeHeading">Fine Food Finder</h1>
-                <hr>
-                <p>Find food that is fine for you</p>
+  <header>
+    <div class="header-content">
+      <div class="header-content-inner">
+        <h1 id="homeHeading">Fine Food Finder</h1>
+        <hr>
+        <p>Find food that is fine for you</p>
 
-                <div class="row">
-                    <div class="col-xs-6 col-xs-offset-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" aria-label="...">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </div><!-- /btn-group -->
-                        </div><!-- /input-group -->
-                    </div>
-                </div>
-            </div>
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3">
+            <form method="POST" action="">
+              <div class="input-group">
+                  <input type="text" name="search" class="form-control" aria-label="...">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                  </div><!-- /btn-group -->
+              </div><!-- /input-group -->
+            </form>
+          </div>
         </div>
-    </header>
+      </div>
+    </div>
+  </header>
 {% endblock %}
