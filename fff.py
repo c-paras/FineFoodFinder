@@ -137,22 +137,28 @@ def confirm(user, uuid):
 	flash('You account has been activated. Please log in.')
 	return redirect(url_for('login'))
 
-@app.route('/restaurants')
-def restaurants_page():
-	search_term = request.args.get('search_term')
-	search_criteria = request.args.get('search_criteria')
-
+@app.route('/restaurants', defaults={'rest_id': None})
+@app.route('/restaurants/<path:rest_id>')
+def restaurants_page(rest_id=None):
 	conn = sqlite3.connect('data.db')
 	c = conn.cursor()
-	if not search_term: # Not passed in, pull all restaurants from db
-		restaurants = db_interface.get_restaurants(c)
-	else:  # Search
-		conn = sqlite3.connect('data.db')
-		c = conn.cursor()
-		restaurants = db_interface.search_restaurants(c, criteria=search_criteria, search_term=search_term)
 
+	if rest_id: # Display individual restaurant
+		r = db_interface.get_restaurant_by_id(c, id=rest_id)
+		if r:
+			return render_template('restaurant.html', restaurant=r)
+	else:
+		search_term = request.args.get('search_term')
+		search_criteria = request.args.get('search_criteria')
+
+
+		if not search_term: # Not passed in, pull all restaurants from db
+			restaurants = db_interface.get_restaurants(c)
+		else:  # Search
+			restaurants = db_interface.search_restaurants(c, criteria=search_criteria, search_term=search_term)
+		return render_template('restaurants.html', restaurants=restaurants)
 	conn.close()
-	return render_template('restaurants.html', restaurants=restaurants)
+
 
 # Serve static files from static/
 @app.route('/static/<path:path>')

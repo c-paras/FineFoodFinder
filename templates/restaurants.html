@@ -11,18 +11,17 @@ Find Food Finder - Restaurants
   {% for r in restaurants %}
     <div class="restaurant">
       <p>
-        <h2>Restaurant</h2> <br/>
-        <b>id:</b> {{ r.get_id() }} <br/>
-        <b>name:</b> {{ r.get_name() }} <br/>
+      <h2><a href="{{ url_for('restaurants_page', rest_id = r.get_id()) }}">{{ r.get_name() }}</a></h2> <br/>
+{#        <b>id:</b> {{ r.get_id() }} <br/>#}
         <b>suburb:</b> {{ r.get_suburb() }} <br/>
         <b>address:</b> {{ r.get_address() }} <br/>
         <b>cuisine:</b> {{ r.get_cuisine() }} <br/>
-        <b>owner:</b> {{ r.get_owner() }} <br/>
+{#        <b>owner:</b> {{ r.get_owner() }} <br/>#}
         <b>phone:</b> {{ r.get_phone() }} <br/>
-        <b>hours:</b> {{ r.get_hours() }} <br/>
+{#        <b>hours:</b> {{ r.get_hours() }} <br/>#}
         <b>rating:</b> {{ r.get_rating() }} <br/>
         <b>website:</b> {{ r.get_website() }} <br/>
-        <b>cost:</b> {{ r.get_cost() }} <br/>
+{#        <b>cost:</b> {{ r.get_cost() }} <br/>#}
       </p>
     </div>
   {% endfor %}

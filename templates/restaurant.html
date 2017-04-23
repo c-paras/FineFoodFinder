@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+Find Food Finder - {{ restaurant.get_name() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="restaurant-display">
+  <h1>{{ restaurant.get_name() }}</h1>
+  <div class="restaurant">
+    <p>
+      <b>id:</b> {{ restaurant.get_id() }} <br/>
+      <b>suburb:</b> {{ restaurant.get_suburb() }} <br/>
+      <b>address:</b> {{ restaurant.get_address() }} <br/>
+      <b>cuisine:</b> {{ restaurant.get_cuisine() }} <br/>
+      <b>owner:</b> {{ restaurant.get_owner() }} <br/>
+      <b>phone:</b> {{ restaurant.get_phone() }} <br/>
+      <b>hours:</b> {{ restaurant.get_hours() }} <br/>
+      <b>rating:</b> {{ restaurant.get_rating() }} <br/>
+      <b>website:</b> {{ restaurant.get_website() }} <br/>
+      <b>cost:</b> {{ restaurant.get_cost() }} <br/>
+    </p>
+  </div>
+</div>
+
+{% endblock %}
