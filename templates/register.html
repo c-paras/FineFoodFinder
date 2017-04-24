@@ -18,6 +18,7 @@ Find Food Finder - Create Account
                             {% endif %}
                         </div>
 
+<<<<<<< HEAD
                         <div class="row">
                             <form method="POST" action="">
                               <div class="panel-body">
@@ -49,4 +50,39 @@ Find Food Finder - Create Account
             </div>
         </div>
     </header>
+=======
+{% if status %}
+<div class="alert alert-danger"><p>{{ status }}</p></div>
+{% endif %}
+
+<form method="POST" action="">
+  <div class="panel-body">
+    <div class="form-group">
+    <div class="form-group">
+      Full Name (*):
+      <input type="textfield" name="full_name" class="form-control">
+    </div>
+      Username (*):
+      <input type="textfield" name="user" class="form-control">
+    </div>
+    <div class="form-group">
+      Password (*):
+      <input type="password" name="pass1" class="form-control">
+    </div>
+    <div class="form-group">
+      Retype Password (*):
+      <input type="password" name="pass2" class="form-control">
+    </div>
+    <div class="form-group">
+      Email (*):
+      <input type="textfield" name="email" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Create Account" class="btn btn-primary">
+      <input type="submit" name="cancel" value="Cancel" class="btn btn-primary">
+    </div>
+  </div>
+</form>
+
+>>>>>>> 48b41b0473cb53d0480ca42f54898a55e9abf439
 {% endblock %}

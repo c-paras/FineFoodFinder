@@ -13,6 +13,9 @@ class Restaurant():
         self.website = website
         self.cost = cost
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
     # String representation
     def __repr__(self):
         output = 'Restaurant {\n' + \
@@ -101,6 +104,9 @@ class User():
         self.username = username
         self.password = password
         self.email = email
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
     def __repr__(self):
         output = 'User {\n' + \
