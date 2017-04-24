@@ -5,34 +5,48 @@ Find Food Finder - Create Account
 {% endblock %}
 
 {% block body %}
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <div class="row">
+                    <div class="col-xs-4 col-xs-offset-4 header-box">
+                        <div class="row">
+                            <h1 id="homeHeading">Register</h1>
+                            <hr>
+                            {% if status %}
+                              <p class="login-message">{{ status }}</p>
+                            {% endif %}
+                        </div>
 
-{% if status %}
-<div class="alert alert-danger"><p>{{ status }}</p></div>
-{% endif %}
-
-<form method="POST" action="">
-  <div class="panel-body">
-    <div class="form-group">
-      Username (*):
-      <input type="textfield" name="user" class="form-control">
-    </div>
-    <div class="form-group">
-      Password (*):
-      <input type="password" name="pass1" class="form-control">
-    </div>
-    <div class="form-group">
-      Retype Password (*):
-      <input type="password" name="pass2" class="form-control">
-    </div>
-    <div class="form-group">
-      Email (*):
-      <input type="textfield" name="email" class="form-control">
-    </div>
-    <div class="form-group">
-      <input type="submit" value="Create Account" class="btn btn-primary">
-      <input type="submit" name="cancel" value="Cancel" class="btn btn-primary">
-    </div>
-  </div>
-</form>
-
+                        <div class="row">
+                            <form method="POST" action="">
+                              <div class="panel-body">
+                                <div class="form-group">
+                                  Username (*):
+                                  <input type="textfield" name="user" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                  Password (*):
+                                  <input type="password" name="pass1" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                  Retype Password (*):
+                                  <input type="password" name="pass2" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                  Email (*):
+                                  <input type="textfield" name="email" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                  <input type="submit" value="Create Account" class="btn btn-primary">
+                                  <input type="submit" name="cancel" value="Cancel" class="btn btn-primary">
+                                </div>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 {% endblock %}

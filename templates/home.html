@@ -8,18 +8,33 @@ Fine Food Finder - Home
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Fine Food Finder</h1>
-                <hr>
-                <p>Find food that is fine for you</p>
-
                 <div class="row">
-                    <div class="col-xs-6 col-xs-offset-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" aria-label="...">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </div><!-- /btn-group -->
-                        </div><!-- /input-group -->
+                    <div class="col-xs-4 col-xs-offset-4 home-box">
+                        <h1 id="homeHeading">Fine Food Finder</h1>
+                        <hr>
+                        <p>Find food that is fine for you</p>
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Search by
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Cuisine</a></li>
+                            <li><a href="#">Price</a></li>
+                            <li><a href="#">Suburb</a></li>
+                          </ul>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-6 col-xs-offset-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" aria-label="...">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    </div><!-- /btn-group -->
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

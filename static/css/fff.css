@@ -13,8 +13,8 @@ body {
 }
 hr {
   border-color: #F05F40;
-  border-width: 3px;
-  max-width: 50px;
+  border-width: 5px;
+  max-width: 100px;
 }
 hr.light {
   border-color: white;
@@ -38,7 +38,7 @@ h6 {
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 p {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
   margin-bottom: 20px;
 }
@@ -48,7 +48,7 @@ p {
 .bg-dark {
   background-color: #222222;
   color: white;
-}
+} 
 .text-faded {
   color: rgba(255, 255, 255, 0.7);
 }
@@ -107,26 +107,26 @@ aside {
 }
 @media (min-width: 768px) {
   .navbar-default {
-    background-color: transparent;
+    background-color: #ffd9d0;
     border-color: rgba(255, 255, 255, 0.3);
   }
   .navbar-default .navbar-header .navbar-brand {
-    color: rgba(255, 255, 255, 0.7);
+  color: rgb(40,40,40);
   }
   .navbar-default .navbar-header .navbar-brand:hover,
   .navbar-default .navbar-header .navbar-brand:focus {
-    color: white;
+    color: #F05F40;
   }
   .navbar-default .nav > li > a,
   .navbar-default .nav > li > a:focus {
-    color: rgba(255, 255, 255, 0.7);
+  color: rgb(40,40,40);
   }
   .navbar-default .nav > li > a:hover,
   .navbar-default .nav > li > a:focus:hover {
-    color: white;
+    color: #F05F40;
   }
   .navbar-default.affix {
-    background-color: white;
+    background-color: #F05F40;
     border-color: rgba(34, 34, 34, 0.05);
   }
   .navbar-default.affix .navbar-header .navbar-brand {
@@ -153,11 +153,13 @@ header {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+  background-attachment: fixed;
   -o-background-size: cover;
   background-position: center;
-  background-image: url('../img/header.jpg');
+  background-image: url('../img/FFFBackground.jpg');
   text-align: center;
-  color: white;
+  color: rgb(220,220,220);
+  margin-top: 50px;
 }
 header .header-content {
   position: relative;
@@ -170,15 +172,15 @@ header .header-content .header-content-inner h1 {
   text-transform: uppercase;
   margin-top: 20px;
   margin-bottom: 0;
-  font-size: 30px;
+  font-size: 60px;
 }
 header .header-content .header-content-inner hr {
   margin: 30px auto;
 }
 header .header-content .header-content-inner p {
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 16px;
+  color: rgb(220,220,220);
+  font-size: 20px;
   margin-bottom: 50px;
 }
 
@@ -188,8 +190,14 @@ header .header-content .header-content-inner p.login-message {
 }
 
 header .header-content .header-box {
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(0,0,0,0.8);
   border-radius: 10px;
+}
+header .header-content .home-box {
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 10px;
+  width:420px;
+  height:350px;
 }
 header .header-content p.register-tip {
   margin-bottom: 20px;
@@ -213,13 +221,15 @@ header .header-content p.register-tip {
     margin-right: auto;
   }
   header .header-content .header-content-inner h1 {
-    font-size: 50px;
+    font-size: 45px;
   }
   header .header-content .header-content-inner p {
-    font-size: 18px;
+    font-size: 20px;
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 10px;
+    font-weight: bold;
   }
 }
 .section-heading {
@@ -426,4 +436,67 @@ img::-moz-selection {
 }
 body {
   webkit-tap-highlight-color: #222222;
+}
+
+.restaurants {
+  position: relative;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin-top: 40px;
+}
+
+.restaurants .restaurants-listing {
+  text-align: left;
+  font-size:20px;
+  padding: 10px;
+  margin-left: 50px;
+}
+
+.restaurants .restaurants-listing .restaurants-listing-box {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 10px 20px 10px 40px;
+  margin-bottom: 20px;
+}
+
+.restaurants .restaurants-listing .restaurants-listing-box h2 {
+  color: #F05F40;	
+  font-weight: bold;
+  text-decoration: underline;  
+  margin-left: 15px;
+}
+
+.restaurants .restaurants-listing .restaurants-listing-box p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgb(100, 100, 100);
+}
+
+img {
+	max-height: 100%;
+	max-width: 100%;
+	border-radius: 10px;
+}
+
+.sidebar {
+  position: fixed;
+  background-color: #F05F40;
+  background-repeat: cover;
+  padding: 10px 20px 10px 40px;
+  margin-bottom: -9999px;
+  padding-bottom: 9999px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.sidebar h3 {
+  color: white;
+}
+
+.sidebar h4 {
+  color: white;
+  background-color: #f29d81;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  padding-left: 20px;
 }

@@ -6,6 +6,98 @@ Find Food Finder - Restaurants
 
 {% block body %}
 
+
+
+
+<header>
+	<div class="restaurants">
+		<div class="row">
+			<!-- 1.0 Filter Sidebar-->
+			<div class="col-xs-2 sidebar">
+				<span>
+					<h3>Filter by: </h3>
+					<h4>Suburb </h4>
+					<h4>Cuisine </h4> 
+					<h4>Cost </h4>
+					<h4>Rating </h4>
+				</span>
+			</div> 
+		
+			<!-- 1.1 Restaurant Listings -->
+			<div class="col-xs-9 col-xs-offset-2">
+				<div class="restaurants-listing">
+					<div class="row">
+						<div class="col-xs-5">
+							<h1 id="homeHeading" align="left">Restaurants List</h1>
+							<hr align="left">
+						</div>
+					</div>			
+					
+					<!-- Individual boxes of Restaurants-->
+					<div class="row">
+						{% for r in restaurants %}
+						<div class="restaurants-listing-box">
+							<div class="row">
+							<h2>{{ r.get_name() }}</h2>
+							
+								<!-- 2.0 Image Part -->
+								<div class="col-xs-4">
+									<img src="http://smokeybones.com/wp-content/uploads/2015/11/smokehouse-burger.jpg" alt="Restaurant 1" height ="220" width="250">
+								</div>
+								
+								<!-- 2.1 Restaurant Details Part -->
+								<div class="col-xs-8">
+									<p> 
+										<b> Ratings: {{ r.get_rating() }} </b> <br>
+										<font color=#e85929> {{ r.get_cuisine() }} </font><br>
+										<i> This restaurant gives fine food for you. </i>
+									</p>
+									<div class="row">
+										<div class="col-xs-3">
+											<p> 
+												Average cost: <br>
+												Opening Hours:
+											</p>
+										</div>
+										
+										<div class="col-xs-9">
+											<p>
+												${{ r.get_cost() }} per person <br/>
+												{{ r.get_hours() }} 
+											</p>
+										</div>
+									</div>	
+									
+									<div class="row">
+										<div class="col-xs-3">
+											<p> 
+												Owner:<br>
+												Address:<br>
+												Contact:<br>
+												Website:<br>
+											</p>
+										</div>
+										<div class="col-xs-9">
+											<p>
+												{{ r.get_owner() }} <br>
+												{{ r.get_address() }} <br>
+												{{ r.get_phone() }} <br/>
+												{{ r.get_website() }} <br/>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}				
+					</div>
+				</div>
+			</div>
+		<div>
+	</div>
+</header>
+
+<!--
 <div class="restaurant-display">
   <h1>Restaurants Listing</h1>
   {% for r in restaurants %}
@@ -27,5 +119,5 @@ Find Food Finder - Restaurants
     </div>
   {% endfor %}
 </div>
-
+-->
 {% endblock %}
