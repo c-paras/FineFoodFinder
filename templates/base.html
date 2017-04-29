@@ -31,7 +31,9 @@
                                 <a class="page-scroll" href="{{ url_for('restaurants_page') }}">Restaurants</a>
                             </li>
                             <li>
+                              {% if session['logged_in'] != True %}
                                 <a class="page-scroll" href="{{ url_for('register') }}">Register</a>
+                              {% endif %}
                             </li>
                             <li>
                               {% if session['logged_in'] == True %}
