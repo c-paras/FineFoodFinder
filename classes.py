@@ -37,7 +37,7 @@ class Restaurant():
         return output
 
     # Getters and setters
-    def get_id(self):  # Does not require setter
+    def get_id(self): # Does not require setter
         return self.id
 
     def get_name(self):
@@ -111,7 +111,6 @@ class Restaurant():
 
     def set_image(self, image):
         self.image = image
-
 
 class User():
     # Constructor

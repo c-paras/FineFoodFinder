@@ -117,6 +117,7 @@ def populate_restaurants(c):
 	for suburb in suburbs:
 		lat, lng, pst, sub = suburb.strip().split('\t')
 		postcodes[sub] = pst
+	postcodes['CBD'] = 2000 #special case not in data file
 
 	users = c.execute('SELECT username FROM Users').fetchall()
 	num_users = c.execute('SELECT COUNT(*) FROM Users').fetchone()[0]
@@ -150,9 +151,7 @@ def populate_restaurants(c):
 
 		#lookup postcode using suburb
 		postcode = ''
-		if suburb == 'CBD':
-			postcode = 2000 #cbd missing from data file
-		elif not suburb in postcodes:
+		if not suburb in postcodes:
 			continue
 		else:
 			postcode = postcodes[suburb]
