@@ -3,21 +3,22 @@ from classes import Restaurant
 
 def get_restaurants(c):
     results = []
-    c.execute("SELECT * FROM Restaurants LIMIT 10")  # TODO update limit
+    c.execute("SELECT * FROM Restaurants LIMIT 100")  # TODO update limit
     for restaurant in c.fetchall():
         r = Restaurant(
             id=restaurant[0],
             name=restaurant[1],
             suburb=restaurant[2],
             address=restaurant[3],
-            phone=restaurant[4],
-            hours=restaurant[5],
-            cuisine=restaurant[6],
-            owner=restaurant[7],
-            rating=restaurant[8],
-            website=restaurant[9],
-            cost=restaurant[10],
-				image=restaurant[11]
+            postcode=restaurant[4],
+            phone=restaurant[5],
+            hours=restaurant[6],
+            cuisine=restaurant[7],
+            owner=restaurant[8],
+            rating=restaurant[9],
+            website=restaurant[10],
+            cost=restaurant[11],
+				image=restaurant[12]
         )
         results.append(r)
     return results
@@ -62,13 +63,14 @@ def get_restaurant_by_id(c, id):
             name=res[1],
             suburb=res[2],
             address=res[3],
-            phone=res[4],
-            hours=res[5],
-            cuisine=res[6],
-            owner=res[7],
-            rating=res[8],
-            website=res[9],
-            cost=res[10],
-				image=res[11]
+            postcode=res[4],
+            phone=res[5],
+            hours=res[6],
+            cuisine=res[7],
+            owner=res[8],
+            rating=res[9],
+            website=res[10],
+            cost=res[11],
+				image=res[12]
         )
         return r

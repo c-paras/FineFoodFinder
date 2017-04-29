@@ -1,10 +1,11 @@
 class Restaurant():
     # Constructor
-    def __init__(self, id, name, suburb, address, cuisine, owner, phone='', hours='', rating=0, website='', cost=0, image=''):
+    def __init__(self, id, name, suburb, address, postcode, cuisine, owner, phone='', hours='', rating=0, website='', cost=0, image=''):
         self.id = id
         self.name = name
         self.suburb = suburb
         self.address = address
+        self.postcode = postcode
         self.cuisine = cuisine
         self.owner = owner
         self.phone = phone
@@ -56,6 +57,12 @@ class Restaurant():
 
     def set_address(self, address):
         self.address = address
+
+    def get_postcode(self):
+        return self.postcode
+
+    def set_postcode(self, postcode):
+        self.postcode = postcode
 
     def get_cuisine(self):
         return self.cuisine
