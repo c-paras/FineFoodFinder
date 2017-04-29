@@ -18,7 +18,7 @@ def main():
 	c.execute("PRAGMA foreign_keys = ON")
 
 	#generate and populate database tables
-	tables = ['Restaurants', 'Users']
+	tables = ['Ratings', 'Restaurants', 'Users']
 	drop_tables(c, tables)
 	create_tables(c)
 	populate_tables(c)
@@ -58,21 +58,32 @@ def create_tables(c):
 				address	TEXT not null,
 				postcode INTEGER not null,
 				phone		TEXT,
-				hours		TEXT, -- business hours
+				hours		TEXT, -- business hours; varying format
 				cuisine	TEXT not null,
 				owner		TEXT,
-				rating	FLOAT, -- can be unrated
 				website	TEXT check (website like 'http%://%'),
-				cost		FLOAT, -- average cost
+				cost		FLOAT, -- average cost per person
 				image		TEXT check (image like 'http%://%'),
 				PRIMARY KEY (id),
 				FOREIGN KEY (owner) REFERENCES Users(username)
 			);''')
 
+	print 'Creating Ratings table...'
+	c.execute(
+		'''CREATE TABLE Ratings (
+				user			TEXT not null,
+				restaurant	INTEGER not null,
+				rating		FLOAT not null,
+				PRIMARY KEY (user, restaurant), -- one rating per user per restaurant
+				FOREIGN KEY (user) REFERENCES Users(username),
+				FOREIGN KEY (restaurant) REFERENCES Restaurants(id)
+		);''')
+
 #populates fresh tables with mock data
 def populate_tables(c):
 	populate_users(c)
 	populate_restaurants(c)
+	populate_ratings(c)
 
 #populates users table with random name & email
 #username created based on first name
@@ -111,7 +122,7 @@ def populate_restaurants(c):
 		print >>sys.stderr, "Error: cannot access raw data file 'suburbs.txt'"
 		sys.exit(1)
 
-	#get postcodes from file
+	#get postcodes from file and cache in dict
 	suburbs = open('suburbs.txt').readlines()
 	postcodes = {}
 	for suburb in suburbs:
@@ -159,11 +170,6 @@ def populate_restaurants(c):
 		#and append it to the address
 		address = address + ' ' + str(postcode)
 
-		#use a ficticious rating between 1 and 5
-		int_part = str(random.randint(1, 4))
-		decimal_part = str(random.randint(1, 9))
-		rating = float(int_part + '.' + decimal_part)
-
 		#chose a random protocol for the website
 		protocol = 'http://'
 		if random.randint(0, 1) == 1:
@@ -181,10 +187,38 @@ def populate_restaurants(c):
 			owner = users[random.randint(0, num_users - 1)][0]
 
 		i += 1
-		data = (i, name, suburb, address, postcode, phone, hours, cuisine, owner, rating, website, cost, image)
+		data = (i, name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
 		c.execute('''INSERT INTO Restaurants
-				(id, name, suburb, address, postcode, phone, hours, cuisine, owner, rating, website, cost, image)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
+				(id, name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
+
+#populates ratings table
+def populate_ratings(c):
+	print 'Populating Ratings table...'
+
+	users = c.execute('SELECT username FROM Users').fetchall()
+	num_users = c.execute('SELECT COUNT(*) FROM Users').fetchone()[0]
+	restaurants = c.execute('SELECT id FROM Restaurants').fetchall()
+	num_restaurants = c.execute('SELECT COUNT(*) FROM Restaurants').fetchone()[0]
+
+	#add 1000 random ratings by 1000 random users to 1000 random restaurants
+	#assumes there is enough data in users and restaurants tables
+	i = 0
+	while i < 1000:
+		user = users[random.randint(0, num_users - 1)][0]
+		restaurant = restaurants[random.randint(0, num_restaurants - 1)][0]
+
+		#use a ficticious rating between 1 and 5
+		int_part = str(random.randint(1, 4))
+		decimal_part = str(random.randint(1, 9))
+		rating = float(int_part + '.' + decimal_part)
+
+		data = (user, restaurant, rating)
+		try:
+			c.execute('''INSERT INTO Ratings (user, restaurant, rating) VALUES (?, ?, ?)''', data)
+			i += 1
+		except:
+			pass #skip this since only one rating per user per restaurant
 
 if __name__ == '__main__':
 	main()
