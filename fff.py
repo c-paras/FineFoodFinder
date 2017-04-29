@@ -167,7 +167,7 @@ def send_static_file(path):
 def send_email(to, body, subject):
 
 	noreply = 'noreply.fine.food.finder@gmail.com'
-	noreply_password = 'finefoodfinder'
+	noreply_password = '15fac6da-2980-4586-b9f2-ae521261b391'
 
 	#construct email
 	msg = MIMEMultipart()

@@ -14,10 +14,10 @@ def get_restaurants(c):
             hours=restaurant[6],
             cuisine=restaurant[7],
             owner=restaurant[8],
-            rating=restaurant[9],
-            website=restaurant[10],
-            cost=restaurant[11],
-				image=restaurant[12]
+            website=restaurant[9],
+            cost=restaurant[10],
+				image=restaurant[11],
+				rating=find_average_rating(c, restaurant[0])
         )
         results.append(r)
     return results
@@ -66,9 +66,22 @@ def get_restaurant_by_id(c, id):
             hours=res[6],
             cuisine=res[7],
             owner=res[8],
-            rating=res[9],
-            website=res[10],
-            cost=res[11],
-				image=res[12]
+            website=res[9],
+            cost=res[10],
+				image=res[11],
+				rating=find_average_rating(c, res[0])
         )
         return r
+
+#calcs average rating based on all user ratings for id
+def find_average_rating(c, i):
+	ratings = c.execute('SELECT rating FROM Ratings WHERE restaurant="%s"' %i).fetchall()
+	sum = 0
+	num = 0
+	for rating in ratings:
+		sum += rating[0]
+		num += 1
+	if num == 0:
+		return 'Unrated'
+	else:
+		return round(sum/num , 1)
