@@ -63,6 +63,7 @@ def create_tables(c):
 				rating	FLOAT, -- can be unrated
 				website	TEXT check (website like 'http%://%'),
 				cost		FLOAT, -- average cost
+				image		TEXT check (image like 'http%://%'),
 				PRIMARY KEY (id),
 				FOREIGN KEY (owner) REFERENCES Users(username)
 			);''')
@@ -125,6 +126,7 @@ def populate_restaurants(c):
 			hours = r[3].strip()
 			cuisine = r[4].strip()
 			cost = r[5].strip()
+			image = r[6].strip()
 		except:
 			print("Error: skipping '%s'" %restaurant, file=sys.stderr)
 			continue
@@ -150,10 +152,10 @@ def populate_restaurants(c):
 		if random.randint(0, 3) == 0:
 			owner = users[random.randint(0, num_users - 1)][0]
 
-		data = (i, name, suburb, address, phone, hours, cuisine, owner, rating, website, cost)
+		data = (i, name, suburb, address, phone, hours, cuisine, owner, rating, website, cost, image)
 		c.execute('''INSERT INTO Restaurants
-				(id, name, suburb, address, phone, hours, cuisine, owner, rating, website, cost)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
+				(id, name, suburb, address, phone, hours, cuisine, owner, rating, website, cost, image)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
 
 if __name__ == '__main__':
 	main()
