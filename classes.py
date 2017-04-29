@@ -1,6 +1,6 @@
 class Restaurant():
     # Constructor
-    def __init__(self, id, name, suburb, address, cuisine, owner, phone='', hours='', rating=0, website='', cost=0):
+    def __init__(self, id, name, suburb, address, cuisine, owner, phone='', hours='', rating=0, website='', cost=0, image=''):
         self.id = id
         self.name = name
         self.suburb = suburb
@@ -12,6 +12,7 @@ class Restaurant():
         self.rating = rating
         self.website = website
         self.cost = cost
+        self.image = image
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -30,6 +31,7 @@ class Restaurant():
             '\trating: {}\n'.format(self.rating) + \
             '\twebsite: {}\n'.format(self.website) + \
             '\tcost: {}\n'.format(self.cost) + \
+            '\timage: {}\n'.format(self.image) + \
             '}'
         return output
 
@@ -96,6 +98,12 @@ class Restaurant():
 
     def set_cost(self, cost):
         self.cost = cost
+
+    def get_image(self):
+        return self.image
+
+    def set_image(self, image):
+        self.image = image
 
 
 class User():

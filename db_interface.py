@@ -16,7 +16,8 @@ def get_restaurants(c):
             owner=restaurant[7],
             rating=restaurant[8],
             website=restaurant[9],
-            cost=restaurant[10]
+            cost=restaurant[10],
+				image=restaurant[11]
         )
         results.append(r)
     return results
@@ -67,6 +68,7 @@ def get_restaurant_by_id(c, id):
             owner=res[7],
             rating=res[8],
             website=res[9],
-            cost=res[10]
+            cost=res[10],
+				image=res[11]
         )
         return r
