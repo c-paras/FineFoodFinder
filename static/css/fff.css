@@ -506,10 +506,14 @@ img {
   padding-left: 20px;
 }
 
+.collapse li a {
+  color: white;
+}
+
 .sidebar .sidebar-filters {
   color: white;
   background-color: #f29d81;
   padding-top: 5%;
   padding-bottom: 5%;
   padding-left: 20px;
-}
+}	
