@@ -12,6 +12,7 @@
         <link href="{{ url_for('static', filename='fonts/josefin_sans.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ url_for('static', filename='css/fff.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" type="image/x-icon">
+        <link href="{{ url_for('static', filename='css/ratings.css') }}" rel="stylesheet" type="text/css">
     </head>
 
     <body>
@@ -31,7 +32,9 @@
                                 <a class="page-scroll" href="{{ url_for('restaurants_page') }}">Restaurants</a>
                             </li>
                             <li>
+                              {% if session['logged_in'] != True %}
                                 <a class="page-scroll" href="{{ url_for('register') }}">Register</a>
+                              {% endif %}
                             </li>
                             <li>
                               {% if session['logged_in'] == True %}

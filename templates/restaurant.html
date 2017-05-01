@@ -10,6 +10,30 @@ Find Food Finder - {{ restaurant.get_name() }}
   <h1>{{ restaurant.get_name() }}</h1>
   <div class="restaurant">
     <p>
+    <b>
+    <h1>Rate us</h1>
+    <fieldset class="rating">
+      <input type="radio" id="star5" name="rating" value="5" />
+      <label class = "full" for="star5" title="Amazing - 5 stars"></label>
+      <input type="radio" id="star4half" name="rating" value="4.5" />
+      <label class="half" for="star4half" title="4.5 stars"></label>
+      <input type="radio" id="star4" name="rating" value="4" />
+      <label class = "full" for="star4" title="Very good - 4 stars"></label>
+      <input type="radio" id="star3half" name="rating" value="3.5" />
+      <label class="half" for="star3half" title="3.5 stars"></label>
+      <input type="radio" id="star3" name="rating" value="3" />
+      <label class = "full" for="star3" title="Average - 3 stars"></label>
+      <input type="radio" id="star2half" name="rating" value="2.5" />
+      <label class="half" for="star2half" title="2.5 stars"></label>
+      <input type="radio" id="star2" name="rating" value="2" />
+      <label class = "full" for="star2" title="Below average - 2 stars"></label>
+      <input type="radio" id="star1half" name="rating" value="1.5" />
+      <label class="half" for="star1half" title="1.5 stars"></label>
+      <input type="radio" id="star1" name="rating" value="1" />
+      <label class = "full" for="star1" title="Not great - 1 star"></label>
+      <input type="radio" id="starhalf" name="rating" value="0.5" />
+      <label class="half" for="starhalf" title="0.5 stars"></label>
+    </fieldset> <br> <br/>
       <b>id:</b> {{ restaurant.get_id() }} <br/>
       <b>suburb:</b> {{ restaurant.get_suburb() }} <br/>
       <b>address:</b> {{ restaurant.get_address() }} <br/>

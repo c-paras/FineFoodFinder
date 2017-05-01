@@ -37,15 +37,16 @@ for $result (@results) {
 	my ($cost) = $result =~ /Cost for two:<\/span><span class="col-s-11 col-m-12 pl0" >A\$(.*)<\/span><\/div>/;
 	my ($address) = $result =~ /<div style=" max-width:370px; " class="col-m-16 search-result-address grey-text nowrap ln22" title="(.*)">/;
 	my ($cuisine) = $result =~ /<div class='clearfix'><span class='col-s-5 col-m-4 ttupper fontsize5 grey-text' >Cuisines: <\/span><span class='col-s-11 col-m-12 nowrap  pl0' ><a title="([^"]*)" href/;
+	my ($image) = $result =~ /background-repeat: repeat;" data-original="(.*)"><\/a>/;
 
 	#discards bad data
-	if (!defined $name || !defined $phone || !defined $hours || !defined $cost || !defined $address || !defined $cuisine) {
+	if (!defined $name || !defined $phone || !defined $hours || !defined $cost || !defined $address || !defined $cuisine || !defined $image) {
 		continue;
 	}
 
 	open FILE, '>', "restaurants/$i";
 	$cost = int($cost / 2); #maps "cost for two" to "cost per meal"
-	print FILE "$name\n$address\n$phone\n$hours\n$cuisine\n$cost\n";
+	print FILE "$name\n$address\n$phone\n$hours\n$cuisine\n$cost\n$image\n";
 	close FILE;
 	$i++;
 }

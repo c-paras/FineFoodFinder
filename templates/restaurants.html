@@ -50,24 +50,23 @@ Find Food Finder - Restaurants
 						{% for r in restaurants %}
 						<div class="restaurants-listing-box">
 							<div class="row">
-							<h2>{{ r.get_name() }}</h2>
+							<h2><a href="{{ url_for('restaurants_page', rest_id = r.get_id()) }}">{{ r.get_name() }}</a></h2>
 							
 								<!-- 2.0 Image Part -->
 								<div class="col-xs-4">
-									<img src="http://smokeybones.com/wp-content/uploads/2015/11/smokehouse-burger.jpg" alt="Restaurant 1" height ="220" width="250">
+									<a href="{{ url_for('restaurants_page', rest_id = r.get_id()) }}"><img src="{{ r.get_image() }}" alt="Restaurant 1" height ="220" width="250"></a>
 								</div>
-								
 								<!-- 2.1 Restaurant Details Part -->
 								<div class="col-xs-8">
 									<p> 
-										<b> Ratings: {{ r.get_rating() }} </b> <br>
+										<b> Rating: {{ r.get_rating() }} </b> <br>
 										<font color=#e85929> {{ r.get_cuisine() }} </font><br>
 										<i> This restaurant gives fine food for you. </i>
 									</p>
 									<div class="row">
 										<div class="col-xs-3">
 											<p> 
-												Average cost: <br>
+												Average Cost: <br>
 												Opening Hours:
 											</p>
 										</div>
@@ -82,19 +81,17 @@ Find Food Finder - Restaurants
 									
 									<div class="row">
 										<div class="col-xs-3">
-											<p> 
-												Owner:<br>
+											<p>
 												Address:<br>
-												Contact:<br>
+												Phone:<br>
 												Website:<br>
 											</p>
 										</div>
 										<div class="col-xs-9">
 											<p>
-												{{ r.get_owner() }} <br>
 												{{ r.get_address() }} <br>
 												{{ r.get_phone() }} <br/>
-												{{ r.get_website() }} <br/>
+												<a href="{{ r.get_website() }}">{{ r.get_website() }}</a> <br/>
 											</p>
 										</div>
 									</div>
@@ -108,27 +105,4 @@ Find Food Finder - Restaurants
 		<div>
 	</div>
 </header>
-
-<!--
-<div class="restaurant-display">
-  <h1>Restaurants Listing</h1>
-  {% for r in restaurants %}
-    <div class="restaurant">
-      <p>
-      <h2><a href="{{ url_for('restaurants_page', rest_id = r.get_id()) }}">{{ r.get_name() }}</a></h2> <br/>
-{#        <b>id:</b> {{ r.get_id() }} <br/>#}
-        <b>suburb:</b> {{ r.get_suburb() }} <br/>
-        <b>address:</b> {{ r.get_address() }} <br/>
-        <b>cuisine:</b> {{ r.get_cuisine() }} <br/>
-{#        <b>owner:</b> {{ r.get_owner() }} <br/>#}
-        <b>phone:</b> {{ r.get_phone() }} <br/>
-{#        <b>hours:</b> {{ r.get_hours() }} <br/>#}
-        <b>rating:</b> {{ r.get_rating() }} <br/>
-        <b>website:</b> {{ r.get_website() }} <br/>
-{#        <b>cost:</b> {{ r.get_cost() }} <br/>#}
-      </p>
-    </div>
-  {% endfor %}
-</div>
--->
 {% endblock %}
