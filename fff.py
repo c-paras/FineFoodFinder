@@ -151,14 +151,12 @@ def restaurants_page(rest_id=None):
 		search_term = request.args.get('search_term')
 		search_criteria = request.args.get('search_criteria')
 
-
 		if not search_term: # Not passed in, pull all restaurants from db
 			restaurants = db_interface.get_restaurants(c)
-		else:  # Search
+		else: # Search
 			restaurants = db_interface.search_restaurants(c, criteria=search_criteria, search_term=search_term)
 		return render_template('restaurants.html', restaurants=restaurants)
 	conn.close()
-
 
 # Serve static files from static/
 @app.route('/static/<path:path>')
@@ -169,7 +167,7 @@ def send_static_file(path):
 def send_email(to, body, subject):
 
 	noreply = 'noreply.fine.food.finder@gmail.com'
-	noreply_password = 'finefoodfinder'
+	noreply_password = '15fac6da-2980-4586-b9f2-ae521261b391'
 
 	#construct email
 	msg = MIMEMultipart()
