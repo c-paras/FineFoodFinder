@@ -3,7 +3,7 @@
 # SENG2011 17s1 Project
 # Implements a prototype for Fine Food Finder
 
-import os, re, sqlite3, db_interface, uuid
+import os, re, sqlite3, db_interface, fff_helpers, uuid
 from flask import *
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -22,10 +22,21 @@ def home_page():
     elif request.method == 'POST':
         search_term = request.form.get('search-box')
         search_criteria = request.form.get('search-criteria')
-        if not search_criteria:
+
+        if not search_criteria:  # Default search criteria
             search_criteria = "any"
 
-        return redirect(url_for('restaurants_page', search_term=search_term, search_criteria=search_criteria))
+        any, name, cuisine, suburb = None, None, None, None
+        if search_criteria == "any":
+            any = search_term
+        if search_criteria == "name":
+            name = search_term
+        if search_criteria == "cuisine":
+            cuisine = search_term
+        if search_criteria == "suburb":
+            suburb = search_term
+
+        return redirect(url_for('restaurants_page', any=any, name=name, cuisine=cuisine, suburb=suburb))
 
 
 # Login page
@@ -121,7 +132,7 @@ def confirm(user, uuid):
     return redirect(url_for('login'))
 
 
-@app.route('/restaurants', defaults={'rest_id': None})
+@app.route('/restaurants', defaults={'rest_id': None}, methods=['GET', 'POST'])
 @app.route('/restaurants/<path:rest_id>')
 def restaurants_page(rest_id=None):
     conn = sqlite3.connect('data.db')
@@ -132,17 +143,22 @@ def restaurants_page(rest_id=None):
         if r:
             return render_template('restaurant.html', restaurant=r)
     else:
-        search_term = request.args.get('search_term')
-        search_criteria = request.args.get('search_criteria')
+        name = request.args.get('name') or request.form.get('name')
+        cuisine = request.args.get('cuisine') or request.form.get('cuisine')
+        suburb = request.args.get('suburb') or request.form.get('suburb')
 
-        if not search_term: # Not passed in, pull all restaurants from db
-            restaurants = db_interface.get_restaurants(c)
-        else:  # Search
-            restaurants = db_interface.search_restaurants(c, criteria=search_criteria, search_term=search_term)
+        print('name', name)
+        print('cuisine', cuisine)
+        print('suburb', suburb)
+
+        restaurants = db_interface.get_restaurants(c)
+        if name or cuisine or suburb:  # Search
+            restaurants = fff_helpers.filter_restaurants(restaurants, name=name, cuisine=cuisine, cost="", suburb=suburb, rating="")
 
         suburbs = set(r.get_suburb() for r in restaurants)
         cuisines = set(r.get_cuisine() for r in restaurants)
-        return render_template('restaurants.html', restaurants=restaurants, suburbs=suburbs, cuisines=cuisines)
+        return render_template('restaurants.html', name=name, cuisine=cuisine, suburb=suburb, restaurants=restaurants,
+                               suburbs=suburbs, cuisines=cuisines)
     conn.close()
 
 

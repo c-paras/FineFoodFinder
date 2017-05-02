@@ -14,12 +14,13 @@ Find Food Finder - Restaurants
                 <div class="row">
                     <h4>Filter by</h4>
                     <div class="col-xs-12">
-                        <div class="btn-group-vertical btn-group-lg" role="group">
+                        <form method="POST">
+                            <div class="btn-group-vertical btn-group-lg" role="group">
                             <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
                             <div id="filters-suburb" class="collapse in">
                                 <ul>
                                     {% for suburb in suburbs %}
-                                        <li><a>{{ suburb }}</a></li>
+                                        <li><input class="sidebar-selection" type="submit" name="suburb" value="{{ suburb }}"></li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -28,7 +29,7 @@ Find Food Finder - Restaurants
                             <div id="filters-cuisine" class="collapse in">
                                 <ul>
                                     {% for cuisine in cuisines %}
-                                        <li><a>{{ cuisine }}</a></li>
+                                        <li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ cuisine }}"></li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -62,6 +63,7 @@ Find Food Finder - Restaurants
                                 </ul>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
 			</div> 
