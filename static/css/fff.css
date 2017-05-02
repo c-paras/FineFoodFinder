@@ -527,7 +527,7 @@ img {
 .sidebar .sidebar-filters {
   color: white;
   background-color: #f29d81;
-  padding-top: 5%;
-  padding-bottom: 5%;
-  padding-left: 20px;
-}	
+}
+.sidebar .btn-group-vertical div {
+  width: 100%;
+}

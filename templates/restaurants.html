@@ -6,76 +6,67 @@ Find Food Finder - Restaurants
 
 {% block body %}
 
-
-
-
 <header>
 	<div class="restaurants">
 		<div class="row">
 			<!-- 1.0 Filter Sidebar-->
 			<div class="col-xs-2 sidebar">
-				<span>
-					<h3>Filter by: </h3>
-					<!-- Testing the collapse thingo -->
-					<button type="button" class="sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">
-						<h4> Suburb </h4>
-					</button>
-					<div id="filters-suburb" class="collapse">
-						<ul>
-							<li> <a> Maroubra </a> </li> 
-							<li> <a> Kensington </a> </li>
-							<li> <a> Kingsford </a> </li>
-						</ul>
-					</div>
-					<!-- Test ends -->
-					
-					<button type="button" class="sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">
-						<h4> Cuisine </h4>
-					</button>
-					<div id="filters-cuisine" class="collapse">
-						<ul>
-							<li> <a> Modern Australian </a> </li>
-							<li> <a> German </a> </li>
-							<li> <a> Cafe </a> </li>
-							<li> <a> BBQ </a> </li>
-							<li> <a> Japanese </a> </li>
-							<li> <a> Middle Eastern </a> </li>
-						</ul>
-					</div>
-					
-					<button type="button" class="sidebar-filters" data-toggle="collapse" data-target="#filters-cost">
-						<h4> Cost </h4>
-					</button>
-					<div id="filters-cost" class="collapse">
-						<ul>
-							<li> <a> $ 0 - $ 5 </a> </li>
-							<li> <a> $ 5 - $ 10 </a> </li>
-							<li> <a> $ 10 - $ 15 </a> </li>
-							<li> <a> $ 15 - $ 20 </a> </li>
-							<li> <a> $ 20 - $ 25 </a> </li>
-							<li> <a> $ 25 - $ 30 </a> </li>
-						</ul>
-					</div>
-					
-					<button type="button" class="sidebar-filters" data-toggle="collapse" data-target="#filters-rating">
-						<h4> Rating </h4>
-					</button>
-					<div id="filters-rating" class="collapse">
-						<ul>
-							<li> <a> 0.0 </a> </li>
-							<li> <a> 0.5 </a> </li>
-							<li> <a> 1.0 </a> </li>
-							<li> <a> 1.5 </a> </li>
-							<li> <a> 2.0 </a> </li>
-							<li> <a> 2.5 </a> </li>
-							<li> <a> 3.0 </a> </li>
-							<li> <a> 3.5 </a> </li>
-							<li> <a> 4.0 </a> </li>
-							<li> <a> 4.5 </a> </li>
-							<li> <a> 5.0 </a> </li>
-						</ul>
-					</div>
-				</span>
+                <div class="row">
+                    <h4>Filter by</h4>
+                    <div class="col-xs-12">
+                        <div class="btn-group-vertical btn-group-lg" role="group">
+                            <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
+                            <div id="filters-suburb" class="collapse in">
+                                <ul>
+                                    <li> <a> Maroubra </a> </li>
+                                    <li> <a> Kensington </a> </li>
+                                    <li> <a> Kingsford </a> </li>
+                                </ul>
+                            </div>
+
+                            <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
+                            <div id="filters-cuisine" class="collapse in">
+                                <ul>
+                                    <li> <a> Modern Australian </a> </li>
+                                    <li> <a> German </a> </li>
+                                    <li> <a> Cafe </a> </li>
+                                    <li> <a> BBQ </a> </li>
+                                    <li> <a> Japanese </a> </li>
+                                    <li> <a> Middle Eastern </a> </li>
+                                </ul>
+                            </div>
+
+                            <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cost">Cost</button>
+                            <div id="filters-cost" class="collapse in">
+                                <ul>
+                                    <li> <a> $ 0 - $ 5 </a> </li>
+                                    <li> <a> $ 5 - $ 10 </a> </li>
+                                    <li> <a> $ 10 - $ 15 </a> </li>
+                                    <li> <a> $ 15 - $ 20 </a> </li>
+                                    <li> <a> $ 20 - $ 25 </a> </li>
+                                    <li> <a> $ 25 - $ 30 </a> </li>
+                                </ul>
+                            </div>
+
+                            <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-rating">Rating</button>
+                            <div id="filters-rating" class="collapse in">
+                                <ul>
+                                    <li> <a> 0.0 </a> </li>
+                                    <li> <a> 0.5 </a> </li>
+                                    <li> <a> 1.0 </a> </li>
+                                    <li> <a> 1.5 </a> </li>
+                                    <li> <a> 2.0 </a> </li>
+                                    <li> <a> 2.5 </a> </li>
+                                    <li> <a> 3.0 </a> </li>
+                                    <li> <a> 3.5 </a> </li>
+                                    <li> <a> 4.0 </a> </li>
+                                    <li> <a> 4.5 </a> </li>
+                                    <li> <a> 5.0 </a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div> 
 		
 			<!-- 1.1 Restaurant Listings -->
