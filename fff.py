@@ -31,29 +31,23 @@ def home_page():
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET': # First page load
-        return render_template('login.html', status='')
-    else:
-        # User has pressed login button
-        username = request.form.get('user')
-        password = request.form.get('pass')
-        db = sqlite3.connect('data.db')
-        c = db.cursor()
+    if request.method == 'GET':  # First page load
+        return render_template('login.html')
+    else:  # User has pressed login button
+        username, password = request.form.get('user'), request.form.get('pass')
+        conn = sqlite3.connect('data.db')
+        c = conn.cursor()
 
-        # Check user & pass in db
-        res = c.execute('SELECT * FROM Users WHERE username="%s" AND password="%s"' %(username, password))
-        try:
-            res.fetchone()[0]
-            res = c.execute('SELECT status FROM Users WHERE username="%s"' %username)
-            if res.fetchone()[0] != 'active':
-                flash('Please confirm your account first.')
-            else:
-                session['logged_in'] = True
+        login_status = db_interface.check_login(c, username, password)
+        conn.close()
+        if login_status is True:
+            session['logged_in'] = True
             return render_template('home.html')
-        except:
-            err = 'Invalid username or password.'
-            return render_template('login.html', status=err)
-        db.close()
+
+        if not login_status:
+            return render_template('login.html', status='Invalid username or password')
+        elif login_status == 'inactive':
+            return render_template('login.html', status='Please confirm your account first.')
 
 
 # Log out user

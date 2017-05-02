@@ -1,5 +1,23 @@
 from classes import Restaurant
 
+
+def check_login(c, username, password):
+    """
+    :param c: sqlite cursor
+    :param username: username to be checked
+    :param password: password to be checked
+    :return: "inactive"/True/False
+    """
+    res = c.execute("SELECT * FROM Users WHERE username=? AND password=?", (username, password))
+    if res.fetchone(): # Username and password correct
+        res_status = c.execute("SELECT status FROM Users WHERE username=?", (username, ))
+        status = res_status.fetchone()
+        if status and status[0] != 'active':
+            return 'inactive'
+        return True  # Login succeeded
+    return False  # Login failed
+
+
 def get_restaurants(c):
     results = []
     c.execute("SELECT * FROM Restaurants LIMIT 10") # TODO update limit
@@ -16,11 +34,12 @@ def get_restaurants(c):
             owner=restaurant[8],
             website=restaurant[9],
             cost=restaurant[10],
-				image=restaurant[11],
-				rating=find_average_rating(c, restaurant[0])
+            image=restaurant[11],
+            rating=find_average_rating(c, restaurant[0])
         )
         results.append(r)
     return results
+
 
 def search_restaurants(c, criteria="", search_term="", search_term2=""):
     """
@@ -52,6 +71,7 @@ def search_restaurants(c, criteria="", search_term="", search_term2=""):
             results.append(r)
     return results
 
+
 def get_restaurant_by_id(c, id):
     c.execute("""SELECT * FROM Restaurants WHERE ID=?""", (id, ))
     res = c.fetchone()
@@ -68,20 +88,21 @@ def get_restaurant_by_id(c, id):
             owner=res[8],
             website=res[9],
             cost=res[10],
-				image=res[11],
-				rating=find_average_rating(c, res[0])
+            image=res[11],
+            rating=find_average_rating(c, res[0])
         )
         return r
 
-#calcs average rating based on all user ratings for id
+
+# Calculates average rating based on all user ratings for id
 def find_average_rating(c, i):
-	ratings = c.execute('SELECT rating FROM Ratings WHERE restaurant="%s"' %i).fetchall()
-	sum = 0
-	num = 0
-	for rating in ratings:
-		sum += rating[0]
-		num += 1
-	if num == 0:
-		return 'Unrated'
-	else:
-		return round(sum/num , 1)
+    ratings = c.execute('SELECT rating FROM Ratings WHERE restaurant="%s"' % i).fetchall()
+    sum = 0
+    num = 0
+    for rating in ratings:
+        sum += rating[0]
+        num += 1
+    if num == 0:
+        return 'Unrated'
+    else:
+        return round(sum/num , 1)
