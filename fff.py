@@ -69,41 +69,28 @@ def register():
     else:
         full_name = request.form.get('full_name')
         user = request.form.get('user')
-        pass1 = request.form.get('pass1')
-        pass2 = request.form.get('pass2')
+        pass1, pass2 = request.form.get('pass1'), request.form.get('pass2')
         email = request.form.get('email')
 
-        if 'cancel' in request.form: # Cancel registration, return to login page
-            return redirect(url_for('login'))
-        elif full_name == '' or user == '' or pass1 == '' or pass2 == '' or email == '':
-            # No blank fields allowed
+        if not (full_name and user and pass1 and pass2 and email):  # No blank fields allowed
             err = 'Fields marked with (*) are required.'
             return render_template('register.html', status=err)
         elif not re.match(r'.+@.+', email):
             return render_template('register.html', status='Invalid email.')
         elif pass1 != pass2:
             return render_template('register.html', status='Passwords do not match.')
-        else:
-            # Correct registration details
-            db = sqlite3.connect('data.db')
-            c = db.cursor()
+        else:  # Correct registration details
+            conn = sqlite3.connect('data.db')
+            c = conn.cursor()
 
-            #check if user or email already registered
-            res = c.execute('SELECT * FROM Users WHERE username="%s"' %user)
-            try:
-                res.fetchone()[0]
+            # Check if user or email already registered
+            if db_interface.check_username_exists(c, user):
                 err = 'An account with that username already exists.'
                 return render_template('register.html', status=err)
-            except:
-                pass
 
-            res = c.execute('SELECT * FROM Users WHERE email="%s"' %email)
-            try:
-                res.fetchone()[0]
+            if db_interface.check_email_exists(c, email):
                 err = 'The specified email is already associated with an account.'
                 return render_template('register.html', status=err)
-            except:
-                pass
 
             # Sends email with confirmation link
             confirm_id = str(uuid.uuid4())
@@ -111,11 +98,10 @@ def register():
             body = 'Please visit the following link to confirm your account: ' + link
             send_email(email, body, 'Account Confirmation')
 
-            flash('Confirmation email sent to ' + email + '.')
-            c.execute('''INSERT INTO Users (full_name, username, password, email, status) VALUES (?, ?, ?, ?, ?)''', (full_name, user, pass1, email, confirm_id))
-
-            db.commit()
-            db.close()
+            flash('Confirmation email sent to {}.'.format(email))
+            db_interface.add_user(c, full_name=full_name, username=user, password=pass1, email=email, confirm_id=confirm_id)
+            conn.commit()
+            conn.close()
             return redirect(url_for('login'))
 
 

@@ -1,6 +1,10 @@
 from classes import Restaurant
 
 
+def add_user(c, full_name, username, password, email, confirm_id):
+    c.execute('''INSERT INTO Users (full_name, username, password, email, status) VALUES (?, ?, ?, ?, ?)''', (full_name, username, password, email, confirm_id))
+
+
 def check_login(c, username, password):
     """
     :param c: sqlite cursor
@@ -16,6 +20,30 @@ def check_login(c, username, password):
             return 'inactive'
         return True  # Login succeeded
     return False  # Login failed
+
+
+def check_username_exists(c, username):
+    """
+    :param c: sqlite cursor
+    :param username: username to be checked
+    :return: True/False
+    """
+    res = c.execute("SELECT * FROM Users WHERE username=?", (username, ))
+    if res.fetchone():
+        return True
+    return False
+
+
+def check_email_exists(c, email):
+    """
+    :param c: sqlite cursor
+    :param email: email to be checked
+    :return: True/False
+    """
+    res = c.execute("SELECT * FROM Users WHERE email=?", (email, ))
+    if res.fetchone():
+        return True
+    return False
 
 
 def get_restaurants(c):
@@ -96,7 +124,7 @@ def get_restaurant_by_id(c, id):
 
 # Calculates average rating based on all user ratings for id
 def find_average_rating(c, i):
-    ratings = c.execute('SELECT rating FROM Ratings WHERE restaurant="%s"' % i).fetchall()
+    ratings = c.execute("SELECT rating FROM Ratings WHERE restaurant=?", (i, )).fetchall()
     sum = 0
     num = 0
     for rating in ratings:
