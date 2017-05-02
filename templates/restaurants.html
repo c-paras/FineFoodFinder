@@ -18,21 +18,18 @@ Find Food Finder - Restaurants
                             <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
                             <div id="filters-suburb" class="collapse in">
                                 <ul>
-                                    <li> <a> Maroubra </a> </li>
-                                    <li> <a> Kensington </a> </li>
-                                    <li> <a> Kingsford </a> </li>
+                                    {% for suburb in suburbs %}
+                                        <li><a>{{ suburb }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
 
                             <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
                             <div id="filters-cuisine" class="collapse in">
                                 <ul>
-                                    <li> <a> Modern Australian </a> </li>
-                                    <li> <a> German </a> </li>
-                                    <li> <a> Cafe </a> </li>
-                                    <li> <a> BBQ </a> </li>
-                                    <li> <a> Japanese </a> </li>
-                                    <li> <a> Middle Eastern </a> </li>
+                                    {% for cuisine in cuisines %}
+                                        <li><a>{{ cuisine }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
 

@@ -137,9 +137,12 @@ def restaurants_page(rest_id=None):
 
         if not search_term: # Not passed in, pull all restaurants from db
             restaurants = db_interface.get_restaurants(c)
-        else: # Search
+        else:  # Search
             restaurants = db_interface.search_restaurants(c, criteria=search_criteria, search_term=search_term)
-        return render_template('restaurants.html', restaurants=restaurants)
+
+        suburbs = set(r.get_suburb() for r in restaurants)
+        cuisines = set(r.get_cuisine() for r in restaurants)
+        return render_template('restaurants.html', restaurants=restaurants, suburbs=suburbs, cuisines=cuisines)
     conn.close()
 
 
