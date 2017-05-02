@@ -13,28 +13,30 @@ Fine Food Finder - Home
                         <h1 id="homeHeading">Fine Food Finder</h1>
                         <hr>
                         <p>Find food that is fine for you</p>
-                        <div class="dropdown">
-                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Search by
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Cuisine</a></li>
-                            <li><a href="#">Price</a></li>
-                            <li><a href="#">Suburb</a></li>
-                          </ul>
+                        <br/>
+                        <form method="POST">
+                            <div class="row">
+                            <div class="col-xs-6 col-xs-offset-3">
+                                <select class="selectpicker form-control" id="search-criteria" name="search-criteria" title="Search by">
+                                    <option value="any">Any</option>
+                                    <option value="name">Name</option>
+                                    <option value="cuisine">Cuisine</option>
+                                    <option value="suburb">Suburb</option>
+                                </select>
+                            </div>
                         </div>
-                        <br>
+                        <br/>
                         <div class="row">
                             <div class="col-xs-6 col-xs-offset-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" aria-label="...">
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                    </div><!-- /btn-group -->
-                                </div><!-- /input-group -->
+                                  <input type="text" name="search-box" class="form-control" placeholder="Search for...">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                  </span>
+                                </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

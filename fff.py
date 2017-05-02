@@ -21,6 +21,8 @@ def home_page():
 	elif request.method == 'POST':
 		search_term = request.form.get('search-box')
 		search_criteria = request.form.get('search-criteria')
+		if not search_criteria:
+			search_criteria = "any"
 
 		return redirect(url_for('restaurants_page', search_term=search_term, search_criteria=search_criteria))
 
