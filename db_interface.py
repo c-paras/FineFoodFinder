@@ -46,6 +46,21 @@ def check_email_exists(c, email):
     return False
 
 
+def confirm(c, user, uuid):
+    """
+    Confirms a user with a uuid. Returns False if user/uuid not found.
+    :param c: sqlite cursor
+    :param user: username to be checked
+    :param uuid: uuid confirmation token
+    :return: True/False
+    """
+    res = c.execute('SELECT * FROM Users WHERE username=? AND status=?', (user, uuid))
+    if res.fetchone():
+        c.execute('UPDATE Users SET status=? WHERE username=?', ('active', user))
+        return True
+    return False
+
+
 def get_restaurants(c):
     results = []
     c.execute("SELECT * FROM Restaurants LIMIT 10") # TODO update limit

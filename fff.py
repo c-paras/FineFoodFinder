@@ -107,21 +107,17 @@ def register():
 
 @app.route('/confirm/<path:user>/<path:uuid>', methods=['GET', 'POST'])
 def confirm(user, uuid):
-    db = sqlite3.connect('data.db')
-    c = db.cursor()
+    conn = sqlite3.connect('data.db')
+    c = conn.cursor()
 
-    # Activate account if link is valid
-    res = c.execute('SELECT * FROM Users WHERE username="%s" AND status="%s"' %(user, uuid))
-    try:
-        res.fetchone()[0]
-        c.execute('UPDATE Users SET status="%s" WHERE username="%s"' %('active', user))
-    except:
-        #invalid link
-        return redirect(url_for('login'))
+    confirmed = db_interface.confirm(c, user, uuid)  # Activate account if link is valid
+    if confirmed:
+        flash('Your account has been activated. Please log in.')
+    else:
+        flash('Invalid confirmation link!')
 
-    db.commit()
-    db.close()
-    flash('You account has been activated. Please log in.')
+    conn.commit()
+    conn.close()
     return redirect(url_for('login'))
 
 
@@ -155,7 +151,6 @@ def send_static_file(path):
 
 # Sends an email to the specified address
 def send_email(to, body, subject):
-
     noreply = 'noreply.fine.food.finder@gmail.com'
     noreply_password = '15fac6da-2980-4586-b9f2-ae521261b391'
 
