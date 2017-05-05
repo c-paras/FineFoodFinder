@@ -1,5 +1,5 @@
 from classes import Restaurant
-
+from fff_helpers import average
 
 def add_user(c, full_name, username, password, email, confirm_id):
     c.execute('''INSERT INTO Users (full_name, username, password, email, status) VALUES (?, ?, ?, ?, ?)''', (full_name, username, password, email, confirm_id))
@@ -136,16 +136,11 @@ def get_restaurant_by_id(c, id):
         )
         return r
 
-
 # Calculates average rating based on all user ratings for id
 def find_average_rating(c, i):
     ratings = c.execute("SELECT rating FROM Ratings WHERE restaurant=?", (i, )).fetchall()
-    sum = 0
-    num = 0
-    for rating in ratings:
-        sum += rating[0]
-        num += 1
-    if num == 0:
-        return 'Unrated'
-    else:
-        return round(sum/num , 1)
+    ratings = [r[0] for r in ratings]
+    avg = average(ratings)
+    if avg == -1:
+        return "Unrated"
+    return avg
