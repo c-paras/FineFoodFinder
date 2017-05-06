@@ -53,7 +53,8 @@ def login():
         conn.close()
         if login_status is True:
             session['logged_in'] = True
-            return render_template('home.html')
+            session['username'] = username
+            return redirect(url_for('home_page'))
 
         if not login_status:
             return render_template('login.html', status='Invalid username or password')
@@ -66,6 +67,7 @@ def login():
 def logout():
     if 'logged_in' in session:
         session.pop('logged_in', None)
+        session.pop('username', None)
         flash('Successfully logged out.')
     else:
         flash('You are not logged in.')
