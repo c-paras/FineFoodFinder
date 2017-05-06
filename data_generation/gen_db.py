@@ -18,7 +18,7 @@ def main():
 	c.execute("PRAGMA foreign_keys = ON")
 
 	#generate and populate database tables
-	tables = ['Ratings', 'Restaurants', 'Users']
+	tables = ['Ratings', 'Restaurants', 'Users', 'Reviews']
 	drop_tables(c, tables)
 	create_tables(c)
 	populate_tables(c)
@@ -71,13 +71,25 @@ def create_tables(c):
 	print 'Creating Ratings table...'
 	c.execute(
 		'''CREATE TABLE Ratings (
-				user			TEXT not null,
+				user		TEXT not null,
 				restaurant	INTEGER not null,
 				rating		FLOAT not null,
 				PRIMARY KEY (user, restaurant), -- one rating per user per restaurant
 				FOREIGN KEY (user) REFERENCES Users(username),
 				FOREIGN KEY (restaurant) REFERENCES Restaurants(id)
 		);''')
+
+	print 'Creating Reviews table...'
+	c.execute(
+		'''CREATE TABLE Reviews (
+                user		TEXT not null,
+                restaurant	INTEGER not null,
+                review		TEXT not null,
+                timestamp	DATE not null,
+                PRIMARY KEY (user, restaurant), -- one review per user per restaurant
+                FOREIGN KEY (user) REFERENCES Users(username),
+                FOREIGN KEY (restaurant) REFERENCES Restaurants(id)
+        );''')
 
 #populates fresh tables with mock data
 def populate_tables(c):
