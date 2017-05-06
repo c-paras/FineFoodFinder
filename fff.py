@@ -135,7 +135,7 @@ def confirm(user, uuid):
 
 
 @app.route('/restaurants', defaults={'rest_id': None}, methods=['GET', 'POST'])
-@app.route('/restaurants/<path:rest_id>')
+@app.route('/restaurants/<path:rest_id>', methods=['GET', 'POST'])
 def restaurants_page(rest_id=None):
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
@@ -143,7 +143,22 @@ def restaurants_page(rest_id=None):
     if rest_id: # Display individual restaurant
         r = db_interface.get_restaurant_by_id(c, id=rest_id)
         if r:
-            return render_template('restaurant.html', restaurant=r)
+            if request.method == 'GET':
+                return render_template('restaurant.html', restaurant=r, logged_in=('username' in session))
+            elif request.method == 'POST':
+                already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
+                if not already_rated:
+                    rating = float(request.form.get('rating'))
+                    add_rating = db_interface.add_rating(c, rest_id, session['username'], rating)
+
+                    if add_rating:
+                        flash('Thanks for rating!')
+                        conn.commit()
+                    else:
+                        flash('Unable to rate!')
+                else:
+                    flash('You have already rated!')
+                return redirect(url_for('restaurants_page', rest_id=rest_id))
     else:
         name = request.args.get('name') or request.form.get('name')
         cuisine = request.args.get('cuisine') or request.form.get('cuisine')

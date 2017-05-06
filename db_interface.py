@@ -137,6 +137,27 @@ def get_restaurant_by_id(c, id):
         return r
 
 
+def add_rating(c, restaurant_id, username, rating):
+    """
+    :param c: sqlite cursor
+    :param restaurant_id: ID of the restaurant being rated
+    :param username: Username of the user adding the rating
+    :param rating: Rating (float)
+    :return: True/False, depending on whether the action succeeded
+    """
+    if check_username_exists(c, username):
+        c.execute("""INSERT INTO Ratings (user, restaurant, rating) VALUES (?, ?, ?)""", (username, restaurant_id, rating))
+        return True
+    return False
+
+
+def already_rated_restaurant(c, restaurant_id, username):
+    res = c.execute("SELECT * FROM Ratings WHERE restaurant=? AND user=?", (restaurant_id, username))
+    if res.fetchone():
+        return True
+    return False
+
+
 # Calculates average rating based on all user ratings for id
 def find_average_rating(c, i):
     ratings = c.execute("SELECT rating FROM Ratings WHERE restaurant=?", (i, )).fetchall()
