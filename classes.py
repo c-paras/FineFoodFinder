@@ -148,3 +148,21 @@ class User():
 
     def set_email(self, email):
         self.email = email
+
+
+class Review():
+    # Constructor
+    def __init__(self, user, review, timestamp):
+        self.user = user
+        self.review = review
+        self.timestamp = timestamp
+
+    # Getters
+    def get_user(self):
+        return self.user
+
+    def get_review(self):
+        return self.review
+
+    def get_timestamp(self):
+        return self.timestamp
