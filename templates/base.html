@@ -17,57 +17,59 @@
     </head>
 
     <body>
-        <div class="row">
-            <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                        </button>
-                        <a class="navbar-brand page-scroll" href="{{ url_for('home_page') }}">FFF</a>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a class="page-scroll" href="{{ url_for('restaurants_page') }}">Restaurants</a>
-                            </li>
-                            <li>
-                              {% if session['logged_in'] != True %}
-                                <a class="page-scroll" href="{{ url_for('register') }}">Register</a>
-                              {% endif %}
-                            </li>
-                            <li>
-                              {% if session['logged_in'] == True %}
-                                <a class="page-scroll" href="{{ url_for('logout') }}">Logout</a>
-                              {% else %}
-                                <a class="page-scroll" href="{{ url_for('login') }}">Login</a>
-                              {% endif %}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                          <p>{{ message }}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
+      <div class="row">
+        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+              </button>
+              <a class="navbar-brand page-scroll" href="{{ url_for('home_page') }}">FFF</a>
             </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <a class="page-scroll" href="{{ url_for('restaurants_page') }}">Restaurants</a>
+                </li>
+                <li>
+                  {% if session['logged_in'] != True %}
+                    <a class="page-scroll" href="{{ url_for('register') }}">Register</a>
+                  {% endif %}
+                </li>
+                <li>
+                  {% if session['logged_in'] == True %}
+                    <a class="page-scroll" href="{{ url_for('logout') }}">Logout</a>
+                  {% else %}
+                    <a class="page-scroll" href="{{ url_for('login') }}">Login</a>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="row flash-message-row">
+        <div class="col-xs-6 col-xs-offset-3">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-info">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
         </div>
+      </div>
 
-        {% block body %}
-        {% endblock %}
+      {% block body %}
+      {% endblock %}
 
-        <!-- jQuery and Bootstrap js -->
-        <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap-select.min.js') }}"></script>
+      <!-- jQuery and Bootstrap js -->
+      <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap-select.min.js') }}"></script>
     </body>
 </html>

@@ -159,7 +159,7 @@ header {
   background-image: url('../img/FFFBackground.jpg');
   text-align: center;
   color: rgb(220,220,220);
-  margin-top: 50px;
+  margin-top: 10px;
 }
 header .header-content {
   position: relative;
@@ -181,7 +181,6 @@ header .header-content .header-content-inner p {
   font-weight: 300;
   color: rgb(220,220,220);
   font-size: 20px;
-  margin-bottom: 50px;
 }
 
 header .header-content .header-content-inner p.login-message {
@@ -447,7 +446,6 @@ body {
   position: relative;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
-  margin-top: 40px;
 }
 
 .restaurants .restaurants-listing {
@@ -540,4 +538,10 @@ img {
   font: inherit;
   /*border is optional*/
   cursor: pointer;
+}
+
+.flash-message-row .alert {
+  /*padding-top: 65px;*/
+  margin-top: 45px;
+  margin-bottom: 0;
 }

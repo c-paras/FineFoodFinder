@@ -54,6 +54,7 @@ def login():
         if login_status is True:
             session['logged_in'] = True
             session['username'] = username
+            flash('Successfully logged in!')
             return redirect(url_for('home_page'))
 
         if not login_status:
