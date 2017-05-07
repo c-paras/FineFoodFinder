@@ -159,7 +159,7 @@ header {
   background-image: url('../img/FFFBackground.jpg');
   text-align: center;
   color: rgb(220,220,220);
-  margin-top: 10px;
+  margin-top: 40px;
 }
 header .header-content {
   position: relative;
@@ -452,7 +452,7 @@ body {
   text-align: left;
   font-size:20px;
   padding: 10px;
-  margin-left: 0;
+  margin-left: 25px;
 }
 .restaurants .restaurants-listing h1{
   font-size: 35px;
@@ -515,10 +515,14 @@ img {
   background-color: #f29d81;
   padding-top: 5%;
   padding-bottom: 5%;
-  padding-left: 20px;
+  padding-left: 20px;	
 }
 
 .collapse li a {
+  color: white;
+}
+
+.collapse .in ul li a {
   color: white;
 }
 
