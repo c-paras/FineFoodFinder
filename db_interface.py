@@ -1,4 +1,4 @@
-from classes import Restaurant
+from classes import Restaurant, Review
 from fff_helpers import average
 
 def add_user(c, full_name, username, password, email, confirm_id):
@@ -181,3 +181,16 @@ def add_review(c, username, restaurant_id, review_body, timestamp):
                   'VALUES (?, ?, ?, ?)', (username, restaurant_id, review_body, timestamp))
         return True
     return False
+
+
+def get_reviews(c, restaurant_id):
+    results = []
+    c.execute("SELECT * FROM Reviews WHERE restaurant=?", (restaurant_id, ))
+    for review in c.fetchall():
+        r = Review(
+            user=review[0],
+            review=review[2],
+            timestamp=review[3]
+        )
+        results.append(r)
+    return results

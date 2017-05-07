@@ -7,64 +7,104 @@ Find Food Finder - {{ restaurant.get_name() }}
 {% block body %}
 <header>
   <div class="restaurants">
-    <br>
-    <div class="col-xs-9 col-xs-offset-2">
-      <div class ="restaurants-listing-box">
-        <div class="restaurants-listing">
-          <h1>{{ restaurant.get_name() }} - {{ restaurant.get_rating() }} rating <br/> </h1>
+    <div class="row">
+      <br/>
+      <div class="col-xs-3 col-xs-offset-1">
+        <div class ="restaurants-listing-box">
+          <div class="restaurants-listing">
+            <h1>{{ restaurant.get_name() }} - {{ restaurant.get_rating() }} rating <br/> </h1>
 
-          <hr align= "left">
-          <a href="{{ url_for('restaurants_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
-            {% if logged_in %}
-              <h2>Rate us</h2>
-              <form method="POST">
-                <fieldset class="rating">
-                  <input type="radio" id="star5" name="rating" value="5" />
-                  <label class = "full" for="star5" title="Amazing - 5 stars"></label>
-                  <input type="radio" id="star4half" name="rating" value="4.5" />
-                  <label class="half" for="star4half" title="4.5 stars"></label>
-                  <input type="radio" id="star4" name="rating" value="4" />
-                  <label class = "full" for="star4" title="Very good - 4 stars"></label>
-                  <input type="radio" id="star3half" name="rating" value="3.5" />
-                  <label class="half" for="star3half" title="3.5 stars"></label>
-                  <input type="radio" id="star3" name="rating" value="3" />
-                  <label class = "full" for="star3" title="Average - 3 stars"></label>
-                  <input type="radio" id="star2half" name="rating" value="2.5" />
-                  <label class="half" for="star2half" title="2.5 stars"></label>
-                  <input type="radio" id="star2" name="rating" value="2" />
-                  <label class = "full" for="star2" title="Below average - 2 stars"></label>
-                  <input type="radio" id="star1half" name="rating" value="1.5" />
-                  <label class="half" for="star1half" title="1.5 stars"></label>
-                  <input type="radio" id="star1" name="rating" value="1" />
-                  <label class = "full" for="star1" title="Not great - 1 star"></label>
-                  <input type="radio" id="starhalf" name="rating" value="0.5" />
-                  <label class="half" for="starhalf" title="0.5 stars"></label>
-                </fieldset>
+            <hr align= "left">
+            <a href="{{ url_for('restaurants_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
+              {% if logged_in %}
+                <h2>Rate us</h2>
+                <form method="POST">
+                  <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label class = "full" for="star5" title="Amazing - 5 stars"></label>
+                    <input type="radio" id="star4half" name="rating" value="4.5" />
+                    <label class="half" for="star4half" title="4.5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label class = "full" for="star4" title="Very good - 4 stars"></label>
+                    <input type="radio" id="star3half" name="rating" value="3.5" />
+                    <label class="half" for="star3half" title="3.5 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label class = "full" for="star3" title="Average - 3 stars"></label>
+                    <input type="radio" id="star2half" name="rating" value="2.5" />
+                    <label class="half" for="star2half" title="2.5 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label class = "full" for="star2" title="Below average - 2 stars"></label>
+                    <input type="radio" id="star1half" name="rating" value="1.5" />
+                    <label class="half" for="star1half" title="1.5 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label class = "full" for="star1" title="Not great - 1 star"></label>
+                    <input type="radio" id="starhalf" name="rating" value="0.5" />
+                    <label class="half" for="starhalf" title="0.5 stars"></label>
+                  </fieldset>
 
-                <input type="submit" value="Submit" class="btn btn-primary">
-              </form>
-              <br>
-            {% endif %}
-            <h2>Address:</h2>
-            {{ restaurant.get_address() }} <br/>
-            <h2>Opening Hours:</h2>
-            <b></b> {{ restaurant.get_hours() }} <br/>
-            <h2>Contact </h2>
-            <b>Owner:</b> {{ restaurant.get_owner() }} <br/>
-            <b>Phone:</b> {{ restaurant.get_phone() }} <br/>
-            <h2>About us:</h2>
-            <b><a href="{{ restaurant.get_website() }}">{{ restaurant.get_website() }}</a> <br/>
-            <b>cuisine:</b> {{ restaurant.get_cuisine() }} <br/>
+                  <input type="submit" value="Submit" class="btn btn-primary">
+                </form>
+                <br>
+              {% endif %}
+          </div>
         </div>
       </div>
-      <div class="col-xs-6">
-        <form method="POST">
-          <div class="form-group">
-            <label for="review-body">Write a review</label>
-            <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
-            <input type="submit" value="Submit" class="btn btn-primary">
+      <div class="col-xs-4">
+        <div class="restaurants-listing">
+          <h2>Cuisine:</h2>
+          {{ restaurant.get_cuisine() }} <br/>
+          <h2>Address:</h2>
+          {{ restaurant.get_address() }} <br/>
+          <h2>Opening Hours:</h2>
+          {{ restaurant.get_hours() }} <br/>
+          <h2>Contact </h2>
+          <b>Owner:</b> {{ restaurant.get_owner() }} <br/>
+          <b>Phone:</b> {{ restaurant.get_phone() }} <br/>
+          <h2>About us:</h2>
+          <b><a href="{{ restaurant.get_website() }}">{{ restaurant.get_website() }}</a></b> <br/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-xs-offset-1">
+        {% if logged_in %}
+          <form method="POST">
+            <div class="form-group">
+              <h2><label for="review-body">Write a review</label></h2>
+              <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
+              <input type="submit" value="Submit" class="btn btn-primary">
+            </div>
+          </form>
+        {% endif %}
+      </div>
+      <div class="col-xs-8">
+        <h2>Reviews</h2>
+        <div id="carousel-reviews" class="carousel slide" data-ride="carousel">
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            {% for i in range(reviews|length) %}
+              {% if i == 0 %}
+                <div class="item active">
+              {% else %}
+                <div class="item">
+              {% endif %}
+                <p>{{ reviews[i].get_review() }}</p>
+                <p>By: {{ reviews[i].get_user() }}</p>
+                <p>Written at: {{ reviews[i].get_timestamp() }}</p>
+              </div>
+            {% endfor %}
           </div>
-        </form>
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

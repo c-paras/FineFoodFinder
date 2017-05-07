@@ -112,6 +112,7 @@ class Restaurant():
     def set_image(self, image):
         self.image = image
 
+
 class User():
     # Constructor
     def __init__(self, username, password, email):
@@ -156,6 +157,14 @@ class Review():
         self.user = user
         self.review = review
         self.timestamp = timestamp
+
+    def __repr__(self):
+        output = 'Review {\n' + \
+            '\tuser: {}\n'.format(self.user) + \
+            '\treview: {}\n'.format(self.review) + \
+            '\ttimestamp: {}\n'.format(self.timestamp) + \
+            '}'
+        return output
 
     # Getters
     def get_user(self):
