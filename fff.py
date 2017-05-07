@@ -3,7 +3,8 @@
 # SENG2011 17s1 Project
 # Implements a prototype for Fine Food Finder
 
-import os, re, sqlite3, db_interface, fff_helpers, uuid
+import os, re, sqlite3, uuid, datetime
+import fff_helpers, db_interface
 from flask import *
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -147,24 +148,34 @@ def restaurants_page(rest_id=None):
             if request.method == 'GET':
                 return render_template('restaurant.html', restaurant=r, logged_in=('username' in session))
             elif request.method == 'POST':
-                already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
-                rating = float(request.form.get('rating'))
-                if not already_rated:
-                    add_rating = db_interface.add_rating(c, rest_id, session['username'], rating)
+                if request.form.get('rating'):  # Rating
+                    already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
+                    rating = float(request.form.get('rating'))
+                    if not already_rated:
+                        add_rating = db_interface.add_rating(c, rest_id, session['username'], rating)
 
-                    if add_rating:
-                        flash('Thanks for rating!')
+                        if add_rating:
+                            flash('Thanks for rating!')
+                            conn.commit()
+                        else:
+                            flash('Unable to rate!')
+                    else:
+                        update_rating = db_interface.update_rating(c, rest_id, session['username'], rating)
+                        if update_rating:
+                            flash('Rating updated!')
+                            conn.commit()
+                        else:
+                            flash('Unable to rate!')
+                    return redirect(url_for('restaurants_page', rest_id=rest_id))
+                elif request.form.get('review-body'):  # Submit review
+                    review_body = request.form.get('review-body')
+                    add_review = db_interface.add_review(c, session['username'], rest_id, review_body, datetime.datetime.now())
+                    if add_review:
+                        flash('Review added!')
                         conn.commit()
                     else:
-                        flash('Unable to rate!')
-                else:
-                    update_rating = db_interface.update_rating(c, rest_id, session['username'], rating)
-                    if update_rating:
-                        flash('Rating updated!')
-                        conn.commit()
-                    else:
-                        flash('Unable to rate!')
-                return redirect(url_for('restaurants_page', rest_id=rest_id))
+                        flash('Unable to add review!')
+                    return redirect(url_for('restaurants_page', rest_id=rest_id))
     else:
         name = request.args.get('name') or request.form.get('name')
         cuisine = request.args.get('cuisine') or request.form.get('cuisine')

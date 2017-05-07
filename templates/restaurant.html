@@ -15,7 +15,6 @@ Find Food Finder - {{ restaurant.get_name() }}
 
           <hr align= "left">
           <a href="{{ url_for('restaurants_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
-            <p>
             {% if logged_in %}
               <h2>Rate us</h2>
               <form method="POST">
@@ -56,9 +55,16 @@ Find Food Finder - {{ restaurant.get_name() }}
             <h2>About us:</h2>
             <b><a href="{{ restaurant.get_website() }}">{{ restaurant.get_website() }}</a> <br/>
             <b>cuisine:</b> {{ restaurant.get_cuisine() }} <br/>
-
-          </p>
         </div>
+      </div>
+      <div class="col-xs-6">
+        <form method="POST">
+          <div class="form-group">
+            <label for="review-body">Write a review</label>
+            <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
+            <input type="submit" value="Submit" class="btn btn-primary">
+          </div>
+        </form>
       </div>
     </div>
   </div>

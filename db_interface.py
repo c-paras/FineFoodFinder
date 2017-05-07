@@ -173,3 +173,11 @@ def already_rated_restaurant(c, restaurant_id, username):
     if res.fetchone():
         return True
     return False
+
+
+def add_review(c, username, restaurant_id, review_body, timestamp):
+    if check_username_exists(c, username):
+        c.execute('INSERT INTO Reviews(user, restaurant, review, timestamp) '
+                  'VALUES (?, ?, ?, ?)', (username, restaurant_id, review_body, timestamp))
+        return True
+    return False
