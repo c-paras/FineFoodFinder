@@ -148,8 +148,8 @@ def restaurants_page(rest_id=None):
                 return render_template('restaurant.html', restaurant=r, logged_in=('username' in session))
             elif request.method == 'POST':
                 already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
+                rating = float(request.form.get('rating'))
                 if not already_rated:
-                    rating = float(request.form.get('rating'))
                     add_rating = db_interface.add_rating(c, rest_id, session['username'], rating)
 
                     if add_rating:
@@ -158,7 +158,12 @@ def restaurants_page(rest_id=None):
                     else:
                         flash('Unable to rate!')
                 else:
-                    flash('You have already rated!')
+                    update_rating = db_interface.update_rating(c, rest_id, session['username'], rating)
+                    if update_rating:
+                        flash('Rating updated!')
+                        conn.commit()
+                    else:
+                        flash('Unable to rate!')
                 return redirect(url_for('restaurants_page', rest_id=rest_id))
     else:
         name = request.args.get('name') or request.form.get('name')

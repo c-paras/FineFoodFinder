@@ -161,6 +161,13 @@ def add_rating(c, restaurant_id, username, rating):
     return False
 
 
+def update_rating(c, restaurant_id, username, rating):
+    if check_username_exists(c, username):
+        c.execute("UPDATE Ratings SET rating=? WHERE user = ? AND restaurant=?", (rating, username, restaurant_id))
+        return True
+    return False
+
+
 def already_rated_restaurant(c, restaurant_id, username):
     res = c.execute("SELECT * FROM Ratings WHERE restaurant=? AND user=?", (restaurant_id, username))
     if res.fetchone():
