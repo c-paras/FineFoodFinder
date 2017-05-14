@@ -11,10 +11,10 @@ Find Food Finder - Restaurants
 		<div class="row">
 			<!-- 1.0 Filter Sidebar-->
 			<div class="col-xs-2 sidebar">
-			<body data-spy="scroll" data-target=".navbar" data-offset="50">
+				<body data-spy="scroll" data-target=".navbar" data-offset="50">
 				<div class="row">
 					<h4>Search</h4>
-          <form method="POST">
+					<form method="POST">
 						<select class="selectpicker form-control" id="search-criteria" name="search-criteria" title="Search by">
 							<option value="any">Any</option>
 							<option value="name">Name</option>
@@ -22,92 +22,92 @@ Find Food Finder - Restaurants
 							<option value="suburb">Suburb</option>
 						</select>
 
-            <div class="input-group">
-              <input type="text" name="search-box" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-              </span>
-					  </div>
-          </form>
+					<div class="input-group">
+						<input type="text" name="search-box" class="form-control" placeholder="Search for...">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+						</span>
+					</div>
+					</form>
 				</div>
-        <div class="row">
-          <script> {# JS for sliders #}
-            function updateCostLabel(val) {
-              document.getElementById('cost-input-text').value = val;
-            }
-            function updateRatingLabel(val) {
-              document.getElementById('rating-input-text').value = val;
-            }
-            function submitForm() {
-              document.getElementById("sidebar-filters").submit();
-            }
-            function validate(evt) {
-              var theEvent = evt || window.event;
-              var key = theEvent.keyCode || theEvent.which;
-              key = String.fromCharCode( key );
-              var regex = /[0-9]|\./;
-              if( !regex.test(key) ) {
-                theEvent.returnValue = false;
-                if(theEvent.preventDefault) theEvent.preventDefault();
-              }
-            }
-          </script>
-          <h4>Filter by</h4>
-          <div class="col-xs-12">
-            <form id="sidebar-filters" method="POST" class="sidebar-form">
-              <div class="btn-group-vertical btn-group-lg" role="group">
-                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
-                <div id="filters-suburb" class="collapse in">
-                  <ul>
-                    {% for s in suburbs %}
-                      {% if s == suburb %}
-                      <b><u>
-                      {% endif %}
-                      <li><input class="sidebar-selection" type="submit" name="suburb" value="{{ s }}"></li>
-                      {% if s == suburb %}
-                      </u></b>
-                      {% endif %}
-                    {% endfor %}
-                  </ul>
-                </div>
+				<div class="row">
+					<script> {# JS for sliders #}
+						function updateCostLabel(val) {
+						  document.getElementById('cost-input-text').value = val;
+						}
+						function updateRatingLabel(val) {
+						  document.getElementById('rating-input-text').value = val;
+						}
+						function submitForm() {
+						  document.getElementById("sidebar-filters").submit();
+						}
+						function validate(evt) {
+						  var theEvent = evt || window.event;
+						  var key = theEvent.keyCode || theEvent.which;
+						  key = String.fromCharCode( key );
+						  var regex = /[0-9]|\./;
+						  if( !regex.test(key) ) {
+							theEvent.returnValue = false;
+							if(theEvent.preventDefault) theEvent.preventDefault();
+						  }
+						}
+					</script>
+					<h4>Filter by</h4>
+					<div class="col-xs-12">
+						<form id="sidebar-filters" method="POST" class="sidebar-form">
+						<div class="btn-group-vertical btn-group-lg" role="group">
+							<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
+							<div id="filters-suburb" class="collapse in">
+								<ul>
+								{% for s in suburbs %}
+									{% if s == suburb %}
+									<b><u>
+									{% endif %}
+									<li><input class="sidebar-selection" type="submit" name="suburb" value="{{ s }}"></li>
+									{% if s == suburb %}
+									</u></b>
+									{% endif %}
+								{% endfor %}
+								</ul>
+							</div>
+							
+							<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
+							<div id="filters-cuisine" class="collapse in">
+								<ul>
+								{% for c in cuisines %}
+									{% if c == cuisine %}
+									<b><u>
+									{% endif %}
+									<li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ c }}"></li>
+									{% if c == cuisine %}
+									</u></b>
+									{% endif %}
+								{% endfor %}
+								</ul>
+							</div>
+							
+							<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cost">Max Cost</button>
+							<div id="filters-cost" class="collapse in">
+								<div class="input-group">
+									<input type="range" name="cost-input-range" id="cost-input-range" value="{{ max_cost_filter }}" min="0" max="{{ largest_cost }}" step="1" oninput="updateCostLabel(this.value)" onmouseup="submitForm()">
+									<input type="text" class="form-control" id="cost-input-text" name="cost-input-text" value="{{ max_cost_filter }}" onkeypress="validate(event)">
+								</div>
+							</div>
 
-                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
-                <div id="filters-cuisine" class="collapse in">
-                  <ul>
-                    {% for c in cuisines %}
-                      {% if c == cuisine %}
-                      <b><u>
-                      {% endif %}
-                      <li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ c }}"></li>
-                      {% if c == cuisine %}
-                      </u></b>
-                      {% endif %}
-                    {% endfor %}
-                  </ul>
-                </div>
-
-                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cost">Max Cost</button>
-                <div id="filters-cost" class="collapse in">
-                  <div class="input-group">
-                    <input type="range" name="cost-input-range" id="cost-input-range" value="{{ max_cost_filter }}" min="0" max="{{ largest_cost }}" step="1" oninput="updateCostLabel(this.value)" onmouseup="submitForm()">
-                    <input type="text" class="form-control" id="cost-input-text" name="cost-input-text" value="{{ max_cost_filter }}" onkeypress="validate(event)">
-                  </div>
-                </div>
-
-                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-rating">Min Rating</button>
-                <div id="filters-rating" class="collapse in">
-                  <div class="input-group">
-                    <input type="range" name="rating-input-range" id="rating-input-range" value="{{ min_rating_filter }}" min="0" max="5" step="0.1" oninput="updateRatingLabel(this.value)" onmouseup="submitForm()">
-                    <input type="text" class="form-control" id="rating-input-text" name="rating-input-text" value="{{ min_rating_filter }}" onkeypress="validate(event)">
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
+							<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-rating">Min Rating</button>
+							<div id="filters-rating" class="collapse in">
+								<div class="input-group">
+									<input type="range" name="rating-input-range" id="rating-input-range" value="{{ min_rating_filter }}" min="0" max="5" step="0.1" oninput="updateRatingLabel(this.value)" onmouseup="submitForm()">
+									<input type="text" class="form-control" id="rating-input-text" name="rating-input-text" value="{{ min_rating_filter }}" onkeypress="validate(event)">
+								</div>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
 			</div> 
 		
-			<!-- 1.1 Restaurant Listings -->
+			<!-- 2.0 Restaurant Listings -->
 			<div class="col-xs-9 col-xs-offset-2">
 				<div class="restaurants-listing">
 					<div class="row">
@@ -122,13 +122,13 @@ Find Food Finder - Restaurants
 						{% for r in restaurants %}
 						<div class="restaurants-listing-box">
 							<div class="row">
-							<h2><a href="{{ url_for('restaurant_page', rest_id = r.get_id()) }}">{{ r.get_name() }}</a></h2>
+								<h2><a href="{{ url_for('restaurant_page', rest_id = r.get_id()) }}">{{ r.get_name() }}</a></h2>
 							
-								<!-- 2.0 Image Part -->
+								<!-- 2.1 Image Part -->
 								<div class="col-xs-4">
 									<a href="{{ url_for('restaurant_page', rest_id = r.get_id()) }}"><img src="{{ r.get_image() }}" alt="Restaurant 1" height ="220" width="250"></a>
 								</div>
-								<!-- 2.1 Restaurant Details Part -->
+								<!-- 2.2 Restaurant Details Part -->
 								<div class="col-xs-8">
 									<p>
                               {% if r.get_rating() == 'Unrated' %}
