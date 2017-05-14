@@ -193,10 +193,10 @@ def restaurants_page(rest_id=None):
 	conn.close()
 
 #submit new restaurant page
-@app.route('/submit-restuarant', methods=['GET', 'POST'])
+@app.route('/submit_restuarant', methods=['GET', 'POST'])
 def submit_restaurant():
 	if request.method == 'GET':
-		return render_template('submit-restaurant.html', status='')
+		return render_template('submit_restaurant.html', status='')
 	else:
 #		restaurant_id = TODO
 		name = request.form.get('name')
@@ -213,10 +213,10 @@ def submit_restaurant():
 
 		if not (name and suburb and address and postcode and cusine and cost):
 			err = 'Fields marked with (*) are required.'
-			return render_template('submit-restaurant.html', status=err)
+			return render_template('submit_restaurant.html', status=err)
 		elif not re.match(r'^[0-9]{4}$', postcode):
 			err = ''
-			return render_template('submit-restaurant.html', status=err)
+			return render_template('submit_restaurant.html', status=err)
 			#TODO: more validation...
 		else:
 			conn = sqlite3.connect('data.db')
@@ -230,7 +230,7 @@ def submit_restaurant():
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
 			conn.commit()
 			conn.close()
-			return redirect(url_for('home'))
+			return redirect(url_for('home_page'))
 
 # Serve static files from static/
 @app.route('/static/<path:path>')
