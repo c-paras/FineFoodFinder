@@ -192,6 +192,46 @@ def restaurants_page(rest_id=None):
 			   suburbs=suburbs, cuisines=cuisines)
 	conn.close()
 
+#submit new restaurant page
+@app.route('/submit-restuarant', methods=['GET', 'POST'])
+def submit_restaurant():
+	if request.method == 'GET':
+		return render_template('submit-restaurant.html', status='')
+	else:
+#		restaurant_id = TODO
+		name = request.form.get('name')
+		suburb = request.form.get('suburb')
+		address = request.form.get('address')
+		postcode = request.form.get('postcode')
+		phone = request.form.get('phone').replace('(', ''),replace(')', '')
+		hours = request.form.get('hours')
+		cusine = request.form.get('cuisine')
+#		owner = user_logged_in TODO
+		website = request.form.get('website')
+		cost = request.form.get('cost')
+		image = request.form.get('image')
+
+		if not (name and suburb and address and postcode and cusine and cost):
+			err = 'Fields marked with (*) are required.'
+			return render_template('submit-restaurant.html', status=err)
+		elif not re.match(r'^[0-9]{4}$', postcode):
+			err = ''
+			return render_template('submit-restaurant.html', status=err)
+			#TODO: more validation...
+		else:
+			conn = sqlite3.connect('data.db')
+			c = conn.cursor()
+
+			#TODO: deal with empty fields - default data
+			flash('Your restaurant has been added.')
+			data = (restaurant_id, name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
+			c.execute(
+				'''INSERT INTO Users (restaurant_id, name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
+			conn.commit()
+			conn.close()
+			return redirect(url_for('home'))
+
 # Serve static files from static/
 @app.route('/static/<path:path>')
 def send_static_file(path):

@@ -62,7 +62,7 @@ def create_tables(c):
 				cuisine	TEXT not null,
 				owner		TEXT,
 				website	TEXT check (website like 'http%://%'),
-				cost		FLOAT, -- average cost per person
+				cost		FLOAT not null, -- average cost per person
 				image		TEXT check (image like 'http%://%'),
 				PRIMARY KEY (id),
 				FOREIGN KEY (owner) REFERENCES Users(username)
@@ -82,14 +82,14 @@ def create_tables(c):
 	print 'Creating Reviews table...'
 	c.execute(
 		'''CREATE TABLE Reviews (
-                user			TEXT not null,
-                restaurant	INTEGER not null,
-                review		TEXT not null,
-                timestamp	DATE not null,
-                PRIMARY KEY (user, restaurant), -- one review per user per restaurant
-                FOREIGN KEY (user) REFERENCES Users(username),
-                FOREIGN KEY (restaurant) REFERENCES Restaurants(id)
-        );''')
+				user			TEXT not null,
+				restaurant	INTEGER not null,
+				review		TEXT not null,
+				timestamp	DATE not null,
+				PRIMARY KEY (user, restaurant), -- one review per user per restaurant
+				FOREIGN KEY (user) REFERENCES Users(username),
+				FOREIGN KEY (restaurant) REFERENCES Restaurants(id)
+	);''')
 
 #populates fresh tables with mock data
 def populate_tables(c):
