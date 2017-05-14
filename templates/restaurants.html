@@ -59,8 +59,14 @@ Find Food Finder - Restaurants
                 <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
                 <div id="filters-suburb" class="collapse in">
                   <ul>
-                    {% for suburb in suburbs %}
-                      <li><input class="sidebar-selection" type="submit" name="suburb" value="{{ suburb }}"></li>
+                    {% for s in suburbs %}
+                      {% if s == suburb %}
+                      <b><u>
+                      {% endif %}
+                      <li><input class="sidebar-selection" type="submit" name="suburb" value="{{ s }}"></li>
+                      {% if s == suburb %}
+                      </u></b>
+                      {% endif %}
                     {% endfor %}
                   </ul>
                 </div>
@@ -68,8 +74,14 @@ Find Food Finder - Restaurants
                 <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
                 <div id="filters-cuisine" class="collapse in">
                   <ul>
-                    {% for cuisine in cuisines %}
-                      <li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ cuisine }}"></li>
+                    {% for c in cuisines %}
+                      {% if c == cuisine %}
+                      <b><u>
+                      {% endif %}
+                      <li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ c }}"></li>
+                      {% if c == cuisine %}
+                      </u></b>
+                      {% endif %}
                     {% endfor %}
                   </ul>
                 </div>
