@@ -446,6 +446,7 @@ body {
   position: relative;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  margin-top: 50px;
 }
 
 .restaurants .restaurants-listing {
