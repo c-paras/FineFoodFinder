@@ -38,7 +38,7 @@
                   {% endif %}
                 </li>
                 <li>
-                  {% if session['logged_in'] != True %}
+                  {% if session['logged_in'] == True %}
                     <a class="page-scroll" href="{{ url_for('submit_restaurant') }}">Add New Restaurant</a>
                   {% endif %}
                 </li>

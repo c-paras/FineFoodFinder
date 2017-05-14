@@ -13,7 +13,11 @@ Find Food Finder - {{ restaurant.get_name() }}
         <div class ="restaurants-listing-box">
           <div class="restaurants-listing">
             <h1>{{ restaurant.get_name() }} </h1>
-            <b>Rating: {{ restaurant.get_rating() }}/5 </b>
+            {% if restaurant.get_rating() == 'Unrated' %}
+				  <b> {{ restaurant.get_rating() }} </b> <br>
+            {% else %}
+				  <b> Rating: {{ restaurant.get_rating() }}/5 </b> <br>
+            {% endif %}
             <hr align= "left">
             <a href="{{ url_for('restaurants_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
               {% if logged_in %}
@@ -94,8 +98,8 @@ Find Food Finder - {{ restaurant.get_name() }}
                   <div class="item">
                 {% endif %}
                   <p>{{ reviews[i].get_review() }}</p>
-                  <p>By: {{ reviews[i].get_user() }}</p>
-                  <p>Written at: {{ reviews[i].get_timestamp() }}</p>
+                  <p>Reviewer: {{ reviews[i].get_user() }}</p>
+                  <p>Posted at: {{ reviews[i].get_timestamp() }}</p>
                   <br/>
                   <br/>
                 </div>

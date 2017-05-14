@@ -198,36 +198,53 @@ def submit_restaurant():
 	if request.method == 'GET':
 		return render_template('submit_restaurant.html', status='')
 	else:
-#		restaurant_id = TODO
 		name = request.form.get('name')
 		suburb = request.form.get('suburb')
 		address = request.form.get('address')
 		postcode = request.form.get('postcode')
-		phone = request.form.get('phone').replace('(', ''),replace(')', '')
+		phone = request.form.get('phone')
 		hours = request.form.get('hours')
-		cusine = request.form.get('cuisine')
-#		owner = user_logged_in TODO
+		cuisine = request.form.get('cuisine')
+		owner = session['username']
 		website = request.form.get('website')
 		cost = request.form.get('cost')
 		image = request.form.get('image')
 
-		if not (name and suburb and address and postcode and cusine and cost):
+		if not (name and suburb and address and postcode and cuisine and website and cost):
 			err = 'Fields marked with (*) are required.'
 			return render_template('submit_restaurant.html', status=err)
 		elif not re.match(r'^[0-9]{4}$', postcode):
-			err = ''
+			err = 'Postcode must contain 4 digits.'
 			return render_template('submit_restaurant.html', status=err)
-			#TODO: more validation...
+		elif not re.match(r'^https?://.+$', website):
+			err = 'Please provide a valid URL for your restaurant.'
+			return render_template('submit_restaurant.html', status=err)
+		elif image and not re.match(r'^https?://.+$', image):
+			err = 'Please provide a valid URL for a photo.'
+			return render_template('submit_restaurant.html', status=err)
+		elif not re.match(r'^([0-9]+\.)?[0-9]+$', cost):
+			err = 'The cost you entered is not valid.'
+			return render_template('submit_restaurant.html', status=err)
+		elif phone and not (re.match(r'^[0-9\ \-\)\(]+$', phone) and len(re.sub('[^0-9]', '', phone)) >= 8):
+			err = 'The phone number you entered is not valid.'
+			return render_template('submit_restaurant.html', status=err)
 		else:
 			conn = sqlite3.connect('data.db')
 			c = conn.cursor()
 
-			#TODO: deal with empty fields - default data
+			#use default data for unprovided fields
+			if not image: image = 'http://nyburgerbar.com/wp-content/gallery/imagegallery/nyburger1.jpg'
+			if hours == None: hours = 'Not provided'
+			if phone == None: phone = 'Not provided'
+			phone = phone.replace('(', '').replace(')', '').replace('  ', ' ').replace('--', '-')
+			phone = re.sub('[^0-9]+$', '', phone)
+			phone = re.sub('^[^0-9]+', '', phone)
+
 			flash('Your restaurant has been added.')
-			data = (restaurant_id, name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
+			data = (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
 			c.execute(
-				'''INSERT INTO Users (restaurant_id, name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
+				'''INSERT INTO Restaurants (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
 			conn.commit()
 			conn.close()
 			return redirect(url_for('home_page'))

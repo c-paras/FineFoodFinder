@@ -63,7 +63,7 @@ def confirm(c, user, uuid):
 
 def get_restaurants(c):
     results = []
-    c.execute("SELECT * FROM Restaurants LIMIT 10") # TODO update limit
+    c.execute("SELECT * FROM Restaurants LIMIT 100") # TODO update limit
     for restaurant in c.fetchall():
         r = Restaurant(
             id=restaurant[0],

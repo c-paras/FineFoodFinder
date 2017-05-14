@@ -61,9 +61,9 @@ def create_tables(c):
 				hours		TEXT, -- business hours; varying format
 				cuisine	TEXT not null,
 				owner		TEXT,
-				website	TEXT check (website like 'http%://%'),
+				website	TEXT not null check (website like 'http%://_%'),
 				cost		FLOAT not null, -- average cost per person
-				image		TEXT check (image like 'http%://%'),
+				image		TEXT check (image like 'http%://_%'),
 				PRIMARY KEY (id),
 				FOREIGN KEY (owner) REFERENCES Users(username)
 			);''')
@@ -163,7 +163,7 @@ def populate_restaurants(c):
 			suburb = HTMLParser().unescape(suburb)
 			phone = r[2].strip().replace('(', '').replace(')', '')
 			if re.match('Not available', phone):
-				phone = 'Not available'
+				phone = 'Not provided'
 			hours = r[3].strip()
 			hours = re.sub(r'\s*,\s*', ', ', hours)
 			cuisine = r[4].strip()

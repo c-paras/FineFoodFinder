@@ -108,8 +108,12 @@ Find Food Finder - Restaurants
 								</div>
 								<!-- 2.1 Restaurant Details Part -->
 								<div class="col-xs-8">
-									<p> 
-										<b> Rating: {{ r.get_rating() }}/5 </b> <br>
+									<p>
+                              {% if r.get_rating() == 'Unrated' %}
+										  <b> {{ r.get_rating() }} </b> <br>
+                              {% else %}
+									     <b> Rating: {{ r.get_rating() }}/5 </b> <br>
+                              {% endif %}
 										<font color=#e85929> {{ r.get_cuisine() }} </font><br>
 										<i> This restaurant gives fine food for you. </i>
 									</p>
