@@ -6,9 +6,6 @@
 import os, re, sqlite3, uuid, datetime
 import fff_helpers, db_interface
 from flask import *
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import smtplib
 import threading
 
 # Create new flask app
@@ -114,7 +111,7 @@ def register():
             confirm_id = str(uuid.uuid4())
             link = os.path.join(request.url_root, 'confirm', user, confirm_id)
             body = 'Please visit the following link to confirm your FFF account: ' + link
-            threading.Thread(target=send_email, args=(email, body, 'Fine Food Finder Account Confirmation')).start()
+            threading.Thread(target=fff_helpers.send_email, args=(email, body, 'Fine Food Finder Account Confirmation')).start()
             flash('Confirmation email sent to {}.'.format(email))
             db_interface.add_user(c, full_name=full_name, username=user, password=pass1, email=email,
                                   confirm_id=confirm_id)
@@ -248,26 +245,6 @@ def submit_restaurant():
 @app.route('/static/<path:path>')
 def send_static_file(path):
     return send_from_directory('static', path)
-
-
-# Sends an email to the specified address
-def send_email(to, body, subject):
-    noreply = 'noreply.fine.food.finder@gmail.com'
-    noreply_password = '15fac6da-2980-4586-b9f2-ae521261b391'
-
-    # Construct email
-    msg = MIMEMultipart()
-    msg['From'] = noreply
-    msg['To'] = to
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
-
-    # Send the email from gmail account using smtp
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(noreply, noreply_password)
-    server.sendmail(noreply, to, msg.as_string())
-    server.quit()
 
 
 if __name__ == '__main__':
