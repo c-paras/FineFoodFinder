@@ -89,7 +89,7 @@ Find Food Finder - Restaurants
                 <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cost">Max Cost</button>
                 <div id="filters-cost" class="collapse in">
                   <div class="input-group">
-                    <input type="range" name="cost-input-range" id="cost-input-range" value="{{ max_cost_filter }}" min="0" max="{{ largest_cost }}" oninput="updateCostLabel(this.value)" onmouseup="submitForm()">
+                    <input type="range" name="cost-input-range" id="cost-input-range" value="{{ max_cost_filter }}" min="0" max="{{ largest_cost }}" step="1" oninput="updateCostLabel(this.value)" onmouseup="submitForm()">
                     <input type="text" class="form-control" id="cost-input-text" name="cost-input-text" value="{{ max_cost_filter }}" onkeypress="validate(event)">
                   </div>
                 </div>
