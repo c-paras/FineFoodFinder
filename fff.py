@@ -209,7 +209,7 @@ def restaurants_page():
             suburb = search_term
 
         return redirect(url_for('restaurants_page', any=any, name=name, cuisine=cuisine, suburb=suburb))
-    elif request.form.get('names') or request.form.get('cuisine') or request.form.get('suburb') or request.form.get('any'):  # Clicked on a filter
+    elif request.form.get('name') or request.form.get('cuisine') or request.form.get('suburb') or request.form.get('any') or request.form.get('cost-input-range'):  # Clicked on a filter
         if request.args.get('name') == request.form.get('name'):  # "Uncheck" name
             name = None
         else:
@@ -224,19 +224,28 @@ def restaurants_page():
             suburb = None
         else:
             suburb = request.args.get('suburb') or request.form.get('suburb')
-
+        
         any = request.args.get('any') or request.form.get('any')
-        return redirect(url_for('restaurants_page', name=name, cuisine=cuisine, suburb=suburb, any=any))
+        max_cost = request.form.get('cost-input-range')
+        print("MAX_COST:", max_cost)
+        return redirect(url_for('restaurants_page', name=name, cuisine=cuisine, suburb=suburb, any=any, max_cost=max_cost))
     else:  # Display search results
         name = request.args.get('name')
         cuisine = request.args.get('cuisine')
         suburb = request.args.get('suburb')
+        max_cost_filter = request.args.get('max_cost')
         any = request.args.get('any')
 
         restaurants = db_interface.get_restaurants(c)
-        if name or cuisine or suburb or any:  # Search
-            print("FILTERS:", name, cuisine, suburb, any)
-            restaurants = fff_helpers.filter_restaurants(restaurants, name=name, cuisine=cuisine, cost="",
+        largest_cost = 0
+        if restaurants:
+            largest_cost = max(r.get_cost() for r in restaurants)
+
+        if not max_cost_filter:  # No max_cost_filter specified, use default largest cost
+            max_cost_filter = largest_cost
+
+        if name or cuisine or suburb or max_cost_filter or any:  # Search
+            restaurants = fff_helpers.filter_restaurants(restaurants, name=name, cuisine=cuisine, max_cost=max_cost_filter,
                                                          suburb=suburb, rating="", any_field=any)
 
         suburbs = set(r.get_suburb() for r in restaurants)
@@ -244,7 +253,7 @@ def restaurants_page():
         conn.close()
 
         return render_template('restaurants.html', name=name, cuisine=cuisine, suburb=suburb, restaurants=restaurants,
-                           suburbs=suburbs, cuisines=cuisines)
+                           suburbs=suburbs, cuisines=cuisines, largest_cost=largest_cost, max_cost_filter=max_cost_filter)
 
 
 # Submit new restaurant page

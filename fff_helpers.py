@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 import smtplib
 
 
-def filter_restaurants(restaurants, name="", cuisine="", cost="", suburb="", rating="", any_field=""):
+def filter_restaurants(restaurants, name="", cuisine="", max_cost="", suburb="", rating="", any_field=""):
     results = []
     for r in restaurants:
         # TODO suburb_search and rating_search:
@@ -14,6 +14,8 @@ def filter_restaurants(restaurants, name="", cuisine="", cost="", suburb="", rat
             satisfies = satisfies and cuisine.lower() in r.get_cuisine().lower()
         if suburb:
             satisfies = satisfies and suburb.lower() in r.get_suburb().lower()
+        if max_cost:
+            satisfies = satisfies and int(max_cost) > r.get_cost()
 
         if any_field:
             search_all_fields = [r.get_name(), r.get_cuisine(), r.get_suburb()]
