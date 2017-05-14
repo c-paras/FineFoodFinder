@@ -102,8 +102,8 @@ Find Food Finder - {{ restaurant.get_name() }}
                   <div class="item">
                 {% endif %}
                   <p>{{ reviews[i].get_review() }}</p>
-                  <p>Reviewer: {{ reviews[i].get_user() }}</p>
-                  <p>Posted at: {{ reviews[i].get_timestamp() }}</p>
+                  <p>By: {{ reviews[i].get_user() }}</p>
+                  <p>Written at: {{ reviews[i].get_timestamp().strftime('%a %d %b %Y %I:%M %p') }}</p>
                   <br/>
                   <br/>
                 </div>

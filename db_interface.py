@@ -1,5 +1,7 @@
+import datetime
 from classes import Restaurant, Review
 from fff_helpers import average
+
 
 def add_user(c, full_name, username, password, email, confirm_id):
     c.execute('''INSERT INTO Users (full_name, username, password, email, status) VALUES (?, ?, ?, ?, ?)''', (full_name, username, password, email, confirm_id))
@@ -193,11 +195,12 @@ def add_review(c, username, restaurant_id, review_body, timestamp):
 def get_reviews(c, restaurant_id):
     results = []
     c.execute("SELECT * FROM Reviews WHERE restaurant=?", (restaurant_id, ))
+
     for review in c.fetchall():
         r = Review(
             user=review[0],
             review=review[2],
-            timestamp=review[3]
+            timestamp=datetime.datetime.strptime(review[3], "%Y-%m-%d %H:%M:%S.%f")
         )
         results.append(r)
     return results
