@@ -18,7 +18,7 @@ def main():
 	c.execute("PRAGMA foreign_keys = ON")
 
 	#generate and populate database tables
-	tables = ['Ratings', 'Restaurants', 'Users', 'Reviews']
+	tables = ['Reviews', 'Ratings', 'Restaurants', 'Users']
 	drop_tables(c, tables)
 	create_tables(c)
 	populate_tables(c)
@@ -71,7 +71,7 @@ def create_tables(c):
 	print 'Creating Ratings table...'
 	c.execute(
 		'''CREATE TABLE Ratings (
-				user		TEXT not null,
+				user			TEXT not null,
 				restaurant	INTEGER not null,
 				rating		FLOAT not null,
 				PRIMARY KEY (user, restaurant), -- one rating per user per restaurant
@@ -82,7 +82,7 @@ def create_tables(c):
 	print 'Creating Reviews table...'
 	c.execute(
 		'''CREATE TABLE Reviews (
-                user		TEXT not null,
+                user			TEXT not null,
                 restaurant	INTEGER not null,
                 review		TEXT not null,
                 timestamp	DATE not null,
@@ -233,8 +233,10 @@ def populate_ratings(c):
 		except:
 			pass #skip this since only one rating per user per restaurant
 
+#populates reviews table
 def populate_reviews(c):
 	print 'Populating Reviews table...'
+
 	users = c.execute('SELECT username FROM Users').fetchall()
 	num_users = c.execute('SELECT COUNT(*) FROM Users').fetchone()[0]
 	restaurants = c.execute('SELECT id FROM Restaurants').fetchall()
@@ -246,8 +248,8 @@ def populate_reviews(c):
 		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I would not recommend this place. ']
 	}
 
-	# Add 1000 random reviews by 1000 random users to 1000 random restaurants
-	# Assumes there is enough data in users and restaurant tables
+	#add 1000 random reviews by 1000 random users to 1000 random restaurants
+	#assumes there is enough data in users and restaurants tables
 	for i in range(1000):
 		user = users[random.randint(0, num_users - 1)][0]
 		restaurant = restaurants[random.randint(0, num_restaurants - 1)][0]
@@ -261,8 +263,7 @@ def populate_reviews(c):
 		try:
 			c.execute('''INSERT INTO Reviews (user, restaurant, review, timestamp) VALUES (?, ?, ?, ?)''', data)
 		except:
-			pass
-
+			pass #skip this since only one review per user per restaurant
 
 if __name__ == '__main__':
 	main()
