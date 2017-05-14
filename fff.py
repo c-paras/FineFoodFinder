@@ -227,13 +227,14 @@ def restaurants_page():
         
         any = request.args.get('any') or request.form.get('any')
         max_cost = request.form.get('cost-input-range')
-        print("MAX_COST:", max_cost)
-        return redirect(url_for('restaurants_page', name=name, cuisine=cuisine, suburb=suburb, any=any, max_cost=max_cost))
+        min_rating = request.form.get('rating-input-range')
+        return redirect(url_for('restaurants_page', name=name, cuisine=cuisine, suburb=suburb, any=any, max_cost=max_cost, min_rating=min_rating))
     else:  # Display search results
         name = request.args.get('name')
         cuisine = request.args.get('cuisine')
         suburb = request.args.get('suburb')
         max_cost_filter = request.args.get('max_cost')
+        min_rating_filter = request.args.get('min_rating') or 0
         any = request.args.get('any')
 
         restaurants = db_interface.get_restaurants(c)
@@ -244,16 +245,17 @@ def restaurants_page():
         if not max_cost_filter:  # No max_cost_filter specified, use default largest cost
             max_cost_filter = largest_cost
 
-        if name or cuisine or suburb or max_cost_filter or any:  # Search
+        if name or cuisine or suburb or max_cost_filter is not None or min_rating_filter is not None or any:  # Search
             restaurants = fff_helpers.filter_restaurants(restaurants, name=name, cuisine=cuisine, max_cost=max_cost_filter,
-                                                         suburb=suburb, rating="", any_field=any)
+                                                         suburb=suburb, min_rating=min_rating_filter, any_field=any)
 
         suburbs = set(r.get_suburb() for r in restaurants)
         cuisines = set(r.get_cuisine() for r in restaurants)
         conn.close()
 
         return render_template('restaurants.html', name=name, cuisine=cuisine, suburb=suburb, restaurants=restaurants,
-                           suburbs=suburbs, cuisines=cuisines, largest_cost=largest_cost, max_cost_filter=max_cost_filter)
+                               suburbs=suburbs, cuisines=cuisines, largest_cost=largest_cost,
+                               max_cost_filter=max_cost_filter, min_rating_filter=min_rating_filter)
 
 
 # Submit new restaurant page
