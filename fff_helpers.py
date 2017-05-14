@@ -3,28 +3,30 @@ from email.mime.text import MIMEText
 import smtplib
 
 
-def filter_restaurants(restaurants, name="", cuisine="", cost="", suburb="", rating="", any_field=False):
-    print(name, cuisine, suburb)
+def filter_restaurants(restaurants, name="", cuisine="", cost="", suburb="", rating="", any_field=""):
     results = []
     for r in restaurants:
-        search_all_fields = [r.get_name(), r.get_cuisine(), r.get_suburb()]
-        any_search = False
+        # TODO suburb_search and rating_search:
+        satisfies = True
+        if name:
+            satisfies = satisfies and name.lower() in r.get_name().lower()
+        if cuisine:
+            satisfies = satisfies and cuisine.lower() in r.get_cuisine().lower()
+        if suburb:
+            satisfies = satisfies and suburb.lower() in r.get_suburb().lower()
 
         if any_field:
+            search_all_fields = [r.get_name(), r.get_cuisine(), r.get_suburb()]
+            any_search = False
             for field in search_all_fields:
                 if any_field.lower() in field.lower():
                     any_search = True
                     break
-        name_search = name and name.lower() in r.get_name().lower()
-        cuisine_search = cuisine and cuisine.lower() in r.get_cuisine().lower()
-        # cost_search = search_term <= r.get_cost() <= search_term2
-        suburb_search = suburb and suburb.lower() in r.get_suburb().lower()
-        # rating_search = search_term <= r.get_rating() <= search_term2
+            satisfies = satisfies and any_search
 
-        if any_search or name_search or cuisine_search or suburb_search:  # TODO or suburb_search or rating_search:
+        if satisfies:
             results.append(r)
     return results
-
 
 
 def average(arr):  # Calculates average value of an array

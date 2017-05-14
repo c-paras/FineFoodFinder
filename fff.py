@@ -209,26 +209,31 @@ def restaurants_page():
             suburb = search_term
 
         return redirect(url_for('restaurants_page', any=any, name=name, cuisine=cuisine, suburb=suburb))
-    else:
+    elif request.form.get('names') or request.form.get('cuisine') or request.form.get('suburb') or request.form.get('any'):
         name = request.args.get('name') or request.form.get('name')
         cuisine = request.args.get('cuisine') or request.form.get('cuisine')
         suburb = request.args.get('suburb') or request.form.get('suburb')
         any = request.args.get('any') or request.form.get('any')
 
-        # print('name', name)
-        # print('cuisine', cuisine)
-        # print('suburb', suburb)
+        return redirect(url_for('restaurants_page', name=name, cuisine=cuisine, suburb=suburb, any=any))
+    else:
+        name = request.args.get('name')
+        cuisine = request.args.get('cuisine')
+        suburb = request.args.get('suburb')
+        any = request.args.get('any')
 
         restaurants = db_interface.get_restaurants(c)
         if name or cuisine or suburb or any:  # Search
+            print("FILTERS:", name, cuisine, suburb, any)
             restaurants = fff_helpers.filter_restaurants(restaurants, name=name, cuisine=cuisine, cost="",
                                                          suburb=suburb, rating="", any_field=any)
 
         suburbs = set(r.get_suburb() for r in restaurants)
         cuisines = set(r.get_cuisine() for r in restaurants)
         conn.close()
+
         return render_template('restaurants.html', name=name, cuisine=cuisine, suburb=suburb, restaurants=restaurants,
-                               suburbs=suburbs, cuisines=cuisines)
+                           suburbs=suburbs, cuisines=cuisines)
 
 
 # Submit new restaurant page
