@@ -9,7 +9,7 @@ from flask import *
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-from thread import *
+import threading
 
 # Create new flask app
 app = Flask(__name__)
@@ -110,7 +110,7 @@ def register():
 			confirm_id = str(uuid.uuid4())
 			link = os.path.join(request.url_root, 'confirm', user, confirm_id)
 			body = 'Please visit the following link to confirm your FFF account: ' + link
-			start_new_thread(send_email, (email, body, 'Fine Food Finder Account Confirmation'))
+			threading.Thread(target=send_email, args=(email, body, 'Fine Food Finder Account Confirmation')).start()
 			flash('Confirmation email sent to {}.'.format(email))
 			db_interface.add_user(c, full_name=full_name, username=user, password=pass1, email=email, confirm_id=confirm_id)
 			conn.commit()
