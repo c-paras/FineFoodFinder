@@ -549,3 +549,8 @@ img {
   margin-top: 45px;
   margin-bottom: 0;
 }
+
+.sidebar-form {
+  max-height: 70vh;
+  overflow-y: auto;
+}
