@@ -140,7 +140,7 @@ def confirm(user, uuid):
 
 
 # Individual restaurant page
-@app.route('/restaurants/<path:rest_id>', methods=['GET', 'POST'])
+@app.route('/restaurant/<path:rest_id>', methods=['GET', 'POST'])
 def restaurant_page(rest_id):
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
