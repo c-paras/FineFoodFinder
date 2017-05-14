@@ -127,7 +127,10 @@ def confirm(user, uuid):
 
     confirmed = db_interface.confirm(c, user, uuid)  # Activate account if link is valid
     if confirmed:
-        flash('Your account has been activated. Please log in.')
+        session['logged_in'] = True
+        session['username'] = user
+        flash('Your account has been activated. You are now logged in!')
+        return redirect(url_for('home_page'))
     else:
         flash('Invalid confirmation link!')
 
