@@ -48,7 +48,7 @@ Find Food Finder - {{ restaurant.get_name() }}
               {%else%}
               <hr align= "left">
 
-              <b><a class="page-scroll" href="{{ url_for('login') }}">Log in </a> to rate us</b>
+              <b><a class="page-scroll" href="{{ url_for('login') }}">Log in </a> to rate or review us</b>
               {% endif %}
           </div>
         </div>
@@ -62,10 +62,10 @@ Find Food Finder - {{ restaurant.get_name() }}
           <h2>Opening Hours:</h2>
           {{ restaurant.get_hours() }} <br/>
           <h2>Contact </h2>
-          <b>Phone:</b> {{ restaurant.get_phone() }} <br/>
-          <b>Website:<a href="{{ restaurant.get_website() }}">{{ restaurant.get_website() }}</a></b> <br/>
-          <h2>Approximate cost:</h2>
-          <b>Cost: {{restaurant.get_cost()}}$ per person <br/></b> <br/>
+          Phone: {{ restaurant.get_phone() }} <br/>
+          Website: <a href="{{ restaurant.get_website() }}">{{ restaurant.get_website() }}</a> <br/>
+          <h2>Approximate Cost:</h2>
+          ${{restaurant.get_cost()}} per person <br/> <br/>
         </div>
       </div>
     </div>
