@@ -3,7 +3,7 @@
 # SENG2011 17s1 Project
 # Implements a prototype for Fine Food Finder
 
-import os, re, sqlite3, uuid, datetime
+import os, re, sqlite3, uuid, datetime, math
 import fff_helpers, db_interface
 from flask import *
 import threading
@@ -140,7 +140,7 @@ def confirm(user, uuid):
 
 
 # Individual restaurant page
-@app.route('/restaurants/<path:rest_id>', methods=['GET', 'POST'])
+@app.route('/restaurant/<path:rest_id>', methods=['GET', 'POST'])
 def restaurant_page(rest_id):
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
@@ -187,7 +187,8 @@ def restaurant_page(rest_id):
 
 # Restaurants search results
 @app.route('/restaurants', methods=['GET', 'POST'])
-def restaurants_page():
+@app.route('/restaurants/<int:page>', methods=['GET', 'POST'])
+def restaurants_page(page=0):
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
 
@@ -253,9 +254,15 @@ def restaurants_page():
         cuisines = set(r.get_cuisine() for r in restaurants)
         conn.close()
 
-        return render_template('restaurants.html', name=name, cuisine=cuisine, suburb=suburb, restaurants=restaurants,
+        # Pagination - display 10 per page
+        start = page * 10
+        end = (page + 1) * 10
+        results = restaurants[start:end]
+        num_pages = math.ceil(len(restaurants)/10)  # Integer division
+
+        return render_template('restaurants.html', name=name, cuisine=cuisine, suburb=suburb, restaurants=results,
                                suburbs=suburbs, cuisines=cuisines, largest_cost=largest_cost,
-                               max_cost_filter=max_cost_filter, min_rating_filter=min_rating_filter)
+                               max_cost_filter=max_cost_filter, min_rating_filter=min_rating_filter, curr_page=page, num_pages=num_pages)
 
 
 # Submit new restaurant page
