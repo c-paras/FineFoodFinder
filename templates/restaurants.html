@@ -14,6 +14,7 @@ Find Food Finder - Restaurants
 			<body data-spy="scroll" data-target=".navbar" data-offset="50">
 				<div class="row">
 					<h4>Search</h4>
+          <form method="POST">
 						<select class="selectpicker form-control" id="search-criteria" name="search-criteria" title="Search by">
 							<option value="any">Any</option>
 							<option value="name">Name</option>
@@ -21,68 +22,69 @@ Find Food Finder - Restaurants
 							<option value="suburb">Suburb</option>
 						</select>
 
-							<div class="input-group">
-								<input type="text" name="search-box" class="form-control" placeholder="Search for...">
-								<span class="input-group-btn">
-								<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-							</span>
-					</div>
+            <div class="input-group">
+              <input type="text" name="search-box" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+              </span>
+					  </div>
+          </form>
 				</div>
-                <div class="row">
-                    <h4>Filter by</h4>
-                    <div class="col-xs-12">
-                        <form method="POST">
-                            <div class="btn-group-vertical btn-group-lg" role="group">
-								<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
-								<div id="filters-suburb" class="collapse in">
-									<ul>
-										{% for suburb in suburbs %}
-											<li><input class="sidebar-selection" type="submit" name="suburb" value="{{ suburb }}"></li>
-										{% endfor %}
-									</ul>
-								</div>
-
-								<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
-								<div id="filters-cuisine" class="collapse in">
-									<ul>
-										{% for cuisine in cuisines %}
-											<li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ cuisine }}"></li>
-										{% endfor %}
-									</ul	>
-								</div>
-
-								<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cost">Cost</button>
-								<div id="filters-cost" class="collapse in">
-									<ul>
-										<li> <a> $ 0 - $ 5 </a> </li>
-										<li> <a> $ 5 - $ 10 </a> </li>
-										<li> <a> $ 10 - $ 15 </a> </li>
-										<li> <a> $ 15 - $ 20 </a> </li>
-										<li> <a> $ 20 - $ 25 </a> </li>
-										<li> <a> $ 25 - $ 30 </a> </li>
-									</ul>
-								</div>
-
-								<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-rating">Rating</button>
-								<div id="filters-rating" class="collapse in">
-									<ul>
-										<li> <a> 0.0 </a> </li>
-										<li> <a> 0.5 </a> </li>
-										<li> <a> 1.0 </a> </li>
-										<li> <a> 1.5 </a> </li>
-										<li> <a> 2.0 </a> </li>
-										<li> <a> 2.5 </a> </li>
-										<li> <a> 3.0 </a> </li>
-										<li> <a> 3.5 </a> </li>
-										<li> <a> 4.0 </a> </li>
-										<li> <a> 4.5 </a> </li>
-										<li> <a> 5.0 </a> </li>
-									</ul>
-								</div>
-							</div>
-                        </form>
-                    </div>
+        <div class="row">
+          <h4>Filter by</h4>
+          <div class="col-xs-12">
+            <form method="POST">
+              <div class="btn-group-vertical btn-group-lg" role="group">
+                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-suburb">Suburb</button>
+                <div id="filters-suburb" class="collapse in">
+                  <ul>
+                    {% for suburb in suburbs %}
+                      <li><input class="sidebar-selection" type="submit" name="suburb" value="{{ suburb }}"></li>
+                    {% endfor %}
+                  </ul>
                 </div>
+
+                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
+                <div id="filters-cuisine" class="collapse in">
+                  <ul>
+                    {% for cuisine in cuisines %}
+                      <li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ cuisine }}"></li>
+                    {% endfor %}
+                  </ul	>
+                </div>
+
+                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cost">Cost</button>
+                <div id="filters-cost" class="collapse in">
+                  <ul>
+                    <li> <a> $ 0 - $ 5 </a> </li>
+                    <li> <a> $ 5 - $ 10 </a> </li>
+                    <li> <a> $ 10 - $ 15 </a> </li>
+                    <li> <a> $ 15 - $ 20 </a> </li>
+                    <li> <a> $ 20 - $ 25 </a> </li>
+                    <li> <a> $ 25 - $ 30 </a> </li>
+                  </ul>
+                </div>
+
+                <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-rating">Rating</button>
+                <div id="filters-rating" class="collapse in">
+                  <ul>
+                    <li> <a> 0.0 </a> </li>
+                    <li> <a> 0.5 </a> </li>
+                    <li> <a> 1.0 </a> </li>
+                    <li> <a> 1.5 </a> </li>
+                    <li> <a> 2.0 </a> </li>
+                    <li> <a> 2.5 </a> </li>
+                    <li> <a> 3.0 </a> </li>
+                    <li> <a> 3.5 </a> </li>
+                    <li> <a> 4.0 </a> </li>
+                    <li> <a> 4.5 </a> </li>
+                    <li> <a> 5.0 </a> </li>
+                  </ul>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
 			</div> 
 		
 			<!-- 1.1 Restaurant Listings -->
