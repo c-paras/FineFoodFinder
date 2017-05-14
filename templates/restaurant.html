@@ -74,9 +74,13 @@ Find Food Finder - {{ restaurant.get_name() }}
         {% if logged_in %}
           <form method="POST">
             <div class="form-group">
-              <h2><label for="review-body">Write a review</label></h2>
-              <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
-              <input type="submit" value="Submit" class="btn btn-primary">
+              {% if already_reviewed %}
+                <h2>You have already reviewed this restaurant!</h2>
+              {% else %}
+                <h2><label for="review-body">Write a review</label></h2>
+                <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
+                <input type="submit" value="Submit" class="btn btn-primary">
+              {% endif %}
             </div>
           </form>
         {% endif %}
