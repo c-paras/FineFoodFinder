@@ -139,69 +139,77 @@ def confirm(user, uuid):
     return redirect(url_for('login'))
 
 
-@app.route('/restaurants', defaults={'rest_id': None}, methods=['GET', 'POST'])
+# Individual restaurant page
 @app.route('/restaurants/<path:rest_id>', methods=['GET', 'POST'])
-def restaurants_page(rest_id=None):
+def restaurant_page(rest_id):
+    conn = sqlite3.connect('data.db')
+    c = conn.cursor()
+    r = db_interface.get_restaurant_by_id(c, id=rest_id)
+    if r:
+        reviews = db_interface.get_reviews(c, rest_id)
+        already_reviewed = db_interface.already_reviewed_restaurant(c, rest_id, session['username'])
+        if request.method == 'GET':
+            return render_template('restaurant.html', restaurant=r, logged_in=('username' in session),
+                                   reviews=reviews, already_reviewed=already_reviewed)
+        elif request.method == 'POST':
+            if request.form.get('rating'):  # Rating
+                already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
+                rating = float(request.form.get('rating'))
+                if not already_rated:
+                    add_rating = db_interface.add_rating(c, rest_id, session['username'], rating)
+
+                    if add_rating:
+                        flash('Thanks for rating!')
+                        conn.commit()
+                    else:
+                        flash('Unable to rate!')
+                else:
+                    update_rating = db_interface.update_rating(c, rest_id, session['username'], rating)
+                    if update_rating:
+                        flash('Rating updated!')
+                        conn.commit()
+                    else:
+                        flash('Unable to rate!')
+            elif request.form.get('review-body'):  # Submit review
+                review_body = request.form.get('review-body')
+                add_review = db_interface.add_review(c, session['username'], rest_id, review_body,
+                                                     datetime.datetime.now())
+                if add_review:
+                    flash('Review added!')
+                    conn.commit()
+                else:
+                    flash('Unable to add review!')
+            return redirect(url_for('restaurant_page', rest_id=rest_id))
+    else:
+        flash('Restaurant not found!')
+        return redirect(url_for('restaurants_page'))
+
+
+# Restaurants search results
+@app.route('/restaurants', methods=['GET', 'POST'])
+def restaurants_page():
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
 
-    if rest_id:  # Display individual restaurant
-        r = db_interface.get_restaurant_by_id(c, id=rest_id)
-        if r:
-            reviews = db_interface.get_reviews(c, rest_id)
-            already_reviewed = db_interface.already_reviewed_restaurant(c, rest_id, session['username'])
-            if request.method == 'GET':
-                return render_template('restaurant.html', restaurant=r, logged_in=('username' in session),
-                                       reviews=reviews, already_reviewed=already_reviewed)
-            elif request.method == 'POST':
-                if request.form.get('rating'):  # Rating
-                    already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
-                    rating = float(request.form.get('rating'))
-                    if not already_rated:
-                        add_rating = db_interface.add_rating(c, rest_id, session['username'], rating)
+    if request.form.get('search-box'):  # Using sidebar search box
+        search_term = request.form.get('search-box')
+        search_criteria = request.form.get('search-criteria')
 
-                        if add_rating:
-                            flash('Thanks for rating!')
-                            conn.commit()
-                        else:
-                            flash('Unable to rate!')
-                    else:
-                        update_rating = db_interface.update_rating(c, rest_id, session['username'], rating)
-                        if update_rating:
-                            flash('Rating updated!')
-                            conn.commit()
-                        else:
-                            flash('Unable to rate!')
-                    return redirect(url_for('restaurants_page', rest_id=rest_id))
-                elif request.form.get('review-body'):  # Submit review
-                    review_body = request.form.get('review-body')
-                    add_review = db_interface.add_review(c, session['username'], rest_id, review_body,
-                                                         datetime.datetime.now())
-                    if add_review:
-                        flash('Review added!')
-                        conn.commit()
-                    else:
-                        flash('Unable to add review!')
-                    return redirect(url_for('restaurants_page', rest_id=rest_id))
-    else:  # Search results
-        if request.form.get('search-box'):  # Using sidebar search box
-            search_term = request.form.get('search-box')
-            search_criteria = request.form.get('search-criteria')
+        if not search_criteria:  # Default search criteria
+            search_criteria = "any"
 
-            if not search_criteria:  # Default search criteria
-                search_criteria = "any"
+        any, name, cuisine, suburb = None, None, None, None
+        if search_criteria == "any":
+            any = search_term
+        if search_criteria == "name":
+            name = search_term
+        if search_criteria == "cuisine":
+            cuisine = search_term
+        if search_criteria == "suburb":
+            suburb = search_term
 
-            any, name, cuisine, suburb = None, None, None, None
-            if search_criteria == "any":
-                any = search_term
-            if search_criteria == "name":
-                name = search_term
-            if search_criteria == "cuisine":
-                cuisine = search_term
-            if search_criteria == "suburb":
-                suburb = search_term
-
-            return redirect(url_for('restaurants_page', any=any, name=name, cuisine=cuisine, suburb=suburb))
+        return redirect(url_for('restaurants_page', any=any, name=name, cuisine=cuisine, suburb=suburb))
+    else:
         name = request.args.get('name') or request.form.get('name')
         cuisine = request.args.get('cuisine') or request.form.get('cuisine')
         suburb = request.args.get('suburb') or request.form.get('suburb')
@@ -218,9 +226,9 @@ def restaurants_page(rest_id=None):
 
         suburbs = set(r.get_suburb() for r in restaurants)
         cuisines = set(r.get_cuisine() for r in restaurants)
+        conn.close()
         return render_template('restaurants.html', name=name, cuisine=cuisine, suburb=suburb, restaurants=restaurants,
                                suburbs=suburbs, cuisines=cuisines)
-    conn.close()
 
 
 # Submit new restaurant page
