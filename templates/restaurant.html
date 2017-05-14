@@ -19,7 +19,7 @@ Find Food Finder - {{ restaurant.get_name() }}
 				  <b> Rating: {{ restaurant.get_rating() }}/5 </b> <br>
             {% endif %}
             <hr align= "left">
-            <a href="{{ url_for('restaurants_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
+            <a href="{{ url_for('restaurant_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
               {% if logged_in %}
                 <h2>Rate us</h2>
                 <form method="POST">
@@ -78,9 +78,13 @@ Find Food Finder - {{ restaurant.get_name() }}
         {% if logged_in %}
           <form method="POST">
             <div class="form-group">
-              <h2><label for="review-body">Write a review</label></h2>
-              <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
-              <input type="submit" value="Submit" class="btn btn-primary">
+              {% if already_reviewed %}
+                <h2>You have already reviewed this restaurant!</h2>
+              {% else %}
+                <h2><label for="review-body">Write a review</label></h2>
+                <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
+                <input type="submit" value="Submit" class="btn btn-primary">
+              {% endif %}
             </div>
           </form>
         {% endif %}
