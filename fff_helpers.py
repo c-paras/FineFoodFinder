@@ -29,6 +29,7 @@ def filter_restaurants(restaurants, name="", cuisine="", max_cost="", suburb="",
 
         if satisfies:
             results.append(r)
+
     return results
 
 
