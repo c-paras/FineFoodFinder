@@ -122,19 +122,14 @@ Find Food Finder - Restaurants
 						<div class="restaurants-listing-box">
 							<div class="row">
 								<h2><a href="{{ url_for('restaurant_page', rest_id = r.get_id()) }}">{{ r.get_name() }}</a></h2>
-							
-								<!-- 2.1 Image Part -->
-								<div class="col-xs-4">
-									<a href="{{ url_for('restaurant_page', rest_id = r.get_id()) }}"><img src="{{ r.get_image() }}" alt="Restaurant 1" height ="220" width="250"></a>
-								</div>
 								<!-- 2.2 Restaurant Details Part -->
 								<div class="col-xs-8">
 									<p>
-                              {% if r.get_rating() == 'Unrated' %}
+                    {% if r.get_rating() == 'Unrated' %}
 										  <b> {{ r.get_rating() }} </b> <br>
-                              {% else %}
+                    {% else %}
 									     <b> Rating: {{ r.get_rating() }}/5 </b> <br>
-                              {% endif %}
+                    {% endif %}
 										<font color=#e85929> {{ r.get_cuisine() }} </font><br>
 										<i> This restaurant gives fine food for you. </i>
 									</p>
@@ -170,6 +165,11 @@ Find Food Finder - Restaurants
 											</p>
 										</div>
 									</div>
+								</div>
+
+                <!-- 2.1 Image Part -->
+								<div class="col-xs-4">
+									<a href="{{ url_for('restaurant_page', rest_id = r.get_id()) }}"><img src="{{ r.get_image() }}" alt="Restaurant 1" height ="220" width="250"></a>
 								</div>
 							</div>
 						</div>
