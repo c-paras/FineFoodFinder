@@ -454,6 +454,7 @@ body {
   font-size:20px;
   padding: 10px;
   margin-left: 25px;
+  height: 100vh;
 }
 .restaurants .restaurants-listing h1{
   font-size: 40px;
@@ -613,5 +614,4 @@ img {
 
 .reports .reports-listing .reports-listing-box .reports-listing-box-action p a{
   color: white;
-  
 }
