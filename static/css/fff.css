@@ -446,6 +446,7 @@ body {
   position: relative;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  margin-top: 50px;
 }
 
 .restaurants .restaurants-listing {
@@ -453,6 +454,7 @@ body {
   font-size:20px;
   padding: 10px;
   margin-left: 25px;
+  height: 100vh;
 }
 .restaurants .restaurants-listing h1{
   font-size: 40px;
@@ -529,6 +531,8 @@ img {
 .sidebar .sidebar-filters {
   color: white;
   background-color: #f29d81;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 .sidebar .btn-group-vertical div {
   width: 100%;
@@ -548,4 +552,66 @@ img {
   /*padding-top: 65px;*/
   margin-top: 45px;
   margin-bottom: 0;
+}
+
+.sidebar-form {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.reports {
+  position: relative;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.reports .reports-listing {
+  text-align: left;
+  font-size:20px;
+  padding: 10px;
+  margin-left: 25px;
+}
+.reports .reports-listing h1{
+  font-size: 40px;
+  color: #F05F40;  
+  font-weight: bold;
+}
+.reports .reports-listing h2 {
+  font-weight: bold;
+  font-size:28px;
+}
+
+.reports .reports-listing b {
+  font-weight: none;
+  font-size: 26px;
+}
+.reports .reports-listing .reports-listing-box {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 10px 20px 10px 40px;
+  margin-bottom: 40px;
+}
+
+.reports .reports-listing .reports-listing-box h2 {
+  color: #F05F40;	
+  font-weight: bold;	
+}
+
+.reports .reports-listing .reports-listing-box p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgb(100, 100, 100);
+  margin-left: 20px;
+}
+
+.reports .reports-listing .reports-listing-box .reports-listing-box-action {
+  background-color: #F05F40;
+  font-weight: bold;	
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 1px 1px 0px 0px;
+}
+
+.reports .reports-listing .reports-listing-box .reports-listing-box-action p a{
+  color: white;
 }

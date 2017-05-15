@@ -13,11 +13,19 @@ Find Food Finder - {{ restaurant.get_name() }}
         <div class ="restaurants-listing-box">
           <div class="restaurants-listing">
             <h1>{{ restaurant.get_name() }} </h1>
+<<<<<<< HEAD
             <b>Rating: {{ restaurant.get_rating() }}/5 </b>
             <br>
             <b>{{ restaurant.get_numRating() }} Total Ratings</b>
+=======
+            {% if restaurant.get_rating() == 'Unrated' %}
+				  <b> {{ restaurant.get_rating() }} </b> <br>
+            {% else %}
+				  <b> Rating: {{ restaurant.get_rating() }}/5 </b> <br>
+            {% endif %}
+>>>>>>> 41754c8bc8af710022992ffc82df9cd2530d1a40
             <hr align= "left">
-            <a href="{{ url_for('restaurants_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
+            <a href="{{ url_for('restaurant_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
               {% if logged_in %}
                 <h2>Rate us</h2>
                 <form method="POST">
@@ -51,7 +59,7 @@ Find Food Finder - {{ restaurant.get_name() }}
               {%else%}
               <hr align= "left">
 
-              <b><a class="page-scroll" href="{{ url_for('login') }}">Log in </a> to rate us</b>
+              <b><a class="page-scroll" href="{{ url_for('login') }}">Log in</a> to rate or review us</b>
               {% endif %}
           </div>
         </div>
@@ -65,10 +73,10 @@ Find Food Finder - {{ restaurant.get_name() }}
           <h2>Opening Hours:</h2>
           {{ restaurant.get_hours() }} <br/>
           <h2>Contact </h2>
-          <b>Phone:</b> {{ restaurant.get_phone() }} <br/>
-          <b>Website:<a href="{{ restaurant.get_website() }}">{{ restaurant.get_website() }}</a></b> <br/>
-          <h2>Approximate cost:</h2>
-          <b>Cost: {{restaurant.get_cost()}}$ per person <br/></b> <br/>
+          Phone: {{ restaurant.get_phone() }} <br/>
+          Website: <a href="{{ restaurant.get_website() }}">{{ restaurant.get_website() }}</a> <br/>
+          <h2>Approximate Cost:</h2>
+          ${{restaurant.get_cost()}} per person <br/> <br/>
         </div>
       </div>
     </div>
@@ -77,9 +85,13 @@ Find Food Finder - {{ restaurant.get_name() }}
         {% if logged_in %}
           <form method="POST">
             <div class="form-group">
-              <h2><label for="review-body">Write a review</label></h2>
-              <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
-              <input type="submit" value="Submit" class="btn btn-primary">
+              {% if already_reviewed %}
+                <h2>You have already reviewed this restaurant!</h2>
+              {% else %}
+                <h2><label for="review-body">Write a review</label></h2>
+                <textarea class="form-control" id="review-body" name="review-body" rows="4"></textarea>
+                <input type="submit" value="Submit" class="btn btn-primary">
+              {% endif %}
             </div>
           </form>
         {% endif %}
@@ -98,7 +110,7 @@ Find Food Finder - {{ restaurant.get_name() }}
                 {% endif %}
                   <p>{{ reviews[i].get_review() }}</p>
                   <p>By: {{ reviews[i].get_user() }}</p>
-                  <p>Written at: {{ reviews[i].get_timestamp() }}</p>
+                  <p>Written at: {{ reviews[i].get_timestamp().strftime('%a %d %b %Y %I:%M %p') }}</p>
                   <br/>
                   <br/>
                 </div>

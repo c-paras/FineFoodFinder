@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+Find Food Finder - Restaurants
+{% endblock %}
+
+{% block body %}
+
+<header>
+	<div class="reports">
+		<div class="row">
+			<!-- 1.0 Filter Sidebar-->
+			<div class="col-xs-2 sidebar">
+				<h4>Task Menu</h4>
+				<div class="col-xs-12">
+					<form id="sidebar-filters" method="POST" class="sidebar-form">
+					<div class="btn-group-vertical btn-group-lg" role="group">
+						<button type="button" class="btn btn-default sidebar-filters">Moderate Review</button>
+						<button type="button" class="btn btn-default sidebar-filters">Add Restaurant</button>
+					</div>
+					</form>
+				</div>
+			</div>
+			<!-- 2.0 Report Listings -->
+			<div class="col-xs-9  col-xs-offset-2">
+				<div class="reports-listing">
+					<div class="row">
+						<div class="col-xs-5">
+							<h1 id="homeHeading" align="left">Reviews Moderation</h1>
+							<hr align="left">
+						</div>
+					</div>			
+					
+					<!-- Individual boxes of Restaurants-->
+					<div class="row">
+						<div class="reports-listing-box">
+							<div class="row">
+								<div class="col-xs-8">
+									<h2>Review ID: 12345 </h2>
+								</div>
+								<div class="col-xs-2">
+									<div class="reports-listing-box-action">
+										<p>
+											<a> Approve </a>
+										</p>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="reports-listing-box-action">
+										<p>
+											<a> Delete & Block </a>
+										</p>
+									</div>
+								</div>
+								<!-- 2.1 Review details-->
+								<br>
+								<p style="font-style:italic; color:grey">
+									Date: This review is a bad review.<br>
+									User: Bad_User_54321 <br>
+								</p>
+								<p>
+									Reported review goes here
+								</p>
+								
+								<!-- 2.2 Moderation Actions -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>			
+	</div>
+</header>
+{% endblock %}
+

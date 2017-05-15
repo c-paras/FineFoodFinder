@@ -1,5 +1,7 @@
+import datetime
 from classes import Restaurant, Review
 from fff_helpers import average
+
 
 def add_user(c, full_name, username, password, email, confirm_id):
     c.execute('''INSERT INTO Users (full_name, username, password, email, status) VALUES (?, ?, ?, ?, ?)''', (full_name, username, password, email, confirm_id))
@@ -63,7 +65,7 @@ def confirm(c, user, uuid):
 
 def get_restaurants(c):
     results = []
-    c.execute("SELECT * FROM Restaurants LIMIT 10") # TODO update limit
+    c.execute("SELECT * FROM Restaurants LIMIT 100") # TODO update limit
     for restaurant in c.fetchall():
         r = Restaurant(
             id=restaurant[0],
@@ -180,6 +182,13 @@ def already_rated_restaurant(c, restaurant_id, username):
     return False
 
 
+def already_reviewed_restaurant(c, restaurant_id, username):
+    res = c.execute("SELECT * FROM Reviews WHERE restaurant=? AND user=?", (restaurant_id, username))
+    if res.fetchone():
+        return True
+    return False
+
+
 def add_review(c, username, restaurant_id, review_body, timestamp):
     if check_username_exists(c, username):
         c.execute('INSERT INTO Reviews(user, restaurant, review, timestamp) '
@@ -191,11 +200,12 @@ def add_review(c, username, restaurant_id, review_body, timestamp):
 def get_reviews(c, restaurant_id):
     results = []
     c.execute("SELECT * FROM Reviews WHERE restaurant=?", (restaurant_id, ))
+
     for review in c.fetchall():
         r = Review(
             user=review[0],
             review=review[2],
-            timestamp=review[3]
+            timestamp=datetime.datetime.strptime(review[3], "%Y-%m-%d %H:%M:%S.%f")
         )
         results.append(r)
     return results
