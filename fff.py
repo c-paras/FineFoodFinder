@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright (C) 2017 Team Centipede
 # SENG2011 17s1 Project
 # Implements a prototype for Fine Food Finder
