@@ -214,18 +214,21 @@ def restaurants_page(page=0):
 
         return redirect(url_for('restaurants_page', any=any, name=name, cuisine=cuisine, suburb=suburb))
     elif request.form.get('name') or request.form.get('cuisine') or request.form.get('suburb') or request.form.get('any') or request.form.get('cost-input-range'):  # Clicked on a filter
-        if request.args.get('name') == request.form.get('name'):  # "Uncheck" name
-            name = None
+        if request.args.get('name') and request.form.get('name'):  # "Uncheck" name
+            if request.args.get('name').lower() == request.form.get('name').lower():
+                name = None
         else:
             name = request.args.get('name') or request.form.get('name')
 
-        if request.args.get('cuisine') == request.form.get('cuisine'):  # "Uncheck" cuisine
-            cuisine = None
+        if request.args.get('cuisine') and request.form.get('cuisine'):  # "Uncheck" cuisine
+            if request.args.get('cuisine').lower() == request.form.get('cuisine').lower():
+                cuisine = None
         else:
             cuisine = request.args.get('cuisine') or request.form.get('cuisine')
 
-        if request.args.get('suburb') == request.form.get('suburb'):  # "Uncheck" suburb
-            suburb = None
+        if request.args.get('suburb') and request.form.get('suburb'):  # "Uncheck" suburb
+            if request.args.get('suburb').lower() == request.form.get('suburb').lower():
+                suburb = None
         else:
             suburb = request.args.get('suburb') or request.form.get('suburb')
         

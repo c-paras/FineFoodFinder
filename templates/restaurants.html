@@ -59,11 +59,11 @@ Find Food Finder - Restaurants
 							<div id="filters-suburb" class="collapse in">
 								<ul>
 								{% for s in suburbs %}
-									{% if s == suburb %}
+									{% if s.lower() == suburb|lower %}
 									<b><u>
 									{% endif %}
 									<li><input class="sidebar-selection" type="submit" name="suburb" value="{{ s }}"></li>
-									{% if s == suburb %}
+									{% if s|lower == suburb|lower %}
 									</u></b>
 									{% endif %}
 								{% endfor %}
@@ -74,11 +74,11 @@ Find Food Finder - Restaurants
 							<div id="filters-cuisine" class="collapse in">
 								<ul>
 								{% for c in cuisines %}
-									{% if c == cuisine %}
+									{% if c|lower == cuisine|lower %}
 									<b><u>
 									{% endif %}
 									<li><input class="sidebar-selection" type="submit" name="cuisine" value="{{ c }}"></li>
-									{% if c == cuisine %}
+									{% if c|lower == cuisine|lower %}
 									</u></b>
 									{% endif %}
 								{% endfor %}
