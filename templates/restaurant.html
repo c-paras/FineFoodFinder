@@ -14,6 +14,8 @@ Find Food Finder - {{ restaurant.get_name() }}
           <div class="restaurants-listing">
             <h1>{{ restaurant.get_name() }} </h1>
             <b>Rating: {{ restaurant.get_rating() }}/5 </b>
+            <br>
+            <b>{{ restaurant.get_numRating() }} Total Ratings</b>
             <hr align= "left">
             <a href="{{ url_for('restaurants_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
               {% if logged_in %}
@@ -41,7 +43,8 @@ Find Food Finder - {{ restaurant.get_name() }}
                     <input type="radio" id="starhalf" name="rating" value="0.5" />
                     <label class="half" for="starhalf" title="0.5 stars"></label>
                   </fieldset>
-
+                    <br>
+                    <hr align = "left">
                   <input type="submit" value="Submit" class="btn btn-primary">
                 </form>
                 <hr>

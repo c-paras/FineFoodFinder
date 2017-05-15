@@ -78,7 +78,8 @@ def get_restaurants(c):
             website=restaurant[9],
             cost=restaurant[10],
             image=restaurant[11],
-            rating=find_average_rating(c, restaurant[0])
+            rating=find_average_rating(c, restaurant[0]),
+            numRating=find_number_rating(c, restaurant[0])
         )
         results.append(r)
     return results
@@ -132,7 +133,8 @@ def get_restaurant_by_id(c, id):
             website=res[9],
             cost=res[10],
             image=res[11],
-            rating=find_average_rating(c, res[0])
+            rating=find_average_rating(c, res[0]),
+            numRating=find_number_rating(c, res[0])
         )
         return r
 
@@ -146,6 +148,9 @@ def find_average_rating(c, i):
         return "Unrated"
     return avg
 
+def find_number_rating(c, i):
+    r = c.execute("SELECT COUNT(*) FROM Ratings WHERE restaurant=?", (i, )).fetchone()
+    return r[0]
 
 def add_rating(c, restaurant_id, username, rating):
     """

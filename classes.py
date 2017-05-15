@@ -1,6 +1,6 @@
 class Restaurant():
     # Constructor
-    def __init__(self, id, name, suburb, address, postcode, cuisine, owner, phone='', hours='', rating=0, website='', cost=0, image=''):
+    def __init__(self, id, name, suburb, address, postcode, cuisine, owner, phone='', hours='', rating=0, numRating=0, website='', cost=0, image=''):
         self.id = id
         self.name = name
         self.suburb = suburb
@@ -11,6 +11,7 @@ class Restaurant():
         self.phone = phone
         self.hours = hours
         self.rating = rating
+        self.numRating = numRating
         self.website = website
         self.cost = cost
         self.image = image
@@ -91,8 +92,14 @@ class Restaurant():
     def get_rating(self):
         return self.rating
 
+    def get_ratings(self):
+        return self.rating
+
     def set_rating(self, rating):
         self.rating = rating
+
+    def get_numRating(self):
+        return self.numRating
 
     def get_website(self):
         return self.website
