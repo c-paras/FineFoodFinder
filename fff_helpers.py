@@ -45,6 +45,16 @@ def average(arr):  # Calculates average value of an array
         return round(total/i, 1)
 
 
+def bubble_sort(arr):
+    for i in range(len(arr)):
+        for j in range(len(arr) - 1):
+            if arr[j] > arr[j + 1]:  # Swap the elements
+                temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+    return arr
+
+
 # Sends an email to the specified address
 def send_email(to, body, subject):
     noreply = 'noreply.fine.food.finder@gmail.com'
