@@ -147,7 +147,10 @@ def restaurant_page(rest_id):
     r = db_interface.get_restaurant_by_id(c, id=rest_id)
     if r:
         reviews = db_interface.get_reviews(c, rest_id)
-        already_reviewed = db_interface.already_reviewed_restaurant(c, rest_id, session['username'])
+        already_reviewed = False
+        if 'username' in session:
+            already_reviewed = db_interface.already_reviewed_restaurant(c, rest_id, session['username'])
+
         if request.method == 'GET':
             return render_template('restaurant.html', restaurant=r, logged_in=('username' in session),
                                    reviews=reviews, already_reviewed=already_reviewed)
