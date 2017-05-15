@@ -325,6 +325,12 @@ def submit_restaurant():
 			conn.close()
 			return redirect(url_for('home_page'))
 
+
+# View reports
+@app.route('/report')
+def view_reports():
+    return render_template('reports.html')
+
 # Serve static files from static/
 @app.route('/static/<path:path>')
 def send_static_file(path):
