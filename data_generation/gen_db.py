@@ -46,6 +46,7 @@ def create_tables(c):
 				password		TEXT not null,
 				email			TEXT not null unique check (email like '_%@_%'),
 				status      TEXT not null,
+				admin			INTEGRER not null check (admin == 0 || admin == 1),
 				PRIMARY KEY (username)
 			);''')
 
@@ -111,7 +112,7 @@ def populate_users(c):
 			sys.exit(1)
 
 	names = open('names.txt').readlines()
-	emails = open('emails.txt').readlines()
+	emails = open('emails.txt').readlines() #there are plenty more emails than names
 	passwords = ['qwerty', '1111', 'zzz', 'abc', 'hello', '555', 'qqq', 'ppp']
 
 	for name in names:
@@ -119,9 +120,19 @@ def populate_users(c):
 		username = full_name.split(' ')[0].lower() + str(random.randint(10, 99)) #first name + 2 digits
 		password = passwords[random.randint(0, len(passwords) - 1)]
 		email = emails.pop().strip()
-		data = (full_name, username, password, email, 'active')
-		c.execute('''INSERT INTO Users (full_name, username, password, email, status)
-				VALUES (?, ?, ?, ?, ?)''', data)
+		data = (full_name, username, password, email, 'active', 0)
+		c.execute('''INSERT INTO Users (full_name, username, password, email, status, admin)
+				VALUES (?, ?, ?, ?, ?, ?)''', data)
+
+	#hard-code all contributors as admin users
+	contributors = ['Costa Paraskevopoulos', 'Dominic Fung', 'Victor Zhang', 'Joseph Yeoh', 'Heng Fu Xiu']
+	for full_name in contributors:
+		username = full_name.lower().split(' ')[0] #lowercase first-name
+		password = 'iluvfood' #use the same password for all admins
+		email = emails.pop().strip()
+		data = (full_name, username, password, email, 'active', 1)
+		c.execute('''INSERT INTO Users (full_name, username, password, email, status, admin)
+				VALUES (?, ?, ?, ?, ?, ?)''', data)
 
 #populates restaurants table
 def populate_restaurants(c):
