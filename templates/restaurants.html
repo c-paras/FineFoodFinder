@@ -109,13 +109,7 @@ Find Food Finder - Restaurants
 			<!-- 2.0 Restaurant Listings -->
 			<div class="col-xs-9 col-xs-offset-2">
 				<div class="restaurants-listing">
-					<div class="row">
-						<div class="col-xs-5">
-							<h1 id="homeHeading" align="left">Restaurants List</h1>
-							<hr align="left">
-						</div>
-					</div>			
-					
+               <br>
 					<!-- Individual boxes of Restaurants-->
 					<div class="row">
 						{% for r in restaurants %}
@@ -131,7 +125,6 @@ Find Food Finder - Restaurants
 									     <b> Rating: {{ r.get_rating() }}/5 </b> <br>
                     {% endif %}
 										<font color=#e85929> {{ r.get_cuisine() }} </font><br>
-										<i> This restaurant gives fine food for you. </i>
 									</p>
 									<div class="row">
 										<div class="col-xs-3">

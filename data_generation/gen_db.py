@@ -83,11 +83,13 @@ def create_tables(c):
 	print 'Creating Reviews table...'
 	c.execute(
 		'''CREATE TABLE Reviews (
+				id				INTEGER unique not null,
 				user			TEXT not null,
 				restaurant	INTEGER not null,
 				review		TEXT not null,
 				timestamp	DATE not null,
-				PRIMARY KEY (user, restaurant), -- one review per user per restaurant
+				reported		INTEGER not null check (reported == 0 || reported == 1),
+				PRIMARY KEY (id),
 				FOREIGN KEY (user) REFERENCES Users(username),
 				FOREIGN KEY (restaurant) REFERENCES Restaurants(id)
 	);''')
@@ -127,7 +129,7 @@ def populate_users(c):
 	#hard-code all contributors as admin users
 	contributors = ['Costa Paraskevopoulos', 'Dominic Fung', 'Victor Zhang', 'Joseph Yeoh', 'Heng Fu Xiu']
 	for full_name in contributors:
-		username = full_name.lower().split(' ')[0] #lowercase first-name
+		username = full_name.lower().split(' ')[0] + '22' #lowercase first-name + '22'
 		password = 'iluvfood' #use the same password for all admins
 		email = emails.pop().strip()
 		data = (full_name, username, password, email, 'active', 1)
@@ -261,7 +263,8 @@ def populate_reviews(c):
 
 	#add 1000 random reviews by 1000 random users to 1000 random restaurants
 	#assumes there is enough data in users and restaurants tables
-	for i in range(1000):
+	i = 1
+	while i < 1000:
 		user = users[random.randint(0, num_users - 1)][0]
 		restaurant = restaurants[random.randint(0, num_restaurants - 1)][0]
 		ind_food = random.randint(0, len(phrases['food']) - 1)
@@ -269,10 +272,11 @@ def populate_reviews(c):
 		ind_staff = random.randint(0, len(phrases['staff']) - 1)
 		ind_overall = random.randint(0, len(phrases['overall']) - 1)
 		review = phrases['food'][ind_food] + phrases['atmosphere'][ind_atmos] + phrases['staff'][ind_staff] + phrases['overall'][ind_overall]
-		data = (user, restaurant, review, datetime.datetime.now())
+		data = (i, user, restaurant, review, datetime.datetime.now(), 0)
 
 		try:
-			c.execute('''INSERT INTO Reviews (user, restaurant, review, timestamp) VALUES (?, ?, ?, ?)''', data)
+			c.execute('''INSERT INTO Reviews (id, user, restaurant, review, timestamp, reported) VALUES (?, ?, ?, ?, ?, ?)''', data)
+			i += 1
 		except:
 			pass #skip this since only one review per user per restaurant
 

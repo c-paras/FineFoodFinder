@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="page-scroll" href="{{ url_for('restaurants_page') }}">Restaurants</a>
+                    <a class="page-scroll" href="{{ url_for('restaurants_page') }}">All Restaurants</a>
                 </li>
                 <li>
                   {% if session['logged_in'] != True %}
@@ -39,8 +39,8 @@
                 </li>
                 <li>
                   {% if session['logged_in'] == True %}
-                    <a class="page-scroll" href="{{ url_for('submit_restaurant') }}">Add New Restaurant</a>
-                  {% endif %}
+                   <a class="page-scroll" href="{{ url_for('view_reports') }}">Admin Tasks</a>
+                {% endif %}
                 </li>
                 <li>
                   {% if session['logged_in'] == True %}
@@ -48,9 +48,6 @@
                   {% else %}
                     <a class="page-scroll" href="{{ url_for('login') }}">Login</a>
                   {% endif %}
-                </li>
-				<li>
-                    <a class="page-scroll" href="{{ url_for('view_reports') }}">Reports</a>
                 </li>
               </ul>
             </div>

@@ -37,7 +37,7 @@ def average(arr):  # Calculates average value of an array
     total = 0
     i = 0
     # Equivalent to for i = 0; i < len(arr); i++
-    for i in range(len(arr)): 
+    for i in range(len(arr)):
         total += arr[i]
     if i == 0:
         return -1
