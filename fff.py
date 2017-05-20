@@ -88,12 +88,17 @@ def register():
         if not (full_name and user and pass1 and pass2 and email):  # No blank fields allowed
             err = 'Fields marked with (*) are required.'
             return render_template('register.html', status=err)
-        elif not re.match(r'.+@.+', email):
-            return render_template('register.html', status='Invalid email.')
+        elif len(user) < 5:
+            return render_template('register.html', status='Username must contain at least 5 characters.')
         elif pass1 != pass2:
             return render_template('register.html', status='Passwords do not match.')
+        elif len(pass1) < 5:
+            return render_template('register.html', status='Password must contain at least 5 characters.')
         elif pass1 in user:
             return render_template('register.html', status='Username must not contain password.')
+        elif not re.match(r'.+@.+', email):
+            return render_template('register.html', status='Invalid email.')
+
         else:  # Correct registration details
             conn = sqlite3.connect('data.db')
             c = conn.cursor()
