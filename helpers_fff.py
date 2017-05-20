@@ -36,9 +36,9 @@ def filter_restaurants(restaurants, name="", cuisine="", max_cost="", suburb="",
 def average(arr):  # Calculates average value of an array
     total = 0
     i = 0
-    # Equivalent to for i = 0; i < len(arr); i++
-    for i in range(len(arr)):
+    while i < len(arr):
         total += arr[i]
+        i += 1
     if i == 0:
         return -1
     else:

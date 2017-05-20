@@ -8,8 +8,7 @@ Find Food Finder - New Restaurant
   <header>
     <div class="header-content">
       <div class="header-content-inner">
-        <div class="row">
-          <div class="col-xs-4 col-xs-offset-4 header-box">
+          <div class="col-xs-8 col-xs-offset-2 header-box">
             <div class="row">
               <h1 id="homeHeading">New Restaurant</h1>
               <hr>
@@ -17,57 +16,68 @@ Find Food Finder - New Restaurant
                 <p class="login-message">{{ status }}</p>
               {% endif %}
             </div>
-            <div class="row">
               <form method="POST" action="">
                <div class="panel-body">
+                <table>
+                <tr><td>
                 <div class="form-group">
                   Name of Restaurant (*):
                   <input type="textfield" name="name" class="form-control">
                 </div>
+                </td><td>
                 <div class="form-group">
                   Suburb (*):
                   <input type="textfield" name="suburb" class="form-control">
                 </div>
+                </td></tr>
+                <tr><td>
                 <div class="form-group">
                   Address (*):
                   <input type="textfield" name="address" class="form-control">
                 </div>
+                </td><td>
                 <div class="form-group">
                   Postcode (*):
                   <input type="textfield" name="postcode" class="form-control">
                 </div>
+                </td></tr><tr><td>
                 <div class="form-group">
                   Phone:
                   <input type="textfield" name="phone" class="form-control">
                 </div>
+                </td><td>
                 <div class="form-group">
                   Business Hours:
                   <input type="textfield" name="hours" class="form-control">
                 </div>
+                </td></tr><tr><td>
                 <div class="form-group">
                   Cuisine (*):
                   <input type="textfield" name="cuisine" class="form-control">
                 </div>
+                </td><td>
                 <div class="form-group">
                   Link to Restaurant's Website (*):
                   <input type="textfield" name="website" class="form-control">
                 </div>
+                </td></tr><tr><td>
                 <div class="form-group">
-                 Average Cost Per Person (*):
+                  Average Cost Per Person (*):
                   <input type="textfield" name="cost" class="form-control">
                 </div>
+                </td><td>
                 <div class="form-group">
                   Photo:
                   <input type="textfield" name="image" class="form-control">
                 </div>
+                </td></tr>
+                </table>
                 <div class="form-group">
                   <input type="submit" value="Create Restaurant Page" class="btn btn-primary">
                   <a href="{{ url_for('view_reports') }}" class="btn btn-primary">Cancel</a>
                 </div>
-               </div>
-              </form>
-            </div>
-          </div>
+              </div>
+             </form>
         </div>
       </div>
     </div>

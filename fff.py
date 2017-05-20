@@ -12,7 +12,6 @@ import threading
 app = Flask(__name__)
 app.secret_key = open('.flask_key').read().strip()
 
-
 # Landing page
 @app.route('/', methods=['GET', 'POST'])
 def home_page():
@@ -37,10 +36,10 @@ def home_page():
 
 		return redirect(url_for('restaurants_page', any=any, name=name, cuisine=cuisine, suburb=suburb))
 
-
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
 	if request.method == 'GET':  # First page load
 		return render_template('login.html')
 	else:  # User has pressed login button
@@ -61,6 +60,19 @@ def login():
 		elif login_status == 'inactive':
 			return render_template('login.html', status='Please confirm your account first.')
 
+@app.context_processor
+def utility_processor():
+
+	def is_admin(user):
+		conn = sqlite3.connect('data.db')
+		c = conn.cursor()
+		is_ad = c.execute('SELECT admin FROM Users where username="%s"' %user).fetchone()[0]
+		if is_ad == 0:
+			return False
+		else:
+			return True
+
+	return dict(is_admin=is_admin)
 
 # Log out user
 @app.route('/logout')
@@ -72,7 +84,6 @@ def logout():
 	else:
 		flash('You are not logged in.')
 	return redirect(url_for('home_page'))
-
 
 # Registration page
 @app.route('/register', methods=['GET', 'POST'])
@@ -123,7 +134,6 @@ def register():
 			conn.commit()
 			conn.close()
 			return redirect(url_for('login'))
-
 
 @app.route('/confirm/<path:user>/<path:uuid>', methods=['GET', 'POST'])
 def confirm(user, uuid):
@@ -191,6 +201,7 @@ def restaurant_page(rest_id):
 			elif request.form.get('report_review'):
 				report_id = request.form.get('report_id')
 				c.execute('UPDATE Reviews SET reported=1 where id="%s"' %report_id)
+				flash('Thank you. An admin will review your report.')
 				conn.commit()
 
 			return redirect(url_for('restaurant_page', rest_id=rest_id))
@@ -280,10 +291,18 @@ def restaurants_page(page=0):
 							   suburbs=suburbs, cuisines=cuisines, largest_cost=largest_cost,
 							   max_cost_filter=max_cost_filter, min_rating_filter=min_rating_filter, curr_page=page, num_pages=num_pages)
 
-
 # Submit new restaurant page
 @app.route('/submit_restaurant', methods=['GET', 'POST'])
 def submit_restaurant():
+
+	#only display page if current user is an admin
+	conn = sqlite3.connect('data.db')
+	c = conn.cursor()
+	is_admin = c.execute('SELECT admin FROM Users where username="%s"' %session['username']).fetchone()[0]
+	if is_admin == 0:
+		flash('You are not an administrator.')
+		return render_template('home.html')
+
 	if request.method == 'GET':
 		return render_template('submit_restaurant.html', status='')
 	else:
@@ -329,7 +348,7 @@ def submit_restaurant():
 			phone = re.sub('[^0-9]+$', '', phone)
 			phone = re.sub('^[^0-9]+', '', phone)
 
-			flash('Your restaurant has been added.')
+			flash('Restaurant has been added.')
 			data = (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
 			c.execute(
 				'''INSERT INTO Restaurants (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
@@ -342,7 +361,7 @@ def submit_restaurant():
 @app.route('/report', methods=['GET', 'POST'])
 def view_reports():
 
-	#only display admin page if current user is an admin
+	#only display page if current user is an admin
 	conn = sqlite3.connect('data.db')
 	c = conn.cursor()
 	is_admin = c.execute('SELECT admin FROM Users where username="%s"' %session['username']).fetchone()[0]
@@ -364,8 +383,11 @@ def view_reports():
 		c.execute('DELETE FROM Reviews WHERE id="%s"' %report_id)
 		flash('Deleted review #%s' %report_id)
 
-	res = db_interface.get_reported(c)
 	conn.commit()
+	conn.close()
+	conn = sqlite3.connect('data.db')
+	c = conn.cursor()
+	res = db_interface.get_reported(c)
 	conn.close()
 	return render_template('reports.html', reported=res)
 
@@ -373,7 +395,6 @@ def view_reports():
 @app.route('/static/<path:path>')
 def send_static_file(path):
 	return send_from_directory('static', path)
-
 
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=True)

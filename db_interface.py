@@ -65,7 +65,7 @@ def confirm(c, user, uuid):
 
 def get_restaurants(c):
 	results = []
-	c.execute("SELECT * FROM Restaurants LIMIT 100") # TODO update limit
+	c.execute("SELECT * FROM Restaurants LIMIT 1000")
 	for restaurant in c.fetchall():
 		 r = Restaurant(
 				id=restaurant[0],
@@ -147,7 +147,7 @@ def find_average_rating(c, i):
 	ratings = [r[0] for r in ratings]
 	avg = average(ratings)
 	if avg == -1:
-		 return "Unrated"
+		 return 0 #this needs to be a number
 	return avg
 
 def find_number_rating(c, i):
@@ -191,8 +191,9 @@ def already_reviewed_restaurant(c, restaurant_id, username):
 
 def add_review(c, username, restaurant_id, review_body, timestamp, reported):
 	if check_username_exists(c, username):
-		 c.execute('INSERT INTO Reviews(user, restaurant, review, timestamp, reported) '
-						'VALUES (?, ?, ?, ?, ?)', (username, restaurant_id, review_body, timestamp, reported))
+		 num = c.execute('SELECT COUNT(*) FROM Reviews').fetchone()[0]
+		 c.execute('INSERT INTO Reviews(id, user, restaurant, review, timestamp, reported) '
+						'VALUES (?, ?, ?, ?, ?, ?)', (num+1, username, restaurant_id, review_body, timestamp, reported))
 		 return True
 	return False
 

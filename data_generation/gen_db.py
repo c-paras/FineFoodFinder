@@ -89,7 +89,7 @@ def create_tables(c):
 				review		TEXT not null,
 				timestamp	DATE not null,
 				reported		INTEGER not null check (reported == 0 || reported == 1),
-				PRIMARY KEY (id),
+				PRIMARY KEY (user, restaurant), -- one review per user per restaurant
 				FOREIGN KEY (user) REFERENCES Users(username),
 				FOREIGN KEY (restaurant) REFERENCES Restaurants(id)
 	);''')

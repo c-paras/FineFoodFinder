@@ -69,7 +69,7 @@ Find Food Finder - Restaurants
 								{% endfor %}
 								</ul>
 							</div>
-							
+
 							<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cuisine">Cuisine</button>
 							<div id="filters-cuisine" class="collapse in">
 								<ul>
@@ -84,7 +84,6 @@ Find Food Finder - Restaurants
 								{% endfor %}
 								</ul>
 							</div>
-							
 							<button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse" data-target="#filters-cost">Max Cost</button>
 							<div id="filters-cost" class="collapse in">
 								<div class="input-group">
@@ -104,12 +103,15 @@ Find Food Finder - Restaurants
 						</form>
 					</div>
 				</div>
-			</div> 
-		
+			</div>
+
 			<!-- 2.0 Restaurant Listings -->
 			<div class="col-xs-9 col-xs-offset-2">
 				<div class="restaurants-listing">
                <br>
+                  {% if restaurants|length == 0 %}
+                  <p>No search results.</p>
+                  {% else %}
 					<!-- Individual boxes of Restaurants-->
 					<div class="row">
 						{% for r in restaurants %}
@@ -119,8 +121,8 @@ Find Food Finder - Restaurants
 								<!-- 2.2 Restaurant Details Part -->
 								<div class="col-xs-8">
 									<p>
-                    {% if r.get_rating() == 'Unrated' %}
-										  <b> {{ r.get_rating() }} </b> <br>
+                    {% if r.get_rating() == 0 %}
+										  <b>Unrated </b> <br>
                     {% else %}
 									     <b> Rating: {{ r.get_rating() }}/5 </b> <br>
                     {% endif %}
@@ -128,20 +130,20 @@ Find Food Finder - Restaurants
 									</p>
 									<div class="row">
 										<div class="col-xs-3">
-											<p> 
+											<p>
 												Average Cost: <br>
 												Opening Hours:
 											</p>
 										</div>
-										
+
 										<div class="col-xs-9">
 											<p>
 												${{ r.get_cost() }} per person <br/>
-												{{ r.get_hours() }} 
+												{{ r.get_hours() }}
 											</p>
 										</div>
-									</div>	
-									
+									</div>
+
 									<div class="row">
 										<div class="col-xs-3">
 											<p>
@@ -166,7 +168,7 @@ Find Food Finder - Restaurants
 								</div>
 							</div>
 						</div>
-						{% endfor %}				
+						{% endfor %}
 					</div>
 
           <nav aria-label="Page navigation example">
@@ -199,6 +201,7 @@ Find Food Finder - Restaurants
               </li>
             </ul>
           </nav>
+          {% endif %}
 				</div>
 			</div>
 		<div>

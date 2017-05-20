@@ -13,8 +13,8 @@ Find Food Finder - {{ restaurant.get_name() }}
         <div class ="restaurants-listing-box">
           <div class="restaurants-listing">
             <h1>{{ restaurant.get_name() }} </h1>
-            {% if restaurant.get_rating() == 'Unrated' %}
-				  <b> {{ restaurant.get_rating() }} </b> <br>
+            {% if restaurant.get_rating() == 0 %}
+				  <b> Unrated </b> <br>
             {% else %}
 				  <b> Rating: {{ restaurant.get_rating() }}/5 </b> <br>
               <b>{{ restaurant.get_numRating() }} Total Ratings</b>
@@ -97,6 +97,9 @@ Find Food Finder - {{ restaurant.get_name() }}
           <div class="row">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
+              {% if reviews|length == 0 %}
+                 <p>No reviews yet!</p>
+              {% else %}
               {% for i in range(reviews|length) %}
                 {% if i == 0 %}
                   <div class="item active">
@@ -114,6 +117,7 @@ Find Food Finder - {{ restaurant.get_name() }}
                   <br/>
                 </div>
               {% endfor %}
+              {% endif %}
             </div>
 
             <!-- Controls -->
@@ -126,9 +130,7 @@ Find Food Finder - {{ restaurant.get_name() }}
               <span class="sr-only">Next</span>
             </a>
           </div>
-
           <div class="row">
-            <!-- Controls -->
             <ol class="carousel-indicators">
               {% for i in range(reviews|length) %}
                 {% if i == 0 %}
