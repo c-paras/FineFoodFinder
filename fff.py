@@ -131,6 +131,9 @@ def confirm(user, uuid):
 	c = conn.cursor()
 
 	confirmed = db_interface.confirm(c, user, uuid)  # Activate account if link is valid
+	conn.commit()
+	conn.close()
+
 	if confirmed:
 		session['logged_in'] = True
 		session['username'] = user
@@ -139,10 +142,8 @@ def confirm(user, uuid):
 	else:
 		flash('Invalid confirmation link!')
 
-	conn.commit()
-	conn.close()
-	return redirect(url_for('login'))
 
+	return redirect(url_for('login'))
 
 # Individual restaurant page
 @app.route('/restaurant/<path:rest_id>', methods=['GET', 'POST'])
