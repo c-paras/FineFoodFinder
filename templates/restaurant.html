@@ -15,6 +15,9 @@ Find Food Finder - {{ restaurant.get_name() }}
             <h1>{{ restaurant.get_name() }} </h1>
             {% if restaurant.get_rating() == 0 %}
 				  <b> Unrated </b> <br>
+            {% elif restaurant.get_numRating() == 1 %}
+				  <b> Rating: {{ restaurant.get_rating() }}/5 </b> <br>
+              <b>{{ restaurant.get_numRating() }} Rating</b>
             {% else %}
 				  <b> Rating: {{ restaurant.get_rating() }}/5 </b> <br>
               <b>{{ restaurant.get_numRating() }} Total Ratings</b>

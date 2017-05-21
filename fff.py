@@ -353,11 +353,12 @@ def submit_restaurant():
 
 			#use default data for unprovided fields
 			if not image: image = 'http://nyburgerbar.com/wp-content/gallery/imagegallery/nyburger1.jpg'
-			if hours == None: hours = 'Not provided'
-			if phone == None: phone = 'Not provided'
-			phone = phone.replace('(', '').replace(')', '').replace('  ', ' ').replace('--', '-')
-			phone = re.sub('[^0-9]+$', '', phone)
-			phone = re.sub('^[^0-9]+', '', phone)
+			if not hours: hours = 'Not provided'
+			if not phone: phone = 'Not provided'
+			if phone != 'Not provided':
+				phone = phone.replace('(', '').replace(')', '').replace('  ', ' ').replace('--', '-')
+				phone = re.sub('[^0-9]+$', '', phone)
+				phone = re.sub('^[^0-9]+', '', phone)
 
 			flash('Restaurant has been added.')
 			data = (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
