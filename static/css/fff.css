@@ -619,3 +619,18 @@ img {
 .reports .reports-listing .reports-listing-box .reports-listing-box-action p a{
   color: white;
 }
+
+.sort-filter {
+  background:none!important;
+  color: #eb3812;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  /*border is optional*/
+  cursor: pointer;
+}
+
+.sort-filter:hover,
+.sort-filter:focus {
+  color: white;
+}

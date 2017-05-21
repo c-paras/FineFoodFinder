@@ -108,11 +108,19 @@ Find Food Finder - Restaurants
 			<!-- 2.0 Restaurant Listings -->
 			<div class="col-xs-9 col-xs-offset-2">
 				<div class="restaurants-listing">
-               <br>
-                  {% if restaurants|length == 0 %}
-                  <p>No search results.</p>
-                  {% else %}
-					<!-- Individual boxes of Restaurants-->
+         <br>
+          {% if restaurants|length == 0 %}
+          <p>No search results.</p>
+          {% else %}
+          <!-- Sorting row-->
+          <div class="row">
+            <form id="sort-filters" method="POST">
+              <b>Sort by: </b>
+              <input class="sort-filter" type="submit" name="sort-rating" value="Rating">,
+              <input class="sort-filter" type="submit" name="sort-cost" value="Average Cost">
+            </form>
+          </div>
+          <!-- Individual boxes of Restaurants-->
 					<div class="row">
 						{% for r in restaurants %}
 						<div class="restaurants-listing-box">
@@ -175,7 +183,7 @@ Find Food Finder - Restaurants
             <ul class="pagination">
               {% if curr_page > 0 %}
                 <li class="page-item">
-                <a class="page-link" href="{{ url_for('restaurants_page', page=curr_page-1, suburb=suburb, cuisine=cuisine, max_cost=max_cost_filter, min_rating=min_rating_filter) }}">Previous</a>
+                <a class="page-link" href="{{ url_for('restaurants_page', page=curr_page-1, suburb=suburb, cuisine=cuisine, max_cost=max_cost_filter, min_rating=min_rating_filter, sort_by=sort_by) }}">Previous</a>
               {% else %}
                 <li class="page-item disabled">
                 <span class="page-link">Previous</span>
@@ -188,12 +196,12 @@ Find Food Finder - Restaurants
                 {% else %}
                   <li class="page-item">
                 {% endif %}
-                  <a class="page-link" href="{{ url_for('restaurants_page', page=i, suburb=suburb, cuisine=cuisine, max_cost=max_cost_filter, min_rating=min_rating_filter) }}">{{ i }}</a></li>
+                  <a class="page-link" href="{{ url_for('restaurants_page', page=i, suburb=suburb, cuisine=cuisine, max_cost=max_cost_filter, min_rating=min_rating_filter, sort_by=sort_by) }}">{{ i }}</a></li>
               {% endfor %}
 
               {% if curr_page + 1 < num_pages %}
                 <li class="page-item">
-                <a class="page-link" href="{{ url_for('restaurants_page', page=curr_page+1, suburb=suburb, cuisine=cuisine, max_cost=max_cost_filter, min_rating=min_rating_filter) }}">Next</a>
+                <a class="page-link" href="{{ url_for('restaurants_page', page=curr_page+1, suburb=suburb, cuisine=cuisine, max_cost=max_cost_filter, min_rating=min_rating_filter, sort_by=sort_by) }}">Next</a>
               {% else %}
                 <li class="page-item disabled">
                 <span class="page-link">Next</span>
