@@ -255,10 +255,10 @@ def populate_reviews(c):
 	restaurants = c.execute('SELECT id FROM Restaurants').fetchall()
 	num_restaurants = c.execute('SELECT COUNT(*) FROM Restaurants').fetchone()[0]
 	phrases = {
-		'food': ['Food was great. ', 'The food was quite bland. ', 'I really liked the dishes here. ', 'The food sucks. '],
-		'atmosphere': ['The atmosphere was great. ', 'This place was super boring. ', 'The restaurant was really nicely decorated. '],
-		'staff': ['The staff were quite friendly. ', 'The waiters were very rude.', 'The staff here shouldn\'t work in the service industry. '],
-		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I would not recommend this place. ']
+		'food': ['Food was great. ', 'The food was quite bland. ', 'I really liked the dishes here. ', 'The food sucks.'],
+		'atmosphere': ['The atmosphere was great. ', 'This place was super boring. ', 'The restaurant was really nicely decorated.'],
+		'staff': ['The staff were quite friendly. ', 'The waiters were very rude. ', 'The staff here shouldn\'t work in the service industry.'],
+		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I would not recommend this place.']
 	}
 
 	#add 1000 random reviews by 1000 random users to 1000 random restaurants
@@ -267,11 +267,11 @@ def populate_reviews(c):
 	while i < 1000:
 		user = users[random.randint(0, num_users - 1)][0]
 		restaurant = restaurants[random.randint(0, num_restaurants - 1)][0]
-		ind_food = random.randint(0, len(phrases['food']) - 1)
-		ind_atmos = random.randint(0, len(phrases['atmosphere']) - 1)
-		ind_staff = random.randint(0, len(phrases['staff']) - 1)
-		ind_overall = random.randint(0, len(phrases['overall']) - 1)
-		review = phrases['food'][ind_food] + phrases['atmosphere'][ind_atmos] + phrases['staff'][ind_staff] + phrases['overall'][ind_overall]
+		food = random.randint(0, len(phrases['food']) - 1)
+		atmos = random.randint(0, len(phrases['atmosphere']) - 1)
+		staff = random.randint(0, len(phrases['staff']) - 1)
+		overall = random.randint(0, len(phrases['overall']) - 1)
+		review = phrases['food'][food] + phrases['atmosphere'][atmos] + phrases['staff'][staff] + phrases['overall'][overall]
 		data = (i, user, restaurant, review, datetime.datetime.now(), 0)
 
 		try:
