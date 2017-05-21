@@ -40,6 +40,10 @@ def home_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
+	if 'logged_in' in session:
+		flash('You are already logged in')
+		return redirect(url_for('home_page'))
+
 	if request.method == 'GET':  # First page load
 		return render_template('login.html')
 	else:  # User has pressed login button
