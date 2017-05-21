@@ -52,7 +52,7 @@ def average(arr):  # Calculates average value of an array
 
 def bubble_sort(arr, key="rating", ascending=True):
     for i in range(len(arr)):
-        for j in range(len(arr) - 1):
+        for j in range(len(arr) - 1 - i):
             asc_swap = ascending and arr[j].__dict__[key] > arr[j + 1].__dict__[key]
             desc_swap = not ascending and arr[j].__dict__[key] < arr[j + 1].__dict__[key]
 
