@@ -255,10 +255,10 @@ def populate_reviews(c):
 	restaurants = c.execute('SELECT id FROM Restaurants').fetchall()
 	num_restaurants = c.execute('SELECT COUNT(*) FROM Restaurants').fetchone()[0]
 	phrases = {
-		'food': ['Food was great. ', 'The food was quite bland. ', 'I really liked the dishes here. ', 'The food sucks.'],
-		'atmosphere': ['The atmosphere was great. ', 'This place was super boring. ', 'The restaurant was really nicely decorated.'],
-		'staff': ['The staff were quite friendly. ', 'The waiters were very rude. ', 'The staff here shouldn\'t work in the service industry.'],
-		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I would not recommend this place.']
+		'food': ['Food was great. ', 'The food was quite bland. ', 'I really liked the dishes here. ', 'The food sucks. '],
+		'atmosphere': ['The atmosphere was great. ', 'This place was super boring. ', 'The restaurant was really nicely decorated. '],
+		'staff': ['The staff were quite friendly. ', 'The waiters were very rude. ', 'The staff here shouldn\'t work in the service industry. '],
+		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I would not recommend this place. ']
 	}
 
 	#add 1000 random reviews by 1000 random users to 1000 random restaurants
