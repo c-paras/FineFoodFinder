@@ -506,8 +506,7 @@ img {
   background-color: #F05F40;
   background-repeat: cover;
   padding: 10px 20px 10px 40px;
-  margin-bottom: -9999px;
-  padding-bottom: 9999px;
+  height: 100%;
   text-align: left;
   overflow: hidden;
 }
