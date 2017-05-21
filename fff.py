@@ -200,10 +200,12 @@ def restaurant_page(rest_id):
 						flash('Unable to rate!')
 			elif request.form.get('review-body'):  # Submit review
 				review_body = request.form.get('review-body')
+				if re.match(r'^\s*$', review_body):
+					return redirect(url_for('restaurant_page', rest_id=rest_id))
 				add_review = db_interface.add_review(c, session['username'], rest_id, review_body,
 													 datetime.datetime.now(), 0)
 				if add_review:
-					flash('Review added!')
+					flash('Thank you for your review!')
 					conn.commit()
 				else:
 					flash('Unable to add review!')
