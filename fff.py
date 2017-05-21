@@ -41,7 +41,7 @@ def home_page():
 def login():
 
 	if 'logged_in' in session:
-		flash('You are already logged in')
+		flash('You are already logged in.')
 		return redirect(url_for('home_page'))
 
 	if request.method == 'GET':  # First page load
@@ -92,6 +92,11 @@ def logout():
 # Registration page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+
+	if 'logged_in' in session:
+		flash('You have already registered for an account and are logged in.')
+		return redirect(url_for('home_page'))
+
 	if request.method == 'GET':  # Load registration form
 		return render_template('register.html', status='')
 	else:
