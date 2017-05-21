@@ -506,8 +506,7 @@ img {
   background-color: #F05F40;
   background-repeat: cover;
   padding: 10px 20px 10px 40px;
-  margin-bottom: -9999px;
-  padding-bottom: 9999px;
+  height: 100%;
   text-align: left;
   overflow: hidden;
 }
@@ -617,5 +616,20 @@ img {
 }
 
 .reports .reports-listing .reports-listing-box .reports-listing-box-action p a{
+  color: white;
+}
+
+.sort-filter {
+  background:none!important;
+  color: #eb3812;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  /*border is optional*/
+  cursor: pointer;
+}
+
+.sort-filter:hover,
+.sort-filter:focus {
   color: white;
 }

@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 import smtplib
 
 
-def filter_restaurants(restaurants, name="", cuisine="", max_cost="", suburb="", min_rating=0, any_field=""):
+def filter_restaurants(restaurants, name="", cuisine="", max_cost="", suburb="", min_rating=0, any_field="", sort_by="rating"):
     results = []
     for r in restaurants:
         satisfies = True
@@ -30,6 +30,11 @@ def filter_restaurants(restaurants, name="", cuisine="", max_cost="", suburb="",
         if satisfies:
             results.append(r)
 
+    if sort_by == "rating":
+        results = bubble_sort(results, key="rating", ascending=False)
+    elif sort_by == "cost":
+        results = bubble_sort(results, key="cost", ascending=True)
+
     return results
 
 
@@ -45,10 +50,13 @@ def average(arr):  # Calculates average value of an array
         return round(total/i, 1)
 
 
-def bubble_sort(arr):
+def bubble_sort(arr, key="rating", ascending=True):
     for i in range(len(arr)):
         for j in range(len(arr) - 1):
-            if arr[j] > arr[j + 1]:  # Swap the elements
+            asc_swap = ascending and arr[j].__dict__[key] > arr[j + 1].__dict__[key]
+            desc_swap = not ascending and arr[j].__dict__[key] < arr[j + 1].__dict__[key]
+
+            if asc_swap or desc_swap:  # Swap the elements
                 temp = arr[j]
                 arr[j] = arr[j + 1]
                 arr[j + 1] = temp
