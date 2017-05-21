@@ -210,7 +210,7 @@ def restaurant_page(rest_id):
 			elif request.form.get('report_review'):
 				report_id = request.form.get('report_id')
 				c.execute('UPDATE Reviews SET reported=1 where id="%s"' %report_id)
-				flash('Thank you. An admin will review your report.')
+				flash('Thanks for reporting this review. An administrator will review your report.')
 				conn.commit()
 
 			return redirect(url_for('restaurant_page', rest_id=rest_id))
