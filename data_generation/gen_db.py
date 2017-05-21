@@ -202,10 +202,11 @@ def populate_restaurants(c):
 			protocol = 'https://'
 
 		#make site of the form protocol://www.lowercase.name.of.restaurant.fake.com
-		website = name.replace(' ', '.').replace('-', '').lower().strip().replace('..', '.') + '.fake.com'
+		website = name.replace('  ', ' ').replace(' ', '.').replace('-', '').strip() + '.fake.com'
 		website = HTMLParser().unescape(website)
 		website = urllib.quote(website) #encode as url
 		website = protocol + 'www.' + website #avoid encoding the protocol
+		website = website.lower().replace('..', '.')
 
 		#ensure only some restaurants have owners
 		owner = None
