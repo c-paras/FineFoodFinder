@@ -9,10 +9,14 @@ Find Food Finder - {{ restaurant.get_name() }}
   <div class="restaurants">
     <div class="row">
       <br/>
+   		<div class="row">
+           <div class ="restaurants-heading">
+             <h1>{{ restaurant.get_name() }} </h1>
+	  	     </div>
+         </div>
       <div class="col-xs-3 col-xs-offset-1">
         <div class ="restaurants-listing-box">
           <div class="restaurants-listing">
-            <h1>{{ restaurant.get_name() }} </h1>
             {% if restaurant.get_rating() == 0 %}
 				  <b> Unrated </b> <br>
             {% elif restaurant.get_numRating() == 1 %}
