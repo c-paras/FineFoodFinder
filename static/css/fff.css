@@ -458,6 +458,11 @@ body {
   margin-left: 25px;
   height: 100vh;
 }
+.restaurants .restaurants-heading h1{
+  font-size: 40px;
+  color: #F05F40;
+  font-weight: bold;
+}
 .restaurants .restaurants-listing h1{
   font-size: 40px;
   color: #F05F40;  
@@ -619,7 +624,7 @@ img {
 
 .sort-filter {
   background:none!important;
-  color: #eb3812;
+  color: #f26140;
   border:none;
   padding:0!important;
   font: inherit;
