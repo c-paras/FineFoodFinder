@@ -179,7 +179,9 @@ def populate_restaurants(c):
 				phone = 'Not provided'
 			hours = r[3].strip()
 			hours = re.sub(r'\s*,\s*', ', ', hours)
+			hours = HTMLParser().unescape(hours)
 			cuisine = r[4].strip()
+			cuisine = HTMLParser().unescape(cuisine)
 			cost = r[5].strip()
 			image = r[6].strip()
 		except:
@@ -255,11 +257,17 @@ def populate_reviews(c):
 	num_users = c.execute('SELECT COUNT(*) FROM Users').fetchone()[0]
 	restaurants = c.execute('SELECT id FROM Restaurants').fetchall()
 	num_restaurants = c.execute('SELECT COUNT(*) FROM Restaurants').fetchone()[0]
-	phrases = {
-		'food': ['Food was great. ', 'The food was quite bland. ', 'I really liked the dishes here. ', 'The food sucks. '],
-		'atmosphere': ['The atmosphere was great. ', 'This place was super boring. ', 'The restaurant was really nicely decorated. '],
-		'staff': ['The staff were quite friendly. ', 'The waiters were very rude. ', 'The staff here shouldn\'t work in the service industry. '],
-		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I would not recommend this place. ']
+	good_phrases = {
+		'food': ['Food was great. ', 'I really liked the dishes here. '],
+		'atmosphere': ['The atmosphere was great. ', 'The restaurant was really nicely decorated. '],
+		'staff': ['The staff were quite friendly. ', 'The staff were very helpful. '],
+		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I\'m comming here every week! ']
+	}
+	bad_phrases = {
+		'food': ['The food was quite bland. ', 'The food sucks. ', 'The food was too spicy. '],
+		'atmosphere': ['This place was super boring. ', 'The crowd was too old. '],
+		'staff': ['The waiters were very rude. ', 'The staff here shouldn\'t work in the service industry. '],
+		'overall': ['I would not recommend this place. ', 'Worst restaurant ever! ']
 	}
 
 	#add 1000 random reviews by 1000 random users to 1000 random restaurants
@@ -268,11 +276,14 @@ def populate_reviews(c):
 	while i < 1000:
 		user = users[random.randint(0, num_users - 1)][0]
 		restaurant = restaurants[random.randint(0, num_restaurants - 1)][0]
-		food = random.randint(0, len(phrases['food']) - 1)
-		atmos = random.randint(0, len(phrases['atmosphere']) - 1)
-		staff = random.randint(0, len(phrases['staff']) - 1)
-		overall = random.randint(0, len(phrases['overall']) - 1)
-		review = phrases['food'][food] + phrases['atmosphere'][atmos] + phrases['staff'][staff] + phrases['overall'][overall]
+		source = good_phrases
+		if random.randint(0, 1) == 0:
+			source = bad_phrases
+		food = random.randint(0, len(source['food']) - 1)
+		atmos = random.randint(0, len(source['atmosphere']) - 1)
+		staff = random.randint(0, len(source['staff']) - 1)
+		overall = random.randint(0, len(source['overall']) - 1)
+		review = source['food'][food] + source['atmosphere'][atmos] + source['staff'][staff] + source['overall'][overall]
 		data = (i, user, restaurant, review, datetime.datetime.now(), 0)
 
 		try:
