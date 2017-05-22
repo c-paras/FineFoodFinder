@@ -49,6 +49,8 @@ Find Food Finder - {{ restaurant.get_name() }}
                     <input type="radio" id="starhalf" name="rating" value="0.5" />
                     <label class="half" for="starhalf" title="0.5 stars"></label>
                   </fieldset>
+                  {% if already_rated %}
+                  {%  endif  %}
                     <br>
                     <hr align = "left">
                   <input type="submit" value="Submit" class="btn btn-primary">

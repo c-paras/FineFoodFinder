@@ -150,6 +150,12 @@ def find_average_rating(c, i):
 		 return 0 #this needs to be a number
 	return avg
 
+def find_user_rating(c, restaurant_id, username):
+    rating = c.execute("SELECT rating FROM Ratings WHERE user = ? AND restaurant=?", (username, restaurant_id))
+    if rating.fetchone():
+        return rating
+    return False
+
 def find_number_rating(c, i):
 	r = c.execute("SELECT COUNT(*) FROM Ratings WHERE restaurant=?", (i, )).fetchone()
 	return r[0]
@@ -187,7 +193,6 @@ def already_reviewed_restaurant(c, restaurant_id, username):
 	if res.fetchone():
 		 return True
 	return False
-
 
 def add_review(c, username, restaurant_id, review_body, timestamp, reported):
 	if check_username_exists(c, username):

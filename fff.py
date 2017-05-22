@@ -177,15 +177,20 @@ def restaurant_page(rest_id):
     if r:
         reviews = db_interface.get_reviews(c, rest_id)
         already_reviewed = False
+        already_rated = False
+        user_rating = 0
         if 'username' in session:
             already_reviewed = db_interface.already_reviewed_restaurant(c, rest_id, session['username'])
+            already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
+            if already_rated:
+                user_rating = db_interface.find_user_rating(c, session['username'], rest_id)
 
         if request.method == 'GET':
             return render_template('restaurant.html', restaurant=r, logged_in=('username' in session),
-                                   reviews=reviews, already_reviewed=already_reviewed)
+                                   reviews=reviews, already_reviewed=already_reviewed, already_rated = already_rated,
+                                   user_rating=user_rating)
         elif request.method == 'POST':
             if request.form.get('rating'):  # Rating
-                already_rated = db_interface.already_rated_restaurant(c, rest_id, session['username'])
                 rating = float(request.form.get('rating'))
                 if not already_rated:
                     add_rating = db_interface.add_rating(c, rest_id, session['username'], rating)
