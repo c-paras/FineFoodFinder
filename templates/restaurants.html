@@ -166,18 +166,26 @@
 
                       <div class="row">
                         <div class="col-xs-3">
-                          <p>
-                            Address:<br>
-                            Phone:<br>
-                            Website:<br>
-                          </p>
+                          <p>Address: </p>
                         </div>
                         <div class="col-xs-9">
-                          <p>
-                            {{ r.get_address() }} <br>
-                            {{ r.get_phone() }} <br/>
-                            <a href="{{ r.get_website() }}">{{ r.get_website() }}</a> <br/>
-                          </p>
+                          <p>{{ r.get_address() }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-3">
+                          <p>Phone: </p>
+                        </div>
+                        <div class="col-xs-9">
+                          <p>{{ r.get_phone() }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-3">
+                          <p>Website: </p>
+                        </div>
+                        <div class="col-xs-9">
+                          <a href="{{ r.get_website() }}">{{ r.get_website() }}</a>
                         </div>
                       </div>
                     </div>
