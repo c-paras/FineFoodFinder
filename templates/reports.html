@@ -11,9 +11,12 @@ Find Food Finder - Moderate Reviews
 		<div class="row">
 			<!-- 1.0 Filter Sidebar-->
 			<div class="col-xs-2 sidebar">
-				<h4>Task Menu</h4>
-            <a href="{{ url_for('view_reports') }}"><h4>Moderate Reviews</h4></a>
-            <a href="{{ url_for('submit_restaurant') }}"><h4>Add Restaurant</h4></a>
+        <div class="row">
+          <h4>Admin Tasks</h4>
+        </div>
+
+        <a href="{{ url_for('view_reports') }}"><h4>Moderate Reviews</h4></a>
+        <a href="{{ url_for('submit_restaurant') }}"><h4>Add Restaurant</h4></a>
 			</div>
 			<!-- 2.0 Report Listings -->
 			<div class="col-xs-9 col-xs-offset-2">

@@ -567,8 +567,10 @@ img {
 
 .reports {
   position: relative;
+  margin-top: 50px;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  height: 100vh;
 }
 
 .reports .reports-listing {
