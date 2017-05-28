@@ -396,6 +396,11 @@ def submit_restaurant():
                 phone = re.sub('[^0-9]+$', '', phone)
                 phone = re.sub('^[^0-9]+', '', phone)
 
+            # append suburb & postcode to address
+            address = address.rstrip()
+            address = address + ', ' + suburb
+            address = address + ', ' + postcode
+
             flash('Restaurant has been added.')
             data = (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
             c.execute(
