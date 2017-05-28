@@ -94,6 +94,7 @@ Find Food Finder - {{ restaurant.get_name() }}
               {% else %}
                 <h2><label for="review-body">Write a review</label></h2>
                 <textarea class="form-control" id="review-body" name="review-body" rows="4" maxlength="200"></textarea>
+						<br>
                 <input type="submit" value="Submit" class="btn btn-primary">
               {% endif %}
             </div>
@@ -119,10 +120,12 @@ Find Food Finder - {{ restaurant.get_name() }}
                   <p>By: {{ reviews[i].get_user() }}</p>
                   <p>Written at: {{ reviews[i].get_timestamp().strftime('%a %d %b %Y %I:%M %p') }}</p>
 						{% if session['logged_in'] == True %}
+						<br>
 						<form method="POST">
 						  <input type="submit" name="report_review" value=Report Review" class="btn btn-primary">
 						  <input type="hidden" name="report_id" value="{{ reviews[i].get_id() }}">
 						</form>
+						<br>
 						{% endif %}
                   <br/>
                   <br/>
