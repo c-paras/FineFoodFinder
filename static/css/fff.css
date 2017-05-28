@@ -646,6 +646,10 @@ img {
   color: white;
 }
 
+.sort-filter-selected {
+  text-decoration: underline;
+}
+
 .carousel .review-display {
   padding-top: 10px;
 }

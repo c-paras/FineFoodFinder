@@ -39,15 +39,11 @@
           function submitForm() {
               document.getElementById("sidebar-filters").submit();
           }
-          function validate(evt) {
-              var theEvent = evt || window.event;
-              var key = theEvent.keyCode || theEvent.which;
-              key = String.fromCharCode(key);
-              var regex = /[0-9]|\./;
-              if (!regex.test(key)) {
-                  theEvent.returnValue = false;
-                  if (theEvent.preventDefault) theEvent.preventDefault();
-              }
+          function updateCostRange(val) {
+              document.getElementById('cost-input-range').value = val;
+          }
+          function updateRatingRange(val) {
+              document.getElementById('rating-input-range').value = val;
           }
           </script>
           <h4>Filter by</h4>
@@ -96,7 +92,7 @@
                   </ul>
                 </div>
                 <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse"
-                        data-target="#filters-cost">Max Cost
+                        data-target="#filters-cost">Max Cost (${{ max_cost_filter }})
                 </button>
                 <div id="filters-cost" class="collapse in">
                   <div class="input-group">
@@ -104,12 +100,12 @@
                            min="0" max="{{ largest_cost }}" step="1" oninput="updateCostLabel(this.value)"
                            onmouseup="submitForm()">
                     <input type="text" class="form-control" id="cost-input-text" name="cost-input-text"
-                           value="{{ max_cost_filter }}" onkeypress="validate(event)">
+                           value="{{ max_cost_filter }}" onkeyup="updateCostRange(this.value)">
                   </div>
                 </div>
 
                 <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse"
-                        data-target="#filters-rating">Min Rating
+                        data-target="#filters-rating">Min Rating ({{ min_rating_filter }})
                 </button>
                 <div id="filters-rating" class="collapse in">
                   <div class="input-group">
@@ -117,7 +113,7 @@
                            value="{{ min_rating_filter }}" min="0" max="5" step="0.1"
                            oninput="updateRatingLabel(this.value)" onmouseup="submitForm()">
                     <input type="text" class="form-control" id="rating-input-text" name="rating-input-text"
-                           value="{{ min_rating_filter }}" onkeypress="validate(event)">
+                           value="{{ min_rating_filter }}" onkeyup="updateRatingRange(this.value)">
                   </div>
                 </div>
               </div>
@@ -127,7 +123,7 @@
       </div>
 
       <!-- 2.0 Restaurant Listings -->
-      <div class="col-xs-9 col-xs-offset-2">
+      <div class="col-xs-7 col-xs-offset-2">
         <div class="restaurants-listing">
           {% if restaurants|length == 0 %}
             <p>No search results.</p>
@@ -136,8 +132,14 @@
             <div class="row">
               <form id="sort-filters" method="POST">
                 <b>Sort by: </b>
-                <input class="sort-filter" type="submit" name="sort-rating" value="Rating">,
-                <input class="sort-filter" type="submit" name="sort-cost" value="Average Cost">
+                {% if sort_by == "rating" %}
+                  <input class="sort-filter sort-filter-selected" type="submit" name="sort-rating" value="Rating">,
+                  <input class="sort-filter" type="submit" name="sort-cost" value="Average Cost">
+                {% else %}
+                  <input class="sort-filter" type="submit" name="sort-rating" value="Rating">,
+                  <input class="sort-filter sort-filter-selected" type="submit" name="sort-cost" value="Average Cost">
+                {% endif %}
+
               </form>
             </div>
             <!-- Individual boxes of Restaurants-->
@@ -178,22 +180,6 @@
                         </div>
                         <div class="col-xs-9">
                           <p>{{ r.get_address() }}</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xs-3">
-                          <p>Phone: </p>
-                        </div>
-                        <div class="col-xs-9">
-                          <p>{{ r.get_phone() }}</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xs-3">
-                          <p>Website: </p>
-                        </div>
-                        <div class="col-xs-9">
-                          <a href="{{ r.get_website() }}" target="_blank">{{ r.get_website() }}</a>
                         </div>
                       </div>
                     </div>
