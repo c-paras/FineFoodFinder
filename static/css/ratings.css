@@ -11,6 +11,7 @@ fieldset, label { margin: 0; padding: 0; }
 .rating > label:before { 
   margin: 5px;
   font-size: 1.25em;
+  font-family: FontAwesome;
   display: inline-block;
   content: "\f005";
 }
@@ -23,10 +24,6 @@ fieldset, label { margin: 0; padding: 0; }
 .rating > label { 
   color: #ddd; 
  float: right; 
-}
-
-.restaurants-stars-rating {
-
 }
 
 /*** Highlight Stars on Hover ***/
