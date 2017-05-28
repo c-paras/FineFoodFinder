@@ -27,7 +27,7 @@ Find Food Finder - {{ restaurant.get_name() }}
               <b>{{ restaurant.get_numRating() }} Total Ratings</b>
             {% endif %}
             <hr align= "left">
-            <a href="{{ url_for('restaurant_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant 1" height ="300" width="440"></a> </br>
+            <a href="{{ url_for('restaurant_page', rest_id = restaurant.get_id()) }}"><img src="{{ restaurant.get_image() }}" alt="Restaurant {{ restaurant.get_id() }}" height ="300" width="440"></a> </br>
               {% if logged_in %}
                 <h2>Rate us</h2>
                 <form method="POST">
@@ -63,7 +63,7 @@ Find Food Finder - {{ restaurant.get_name() }}
               {%else%}
               <hr align= "left">
 
-              <b><a class="page-scroll" href="{{ url_for('login') }}">Log in</a> to rate or review us</b>
+              <b><a class="page-scroll" href="{{ url_for('login') }}" target="_blank">Log in</a> to rate or review us</b>
               {% endif %}
           </div>
         </div>

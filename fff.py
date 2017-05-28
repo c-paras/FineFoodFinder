@@ -66,6 +66,7 @@ def login():
             return render_template('login.html', status='Please confirm your account first.')
 
 
+# checks if user is admin
 @app.context_processor
 def utility_processor():
     def is_admin(user):
