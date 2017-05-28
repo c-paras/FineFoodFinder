@@ -109,17 +109,17 @@ def register():
 
         if not (full_name and user and pass1 and pass2 and email):  # No blank fields allowed
             err = 'Fields marked with (*) are required.'
-            return render_template('register.html', status=err)
+            return render_template('register.html', status=err, name=full_name, user=user, email=email)
         elif len(user) < 5:
-            return render_template('register.html', status='Username must contain at least 5 characters.')
+            return render_template('register.html', status='Username must contain at least 5 characters.', name=full_name, user=user, email=email)
         elif pass1 != pass2:
-            return render_template('register.html', status='Passwords do not match.')
+            return render_template('register.html', status='Passwords do not match.', form_data=form_data)
         elif len(pass1) < 5:
-            return render_template('register.html', status='Password must contain at least 5 characters.')
+            return render_template('register.html', status='Password must contain at least 5 characters.', name=full_name, user=user, email=email)
         elif pass1 in user:
-            return render_template('register.html', status='Username must not contain password.')
+            return render_template('register.html', status='Username must not contain password.', name=full_name, user=user, email=email)
         elif not re.match(r'.+@.+', email):
-            return render_template('register.html', status='Invalid email.')
+            return render_template('register.html', status='Invalid email.', name=full_name, user=user, email=email)
 
         else:  # Correct registration details
             conn = sqlite3.connect('data.db')
@@ -128,11 +128,11 @@ def register():
             # Check if user or email already registered
             if db_interface.check_username_exists(c, user):
                 err = 'An account with that username already exists.'
-                return render_template('register.html', status=err)
+                return render_template('register.html', status=err, name=full_name, user=user, email=email)
 
             if db_interface.check_email_exists(c, email):
                 err = 'The specified email is already associated with an account.'
-                return render_template('register.html', status=err)
+                return render_template('register.html', status=err, name=full_name, user=user, email=email)
 
             # Sends email with confirmation link
             confirm_id = str(uuid.uuid4())
