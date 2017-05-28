@@ -261,7 +261,7 @@ def populate_reviews(c):
 		'food': ['Food was great. ', 'I really liked the dishes here. '],
 		'atmosphere': ['The atmosphere was great. ', 'The restaurant was really nicely decorated. '],
 		'staff': ['The staff were quite friendly. ', 'The staff were very helpful. '],
-		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I\'m comming here every week! ']
+		'overall': ['I would come here again. ', 'This is my favourite restaurant. ', 'I\'m coming here every week! ']
 	}
 	bad_phrases = {
 		'food': ['The food was quite bland. ', 'The food sucks. ', 'The food was too spicy. '],
