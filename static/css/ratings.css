@@ -5,6 +5,7 @@ fieldset, label { margin: 0; padding: 0; }
 .rating { 
   border: none;
   float: left;
+  margin-right: 10px;
 }
 
 .rating > input { display: none; } 

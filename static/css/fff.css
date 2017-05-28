@@ -455,7 +455,6 @@ body {
   text-align: left;
   font-size:20px;
   padding: 10px;
-  margin-left: 25px;
 }
 .restaurants .restaurants-heading h1{
   font-size: 40px;
@@ -467,9 +466,18 @@ body {
   color: #F05F40;  
   font-weight: bold;
 }
+
+.restaurants .restaurants-listing h2.listing-header {
+  margin-top: 0;
+}
+
 .restaurants .restaurants-listing h2 {
   font-weight: bold;
   font-size:28px;
+}
+
+.restaurants .restaurants-listing h3 {
+  margin-top: 0;
 }
 
 .restaurants .restaurants-listing b {
@@ -636,4 +644,22 @@ img {
 .sort-filter:hover,
 .sort-filter:focus {
   color: white;
+}
+
+.carousel .review-display {
+  padding-top: 10px;
+}
+
+.reviews-form-box h2 {
+  margin-top: 0;
+  padding: 10px;
+}
+
+.reviews-box h2 {
+  margin-top: 0;
+}
+
+.reviews-box p {
+  margin-left: 15%;
+  margin-right: 15%;
 }
