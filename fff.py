@@ -413,13 +413,21 @@ def submit_restaurant():
             return redirect(url_for('restaurant_page', rest_id=rest_id))
 
 
+@app.route('/dashboard')
+def dashboard():
+    conn = sqlite3.connect('data.db')
+    c = conn.cursor()
+    admin_stats = db_interface.get_admin_stats(c)
+    return render_template('dashboard.html', admin_stats=admin_stats)
+
+
 # sends submit restaurant page with original form data
 def render_new_restaurant_page(err, form_data):
     return render_template('submit_restaurant.html', status=err, name=form_data[0], suburb=form_data[1], address=form_data[2], postcode=form_data[3], phone=form_data[4], hours=form_data[5], cuisine=form_data[6], owner=form_data[7], website=form_data[8], cost=form_data[9], image=form_data[10])
 
 
 # entry-point to admin tasks
-@app.route('/report', methods=['GET', 'POST'])
+@app.route('/reports', methods=['GET', 'POST'])
 def view_reports():
     # only display page if current user is an admin
     conn = sqlite3.connect('data.db')

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Find Food Finder - Admin Dashboard
+{% endblock %}
+
+{% block body %}
+
+  <header>
+    <div class="reports">
+      <div class="row">
+        <!-- 1.0 Filter Sidebar-->
+        <div class="col-xs-2 sidebar">
+          <div class="row">
+            <h4>Admin Tasks</h4>
+          </div>
+
+          <a href="{{ url_for('dashboard') }}"><h4>Dashboard</h4></a>
+          <a href="{{ url_for('view_reports') }}"><h4>Moderate Reviews</h4></a>
+          <a href="{{ url_for('submit_restaurant') }}"><h4>Add Restaurant</h4></a>
+        </div>
+        <!-- 2.0 Dashboard -->
+        <div class="col-xs-9 col-xs-offset-2">
+          <div class="reports-listing admin-listing">
+            <div class="row">
+              <div class="col-xs-5">
+                <h1 id="homeHeading" align="left">Dashboard</h1>
+                <hr align="left">
+              </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="row">
+              <div class="col-xs-6">
+                <h2>Statistics</h2>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>Registered users</td>
+                      <td>{{ admin_stats['user_count'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Restaurants</td>
+                      <td>{{ admin_stats['restaurant_count'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Reviews</td>
+                      <td>{{ admin_stats['review_count'] }}</td>
+                    </tr>
+
+                    <tr>
+                      <td>Reported reviews</td>
+                      <td>{{ admin_stats['reported_reviews_count'] }}/{{ admin_stats['review_count'] }}</td>
+                    </tr>
+
+                    <tr>
+                      <td>Ratings</td>
+                      <td>{{ admin_stats['rating_count'] }}</td>
+                    </tr>
+
+                    <tr>
+                      <td>Average rating</td>
+                      <td>{{ admin_stats['average_restaurant_rating'] }}/5.0</td>
+                    </tr>
+                  </tbody>
+                </table>
+{#                {{ admin_stats }}#}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}

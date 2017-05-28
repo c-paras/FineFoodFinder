@@ -45,7 +45,7 @@
                 </li>
                 <li>
                 {% if session['logged_in'] == True and is_admin(session['username']) == True %}
-                   <a class="page-scroll" href="{{ url_for('view_reports') }}">Admin Tasks</a>
+                   <a class="page-scroll" href="{{ url_for('dashboard') }}">Admin Tasks</a>
                 {% endif %}
                 </li>
                 <li>
