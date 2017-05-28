@@ -211,7 +211,7 @@ def already_reviewed_restaurant(c, restaurant_id, username):
 
 def add_review(c, username, restaurant_id, review_body, timestamp, reported):
     if check_username_exists(c, username):
-        num = c.execute('SELECT COUNT(*) FROM Reviews').fetchone()[0]
+        num = c.execute('SELECT MAX(id) FROM Reviews').fetchone()[0]
         c.execute('INSERT INTO Reviews(id, user, restaurant, review, timestamp, reported) '
                   'VALUES (?, ?, ?, ?, ?, ?)', (num + 1, username, restaurant_id, review_body, timestamp, reported))
         return True
