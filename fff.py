@@ -407,7 +407,7 @@ def submit_restaurant():
             c.execute(
                 '''INSERT INTO Restaurants (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
-            rest_id = c.execute('SELECT MAX(id) FROM Restaurants').fetchone()[0] + 1
+            rest_id = c.execute('SELECT MAX(id) FROM Restaurants').fetchone()[0]
             conn.commit()
             conn.close()
             return redirect(url_for('restaurant_page', rest_id=rest_id))
