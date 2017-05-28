@@ -45,13 +45,13 @@
                   </div>
 
                   <div class="form-group">
-                    Phone:
-                    <input type="text" name="phone" class="form-control" value="{{ phone }}">
+                    Suburb (*):
+                    <input type="text" name="suburb" class="form-control" value="{{ suburb }}">
                   </div>
 
                   <div class="form-group">
-                    Cuisine (*):
-                    <input type="text" name="cuisine" class="form-control" value="{{ cuisine }}">
+                    Postcode (*):
+                    <input type="text" name="postcode" class="form-control" value="{{ postcode }}">
                   </div>
 
                   <div class="form-group">
@@ -62,13 +62,13 @@
 
                 <div class="col-xs-4">
                   <div class="form-group">
-                    Suburb (*):
-                    <input type="text" name="suburb" class="form-control" value="{{ suburb }}">
+                    Cuisine (*):
+                    <input type="text" name="cuisine" class="form-control" value="{{ Cuisine }}">
                   </div>
 
                   <div class="form-group">
-                    Postcode (*):
-                    <input type="text" name="postcode" class="form-control" value="{{ postcode }}">
+                    Phone:
+                    <input type="text" name="phone" class="form-control" value="{{ phone }}">
                   </div>
 
                   <div class="form-group">
@@ -92,7 +92,6 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <input type="submit" value="Create Restaurant" class="btn btn-primary">
-                      <a href="{{ url_for('view_reports') }}" class="btn btn-primary">Cancel</a>
                     </div>
                   </div>
                 </div>
