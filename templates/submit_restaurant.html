@@ -1,83 +1,103 @@
 {% extends "base.html" %}
 
 {% block title %}
-Find Food Finder - New Restaurant
+  Find Food Finder - New Restaurant
 {% endblock %}
 
 {% block body %}
   <header>
-    <div class="header-content">
-      <div class="header-content-inner">
-          <div class="col-xs-8 col-xs-offset-2 header-box">
+    <div class="reports">
+      <div class="row">
+        <!-- 1.0 Filter Sidebar-->
+        <div class="col-xs-2 sidebar">
+          <div class="row">
+            <h4>Admin Tasks</h4>
+          </div>
+
+          <a href="{{ url_for('view_reports') }}"><h4>Moderate Reviews</h4></a>
+          <a href="{{ url_for('submit_restaurant') }}"><h4>Add Restaurant</h4></a>
+        </div>
+        <!-- 2.0 Report Listings -->
+        <div class="col-xs-9 col-xs-offset-2">
+          <div class="reports-listing admin-listing">
             <div class="row">
-              <h1 id="homeHeading">New Restaurant</h1>
-              <hr>
-              {% if status %}
-                <p class="login-message">{{ status }}</p>
-              {% endif %}
-            </div>
-              <form method="POST" action="">
-               <div class="panel-body">
-                <table>
-                <tr><td>
-                <div class="form-group">
-                  Name of Restaurant (*):
-                  <input type="textfield" name="name" class="form-control" value="{{ name }}">
-                </div>
-                </td><td>
-                <div class="form-group">
-                  Suburb (*):
-                  <input type="textfield" name="suburb" class="form-control" value="{{ suburb }}">
-                </div>
-                </td></tr>
-                <tr><td>
-                <div class="form-group">
-                  Street Address (*):
-                  <input type="textfield" name="address" class="form-control" value="{{ address }}">
-                </div>
-                </td><td>
-                <div class="form-group">
-                  Postcode (*):
-                  <input type="textfield" name="postcode" class="form-control" value="{{ postcode }}">
-                </div>
-                </td></tr><tr><td>
-                <div class="form-group">
-                  Phone:
-                  <input type="textfield" name="phone" class="form-control" value="{{ phone }}">
-                </div>
-                </td><td>
-                <div class="form-group">
-                  Business Hours:
-                  <input type="textfield" name="hours" class="form-control" value="{{ hours }}">
-                </div>
-                </td></tr><tr><td>
-                <div class="form-group">
-                  Cuisine (*):
-                  <input type="textfield" name="cuisine" class="form-control" value="{{ cuisine }}">
-                </div>
-                </td><td>
-                <div class="form-group">
-                  Link to Restaurant's Website (*):
-                  <input type="textfield" name="website" class="form-control" value="{{ website }}">
-                </div>
-                </td></tr><tr><td>
-                <div class="form-group">
-                  Average Cost Per Person (*):
-                  <input type="textfield" name="cost" class="form-control" value="{{ cost }}">
-                </div>
-                </td><td>
-                <div class="form-group">
-                  Photo:
-                  <input type="textfield" name="image" class="form-control" value="{{ image }}">
-                </div>
-                </td></tr>
-                </table>
-                <div class="form-group">
-                  <input type="submit" value="Create Restaurant Page" class="btn btn-primary">
-                  <a href="{{ url_for('view_reports') }}" class="btn btn-primary">Cancel</a>
-                </div>
+              <div class="col-xs-5">
+                <h1 id="homeHeading" align="left">Add New Restaurant</h1>
+                <hr align="left">
               </div>
-             </form>
+            </div>
+
+            <!-- Individual boxes of reported reviews -->
+            <div class="row">
+              <div class="col-xs-12">
+                <form method="POST" action="">
+                <div class="row">
+                  <div class="col-xs-4">
+                  <div class="form-group">
+                    Name of Restaurant (*):
+                    <input type="text" name="name" class="form-control" value="{{ name }}">
+                  </div>
+
+                  <div class="form-group">
+                    Street Address (*):
+                    <input type="text" name="address" class="form-control" value="{{ address }}">
+                  </div>
+
+                  <div class="form-group">
+                    Phone:
+                    <input type="text" name="phone" class="form-control" value="{{ phone }}">
+                  </div>
+
+                  <div class="form-group">
+                    Cuisine (*):
+                    <input type="text" name="cuisine" class="form-control" value="{{ cuisine }}">
+                  </div>
+
+                  <div class="form-group">
+                    Average Cost Per Person (*):
+                    <input type="text" name="cost" class="form-control" value="{{ cost }}">
+                  </div>
+                </div>
+
+                <div class="col-xs-4">
+                  <div class="form-group">
+                    Suburb (*):
+                    <input type="text" name="suburb" class="form-control" value="{{ suburb }}">
+                  </div>
+
+                  <div class="form-group">
+                    Postcode (*):
+                    <input type="text" name="postcode" class="form-control" value="{{ postcode }}">
+                  </div>
+
+                  <div class="form-group">
+                    Business Hours:
+                    <input type="text" name="hours" class="form-control" value="{{ hours }}">
+                  </div>
+
+                  <div class="form-group">
+                    Link to Restaurant's Website (*):
+                    <input type="text" name="website" class="form-control" value="{{ website }}">
+                  </div>
+
+                  <div class="form-group">
+                    Photo:
+                    <input type="text" name="image" class="form-control" value="{{ image }}">
+                  </div>
+                </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="form-group">
+                      <input type="submit" value="Create Restaurant" class="btn btn-primary">
+                      <a href="{{ url_for('view_reports') }}" class="btn btn-primary">Cancel</a>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,63 +1,65 @@
 {% extends "base.html" %}
 
 {% block title %}
-Find Food Finder - Moderate Reviews
+  Find Food Finder - Moderate Reviews
 {% endblock %}
 
 {% block body %}
 
-<header>
-	<div class="reports">
-		<div class="row">
-			<!-- 1.0 Filter Sidebar-->
-			<div class="col-xs-2 sidebar">
-        <div class="row">
-          <h4>Admin Tasks</h4>
+  <header>
+    <div class="reports">
+      <div class="row">
+        <!-- 1.0 Filter Sidebar-->
+        <div class="col-xs-2 sidebar">
+          <div class="row">
+            <h4>Admin Tasks</h4>
+          </div>
+
+          <a href="{{ url_for('view_reports') }}"><h4>Moderate Reviews</h4></a>
+          <a href="{{ url_for('submit_restaurant') }}"><h4>Add Restaurant</h4></a>
         </div>
+        <!-- 2.0 Report Listings -->
+        <div class="col-xs-9 col-xs-offset-2">
+          <div class="reports-listing admin-listing">
+            <div class="row">
+              <div class="col-xs-5">
+                <h1 id="homeHeading" align="left">Moderate Reviews</h1>
+                <hr align="left">
+              </div>
+            </div>
 
-        <a href="{{ url_for('view_reports') }}"><h4>Moderate Reviews</h4></a>
-        <a href="{{ url_for('submit_restaurant') }}"><h4>Add Restaurant</h4></a>
-			</div>
-			<!-- 2.0 Report Listings -->
-			<div class="col-xs-9 col-xs-offset-2">
-				<div class="reports-listing">
-					<div class="row">
-						<div class="col-xs-5">
-							<h1 id="homeHeading" align="left">Moderate Reviews</h1>
-							<hr align="left">
-						</div>
-					</div>
-
-					<!-- Individual boxes of reported reviews -->
-					<div class="row">
-					{% if reported|length > 0 %}
-						{% for r in reported %}
-						  <div class="reports-listing-box">
-							 <div class="row">
-								<div class="col-xs-8">
-								  <h2>Review ID: {{ r.get_id() }} </h2>
-								</div>
-								<br><br><br>
-								<p style="font-style:italic; color:grey">
-								  Date: {{ r.get_timestamp().strftime('%a %d %b %Y %I:%M %p') }} <br>
-								  User: {{ r.get_user() }} <br><br>
-								  {{ r.get_review() }}
-								</p>
-								<form method="POST">
-									 <input type="submit" name="keep" value="Keep Review" class="btn btn-primary">
-									 <input type="submit" name="delete" value="Delete Review" class="btn btn-primary">
-									 <input type="hidden" name="report_id" value="{{ r.get_id() }}">
-								</form>
-							 </div>
-						  </div>
-						{% endfor %}
-               {% else %}
+            <!-- Individual boxes of reported reviews -->
+            <div class="row">
+              <div class="col-xs-12">
+                {% if reported|length > 0 %}
+                  {% for r in reported %}
+                    <div class="reports-listing-box">
+                      <div class="row">
+                        <div class="col-xs-8">
+                          <h2>Review ID: {{ r.get_id() }} </h2>
+                        </div>
+                        <br><br><br>
+                        <p style="font-style:italic; color:grey">
+                          Date: {{ r.get_timestamp().strftime('%a %d %b %Y %I:%M %p') }} <br>
+                          User: {{ r.get_user() }} <br><br>
+                          {{ r.get_review() }}
+                        </p>
+                        <form method="POST">
+                          <input type="submit" name="keep" value="Keep Review" class="btn btn-primary">
+                          <input type="submit" name="delete" value="Delete Review" class="btn btn-primary">
+                          <input type="hidden" name="report_id" value="{{ r.get_id() }}">
+                        </form>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
                   No reported reviews.
-               {% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</header>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 {% endblock %}
