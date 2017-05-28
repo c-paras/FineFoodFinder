@@ -363,25 +363,26 @@ def submit_restaurant():
         website = request.form.get('website')
         cost = request.form.get('cost')
         image = request.form.get('image')
+        form_data = (name, suburb, address, postcode, phone, hours, cuisine, owner, website, cost, image)
 
         if not (name and suburb and address and postcode and cuisine and website and cost):
             err = 'Fields marked with (*) are required.'
-            return render_template('submit_restaurant.html', status=err)
+            return render_new_restaurant_page(err, form_data)
         elif not re.match(r'^[0-9]{4}$', postcode):
             err = 'Postcode must contain 4 digits.'
-            return render_template('submit_restaurant.html', status=err)
+            return render_new_restaurant_page(err, form_data)
         elif not re.match(r'^https?://.+$', website):
             err = 'Please provide a valid URL for your restaurant.'
-            return render_template('submit_restaurant.html', status=err)
+            return render_new_restaurant_page(err, form_data)
         elif image and not re.match(r'^https?://.+$', image):
             err = 'Please provide a valid URL for a photo.'
-            return render_template('submit_restaurant.html', status=err)
+            return render_new_restaurant_page(err, form_data)
         elif not re.match(r'^([0-9]+\.)?[0-9]+$', cost):
             err = 'The cost you entered is not valid.'
-            return render_template('submit_restaurant.html', status=err)
+            return render_new_restaurant_page(err, form_data)
         elif phone and not (re.match(r'^[0-9\ \-\)\(]+$', phone) and len(re.sub('[^0-9]', '', phone)) >= 8):
             err = 'The phone number you entered is not valid.'
-            return render_template('submit_restaurant.html', status=err)
+            return render_new_restaurant_page(err, form_data)
         else:
             conn = sqlite3.connect('data.db')
             c = conn.cursor()
@@ -404,6 +405,11 @@ def submit_restaurant():
             conn.commit()
             conn.close()
             return redirect(url_for('restaurant_page', rest_id=rest_id))
+
+
+# sends submit restaurant page with original form data
+def render_new_restaurant_page(err, form_data):
+    return render_template('submit_restaurant.html', status=err, name=form_data[0], suburb=form_data[1], address=form_data[2], postcode=form_data[3], phone=form_data[4], hours=form_data[5], cuisine=form_data[6], owner=form_data[7], website=form_data[8], cost=form_data[9], image=form_data[10])
 
 
 # entry-point to admin tasks
