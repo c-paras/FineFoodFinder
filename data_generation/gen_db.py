@@ -284,7 +284,15 @@ def populate_reviews(c):
 		staff = random.randint(0, len(source['staff']) - 1)
 		overall = random.randint(0, len(source['overall']) - 1)
 		review = source['food'][food] + source['atmosphere'][atmos] + source['staff'][staff] + source['overall'][overall]
-		data = (i, user, restaurant, review, datetime.datetime.now(), 0)
+		year = random.choice(xrange(2014, 2017))
+		month = random.choice(xrange(1, 6))
+		day = random.choice(xrange(1, 28)) #minimum number of days in a month
+		hour = random.choice(xrange(0, 24))
+		minute = random.choice(xrange(0, 60))
+		second = random.choice(xrange(0, 60))
+		micro = random.choice(xrange(0, 1000000))
+		timestamp = datetime.datetime(year, month, day, hour, minute, second, micro)
+		data = (i, user, restaurant, review, timestamp, 0)
 
 		try:
 			c.execute('''INSERT INTO Reviews (id, user, restaurant, review, timestamp, reported) VALUES (?, ?, ?, ?, ?, ?)''', data)
