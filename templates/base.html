@@ -24,14 +24,16 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
               </button>
               <a class="navbar-brand page-scroll" href="{{ url_for('home_page') }}"><img src = "{{ url_for('static', filename='img/FFF.png') }}"></a>
-              {% with messages = get_flashed_messages() %}
+              <div class="nav navbar-nav">
+                {% with messages = get_flashed_messages() %}
                 {% if messages %}
                   {% for message in messages %}
                    <!--<a id="aap" class="navbar-brand page-scroll">{{ message }}</a>-->
-                   <a id="aap">{{ message }}</a>
+                   <li><a id="flash-message" class="page-scroll">{{ message }}</a></li>
                   {% endfor %}
                 {% endif %}
               {% endwith %}
+              </div>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
@@ -61,21 +63,13 @@
         </nav>
       </div>
 
-		<!-- http://jsfiddle.net/Curry/68CUh/ -->
-		<!-- hide flashed msgs after 3 seconds -->
-		<style>
-		a {
-		  opacity:1;
-		  transition:opacity 0ms;
-		}
-		a.waa {
-		  opacity:0;
-		}
-		</style>
+
 		<script>
+    <!-- http://jsfiddle.net/Curry/68CUh/ -->
+		<!-- hide flashed msgs after 5 seconds -->
 		setTimeout(function(){
-		  document.getElementById('aap').className = 'waa';
-		}, 3000);
+		  document.getElementById('flash-message').className = 'page-scroll invisible';
+		}, 5000);
 		</script>
 
       {% block body %}
