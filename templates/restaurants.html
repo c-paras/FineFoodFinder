@@ -55,9 +55,13 @@
             <form id="sidebar-filters" method="POST" class="sidebar-form">
               <div class="btn-group-vertical btn-group-lg" role="group">
                 <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse"
-                        data-target="#filters-suburb">Suburb
+                        data-target="#filters-suburb">Suburb ({{ suburbs|length }})
                 </button>
+                {% if suburb %}
                 <div id="filters-suburb" class="collapse in">
+                {% else %}
+                <div id="filters-suburb" class="collapse">
+                {% endif %}
                   <ul>
                     {% for s in suburbs %}
                       {% if s.lower() == suburb|lower %}
@@ -72,9 +76,13 @@
                 </div>
 
                 <button type="button" class="btn btn-default sidebar-filters" data-toggle="collapse"
-                        data-target="#filters-cuisine">Cuisine
+                        data-target="#filters-cuisine">Cuisine ({{ cuisines|length }})
                 </button>
+                {% if cuisine %}
                 <div id="filters-cuisine" class="collapse in">
+                {% else %}
+                <div id="filters-cuisine" class="collapse">
+                {% endif %}
                   <ul>
                     {% for c in cuisines %}
                       {% if c|lower == cuisine|lower %}
