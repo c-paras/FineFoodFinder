@@ -230,10 +230,10 @@ def populate_ratings(c):
 	restaurants = c.execute('SELECT id FROM Restaurants').fetchall()
 	num_restaurants = c.execute('SELECT COUNT(*) FROM Restaurants').fetchone()[0]
 
-	#add 1000 random ratings by 1000 random users to 1000 random restaurants
+	#add 728 random ratings by 728 random users to 728 random restaurants
 	#assumes there is enough data in users and restaurants tables
 	i = 0
-	while i < 1000:
+	while i < 728:
 		user = users[random.randint(0, num_users - 1)][0]
 		restaurant = restaurants[random.randint(0, num_restaurants - 1)][0]
 
@@ -270,10 +270,10 @@ def populate_reviews(c):
 		'overall': ['I would not recommend this place. ', 'Worst restaurant ever! ']
 	}
 
-	#add 1000 random reviews by 1000 random users to 1000 random restaurants
+	#add 573 random reviews by 573 random users to 573 random restaurants
 	#assumes there is enough data in users and restaurants tables
 	i = 1
-	while i < 1000:
+	while i < 573:
 		user = users[random.randint(0, num_users - 1)][0]
 		restaurant = restaurants[random.randint(0, num_restaurants - 1)][0]
 		source = good_phrases

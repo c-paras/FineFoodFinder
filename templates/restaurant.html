@@ -19,7 +19,7 @@ Find Food Finder - {{ restaurant.get_name() }}
           <div class="restaurants-listing">
             <a href="{{ url_for('restaurant_page', rest_id = restaurant.get_id()) }}">
               <img src="{{ restaurant.get_image() }}" alt="Restaurant {{ restaurant.get_id() }}" height ="300" width="440">
-            </a> </br>
+            </a> <br>
             <hr align= "left">
             {% if restaurant.get_rating() == 0 %}
             <h2> Unrated </h2> <br>
